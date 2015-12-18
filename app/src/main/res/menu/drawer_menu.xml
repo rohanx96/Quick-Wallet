@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <group
+        android:checkableBehavior="single"
+        android:id="@+id/navigation">
+        <item
+            android:id="@+id/nav_transactions"
+            android:title="@string/transactions"
+            android:icon="@drawable/swap_horizontal"/>
+        <item
+            android:id="@+id/nav_wallet"
+            android:checked="false"
+            android:title="@string/my_wallet"
+            android:icon="@drawable/coin"/>
+        <!--<item
+            android:id="@+id/nav_fiba"
+            android:title=""
+            android:checked="false" />-->
+    </group>
+    <group
+        android:checkableBehavior="none"
+        android:menuCategory="container"
+        android:id="@+id/settings">
+        <item
+            android:title="@string/settings"
+            android:id="@+id/nav_settings"
+            android:checked="false"
+            android:icon="@drawable/settings_box"/>
+        <item
+            android:title="Tutorial"
+            android:id="@+id/nav_tutorial"
+            android:checkable="false"
+            android:icon="@drawable/ic_tutorial"/>
+        <item
+            android:title="@string/help_and_feedback"
+            android:icon="@drawable/help_circle"
+            android:id="@+id/nav_help"
+            android:checked="false">
+        </item>
+    </group>
+</menu>

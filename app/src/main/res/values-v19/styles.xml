@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="AppTheme" parent="@style/Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimaryDark">#ff4e727e</item>
+        <item name="colorPrimary">#ff4e727e</item>
+        <item name="colorAccent">#ff4e727e</item>
+    </style>
+    <style name="DetailsActivityTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="android:windowTranslucentStatus">true</item>
+        <item name="colorPrimaryDark">#ff4e727e</item>
+        <item name="colorAccent">#ff4e727e</item>
+    </style>
+</resources>

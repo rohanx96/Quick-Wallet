@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="notification_intervals">
+        <item>Half-Hour"</item>
+        <item>Hour</item>
+        <item>Three Hours</item>
+        <item>Six Hours</item>
+        <item>Half-Day</item>
+        <item>Day</item>
+    </string-array>
+    <string-array name="notification_intervals_values">
+        <item>30</item>
+        <item>60</item>
+        <item>3</item>
+        <item>6</item>
+        <item>12</item>
+        <item>24</item>
+    </string-array>
+    <string-array name="transaction_click_dialog_options">
+        <item>Edit</item>
+        <item>Delete</item>
+    </string-array>
+    <string-array name="transaction_clear_balance_click_dialog_options">
+        <item>Delete</item>
+    </string-array>
+</resources>

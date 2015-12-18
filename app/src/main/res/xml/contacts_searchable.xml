@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<searchable xmlns:android="http://schemas.android.com/apk/res/android"
+    android:searchMode="queryRewriteFromText"
+    android:queryAfterZeroResults="true"
+    android:label="@string/app_name"
+    android:hint="@string/find_contact"
+    android:includeInGlobalSearch="true"
+    android:searchSuggestAuthority="com.android.contacts"
+    android:searchSuggestIntentData="content://com.android.contacts/contacts/lookup"
+    android:searchSuggestIntentAction="android.provider.Contacts.SEARCH_SUGGESTION_CLICKED">
+</searchable>

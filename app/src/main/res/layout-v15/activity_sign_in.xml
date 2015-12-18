@@ -1,0 +1,66 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/signup"
+        android:scaleType="fitXY" />
+    <EditText
+        android:id="@+id/login_edittext"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/password_edittext"
+        android:padding="10dp"
+        android:background="@drawable/edit_text_bg_default"
+        android:layout_centerHorizontal="true"
+        android:inputType="textEmailAddress"
+        android:singleLine="true"
+        android:drawableLeft="@drawable/ic_email"
+        android:hint="Email" />
+
+    <EditText
+        android:id="@+id/password_edittext"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:hint="Password"
+        android:imeOptions="actionSend"
+        android:padding="10dp"
+        android:inputType="textPassword"
+        android:background="@drawable/edit_text_bg_default"
+        android:drawableLeft="@drawable/ic_lock"
+        android:singleLine="true" />
+
+    <Button
+        android:id="@+id/sign_in_button"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/password_edittext"
+        android:layout_centerHorizontal="true"
+        android:onClick="onClick"
+        android:text="Sign in"
+        android:background="@color/teal"
+        android:textColor="@color/white"/>
+    <TextView
+        android:id="@+id/forgot_password_text"
+        android:layout_below="@id/sign_in_button"
+        android:layout_centerHorizontal="true"
+        android:layout_margin="10dp"
+        android:padding="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Forgot Password?"
+        android:textColor="@color/white"
+        android:onClick="onClick"/>
+    <TextView
+        android:id="@+id/create_account_text"
+        android:layout_below="@id/forgot_password_text"
+        android:layout_centerHorizontal="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Create an account"
+        android:textColor="@color/white"
+        android:onClick="onClick"/>
+</RelativeLayout>

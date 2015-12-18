@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:background="@color/colorPrimary">
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:src="@drawable/signup"
+        android:scaleType="fitXY" />
+    <TextView
+        android:layout_marginTop="180dp"
+        android:layout_marginBottom="10dp"
+        android:id="@+id/go_cloud_detail"
+        android:padding="22dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Creating an account enables you to send and receive notifications when you add transactions or someone adds transactions involving you"
+        android:textColor="@color/white"
+        android:gravity="center_horizontal"
+        android:textAppearance="@android:style/TextAppearance.DeviceDefault.Small"/>
+    <Button
+        android:id="@+id/sign_up_button_go_cloud"
+        android:layout_below="@id/go_cloud_detail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Create an account"
+        android:background="@color/teal"
+        android:textColor="@color/white"
+        android:onClick="onClick"/>
+    <TextView
+        android:layout_margin="10dp"
+        android:id="@+id/or_text_view"
+        android:layout_below="@+id/sign_up_button_go_cloud"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="OR"
+        android:textColor="@color/white"
+        android:gravity="center_horizontal"/>
+    <Button
+        android:id="@+id/sign_in_button_go_cloud"
+        android:layout_below="@id/or_text_view"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Sign in with your exisiting account"
+        android:background="@color/teal"
+        android:textColor="@color/white"
+        android:onClick="onClick"/>
+    <Button
+        android:id="@+id/continue_go_cloud"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Continue without creating an account"
+        android:layout_alignParentBottom="true"
+        android:background="@color/colorPrimary"
+        android:textColor="@color/white"
+        android:onClick="onClick"/>
+
+</RelativeLayout>

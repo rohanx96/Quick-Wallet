@@ -1,0 +1,37 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="@style/Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimaryDark">#ff4e727e</item>
+        <item name="colorPrimary">#ff4e727e</item>
+        <item name="colorAccent">#ff4e727e</item>
+        <item name="android:windowBackground">@android:color/white</item>
+    </style>
+
+    <style name="DetailsActivityTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimaryDark">#ff4e727e</item>
+        <item name="colorPrimary">#ff4e727e</item>
+        <item name="colorAccent">#ff4e727e</item>
+    </style>
+
+    <style name="menu_labels_style">
+        <item name="android:background">@drawable/fab_label_background</item>
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+    <style name="WalletTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorPrimary">#ff4e727e</item>
+        <item name="colorAccent">#ff4e727e</item>
+        <item name="android:windowBackground">@android:color/white</item>
+    </style>
+
+    <style name="myDialog" parent="Theme.AppCompat.Light.Dialog">
+        <item name="android:windowNoTitle">true</item>
+        <item name="colorAccent">@color/colorPrimary</item>
+    </style>
+
+    <style name="DemoTheme" parent="Theme.AppCompat"/>
+</resources>

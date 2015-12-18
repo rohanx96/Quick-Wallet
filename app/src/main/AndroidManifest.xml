@@ -1,0 +1,149 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.rose.quickwallet" >
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.READ_CONTACTS"/>
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
+
+
+    <permission android:name="com.rose.quickwallet.permission.C2D_MESSAGE"
+        android:protectionLevel="signature" />
+    <uses-permission android:name="com.rose.quickwallet.permission.C2D_MESSAGE" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:theme="@style/AppTheme" >
+
+        <activity
+            android:name=".EnterPinActivity"
+            android:theme="@style/WalletTheme"/>
+
+        <activity
+            android:name=".transactions.MainActivity"
+            android:label="@string/app_name"
+            android:launchMode="singleTop">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <action android:name="android.intent.action.SEARCH"/>
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+            <meta-data
+                android:name="android.app.searchable"
+                android:resource="@xml/searchable">
+            </meta-data>
+        </activity>
+
+        <activity android:name=".transactions.AddNewTransactionActivity"
+            android:permission="android.permission.READ_CONTACTS"
+            android:launchMode="singleTop"
+            android:theme="@style/Theme.AppCompat.Light.Dialog"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="android.intent.action.SEARCH"/>
+            </intent-filter>
+            <meta-data
+                android:name="android.app.searchable"
+                android:resource="@xml/searchable">
+            </meta-data>
+        </activity>
+
+        <activity
+            android:name=".transactions.DetailsActivity"
+            android:theme="@style/DetailsActivityTheme"/>
+
+        <activity
+            android:name=".myWallet.WalletActivity"
+            android:theme="@style/WalletTheme"/>
+
+        <activity
+            android:name=".myWallet.AddWalletItemActivity"
+            android:theme="@style/Theme.AppCompat.Light.Dialog"
+            android:screenOrientation="portrait"/>
+
+        <activity
+            android:name=".SettingsActivity"
+            android:theme="@style/WalletTheme"/>
+
+        <!--This meta-data tag is required to use Google Play Services.-->
+        <meta-data android:name="com.google.android.gms.version"
+            android:value="@integer/google_play_services_version" />
+
+        <!--Include the AdActivity configChanges and theme. -->
+        <activity android:name="com.google.android.gms.ads.AdActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"
+            android:theme="@android:style/Theme.Translucent" />
+
+        <activity android:name=".CalcActivity"
+            android:theme="@style/WalletTheme"/>
+
+        <activity android:name=".transactions.EditTransactionDetails"
+            android:launchMode="singleTop"
+            android:theme="@style/Theme.AppCompat.Light.Dialog"
+            android:screenOrientation="portrait"/>
+
+        <activity
+            android:name=".quickblox.SignUpUserActivity"
+            android:theme="@style/WalletTheme"
+            android:screenOrientation="portrait">
+        </activity>
+
+        <activity android:name=".quickblox.GoCloudActivity"
+            android:theme="@style/WalletTheme"
+            android:screenOrientation="portrait"/>
+
+        <activity android:name=".quickblox.SignInActivity"
+            android:theme="@style/WalletTheme"
+            android:screenOrientation="portrait"/>
+
+        <activity android:name=".tutorial.TutorialActivity"
+            android:theme="@style/DemoTheme"/>
+        <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ End of activities ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+
+
+
+        <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~ All services with their receivers listed here ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+        <receiver
+            android:name="com.google.android.gms.gcm.GcmReceiver"
+            android:exported="true"
+            android:permission="com.google.android.c2dm.permission.SEND" >
+            <intent-filter>
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+                <category android:name="com.rose.quickwallet" />
+            </intent-filter>
+        </receiver>
+        <!-- Service to send notifications arrived through GCM -->
+        <service
+            android:name=".quickblox.pushnotifications.GCMMessageHandler"
+            android:exported="false" >
+            <intent-filter>
+                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+            </intent-filter>
+        </service>
+
+        <receiver
+            android:name=".ConnectivityReceiver"
+            android:process=":remote">
+            <intent-filter>
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE"/>
+            </intent-filter>
+        </receiver>
+        <service
+            android:name=".quickblox.RetreiveUsersService"
+            android:exported="false"/>
+
+        <service
+            android:name=".NotificationService"
+            android:exported="false"/>
+        <receiver
+            android:name=".AlarmReceiver"
+            android:exported="false"/>
+
+        <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~ End of services and receivers ~~~~~~~~~~~~~~~~~~~~~~ -->
+
+    </application>
+</manifest>
