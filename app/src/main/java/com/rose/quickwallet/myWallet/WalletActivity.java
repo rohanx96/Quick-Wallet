@@ -44,7 +44,7 @@ public class WalletActivity extends BaseActivity implements DetailsRecyclerViewC
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         setupDrawerContent(navigationView);
         setTitle("My Wallet");
-        AdView mAdView = (AdView) findViewById(R.id.adView);
+        /*AdView mAdView = (AdView) findViewById(R.id.adView);
         AdRequest.Builder builder = new AdRequest.Builder();
         builder.addTestDevice("D882CD568608B87702357166E3B3E8BD");
         AdRequest adRequest = builder.build();
@@ -63,7 +63,7 @@ public class WalletActivity extends BaseActivity implements DetailsRecyclerViewC
                 LinearLayout adLayout = (LinearLayout) findViewById(R.id.ad_layout);
                 adLayout.setVisibility(View.VISIBLE);
             }
-        });
+        });*/
         recyclerView = (RecyclerView) findViewById(R.id.wallet_recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         databaseHelper = new WalletDatabaseHelper(this);
