@@ -69,6 +69,7 @@ public class AddNewTransactionActivity extends Activity {
     private float amount = 0;
     private String contact;
     private String senderName;
+    private String senderPhone;
     private DatabaseHelper databaseHelper;
     private QBChatService chatService;
     //private Spinner typeSpinner;
@@ -106,6 +107,7 @@ public class AddNewTransactionActivity extends Activity {
         if (isSignedUp) {
             ((CheckBox) findViewById(R.id.checkbox_send_notification)).setChecked(true);
             senderName = preferences.getString(Consts.USER_NAME,"");
+            senderPhone = preferences.getString(Consts.USER_PHONE,"");
             if (!QBChatService.isInitialized()) {
                 QBChatService.init(this);
             }
@@ -163,6 +165,20 @@ public class AddNewTransactionActivity extends Activity {
             balance = databaseHelper.getBalance(name);
             setBalanceText(balance);
             linearLayout.setVisibility(View.VISIBLE);
+        }
+        Thread thread = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                Uri uri = Uri.withAppendedPath(ContactsContract.PhoneLookup.CONTENT_FILTER_URI, Uri.encode(getIntent().getStringExtra("contact")));
+                Cursor phoneLookup = getContentResolver().query(uri, new String[]{ContactsContract.PhoneLookup.DISPLAY_NAME}, null, null, null);
+                if(phoneLookup!=null && phoneLookup.getCount()==1){
+                    name = phoneLookup.getString(phoneLookup.getColumnIndex(ContactsContract.Data.DISPLAY_NAME));
+                }
+
+            }
+        });
+        if (getIntent().getStringExtra("action").equals("addNotification")){
+            thread.start();
         }
     }
 
@@ -900,7 +916,7 @@ public class AddNewTransactionActivity extends Activity {
             messageText += "I borrowed from you " + (-1 *amount);
         if (detail != null && !detail.equals(""))
             messageText += "\nDetails: " + detail;
-        messageText += "\nPlease make a note of this transaction";
+        messageText += "\nPlease make a note of this transaction*" + senderPhone;
         chatMessage.setBody(messageText);
         chatMessage.setProperty("save_to_history", "1");
         chatMessage.setDateSent(System.currentTimeMillis() / 1000);

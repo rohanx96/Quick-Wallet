@@ -62,6 +62,12 @@ public class GCMMessageHandler extends GcmListenerService {
         NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 
         final String messageValue = extras.getString("message");
+        String message ="";
+        String contact = "";
+        if (messageValue != null) {
+            message = messageValue.substring(0,messageValue.indexOf("*")-1);
+            contact = messageValue.substring(messageValue.indexOf("*")+1);
+        }
 
         /*Intent intent = new Intent(this, MainActivity.class);
         intent.putExtra(Consts.EXTRA_MESSAGE, messageValue);*/
@@ -74,8 +80,8 @@ public class GCMMessageHandler extends GcmListenerService {
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(this);
                 mBuilder.setSmallIcon(R.drawable.ic_notification)
                         .setContentTitle(getResources().getString(R.string.app_name))
-                        .setContentText(messageValue)
-                        .setStyle(new NotificationCompat.BigTextStyle().bigText(messageValue).setSummaryText("Tap to add transaction"))
+                        .setContentText(message)
+                        .setStyle(new NotificationCompat.BigTextStyle().bigText(message).setSummaryText("Tap to add transaction"))
                         .setAutoCancel(true)
                         .setDefaults(Notification.DEFAULT_ALL);
         mBuilder.setContentIntent(contentIntent);
