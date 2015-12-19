@@ -85,7 +85,7 @@ public class SignUpUserActivity extends ActionBarActivity {
                                     preferences.edit().putString(Consts.USER_NAME, nameEditText.getText().toString()).apply();
                                     preferences.edit().putString(Consts.USER_LOGIN, loginEditText.getText().toString()).apply();
                                     preferences.edit().putString(Consts.USER_PASSWORD, passwordEditText.getText().toString()).apply();
-                                    preferences.edit().putString(Consts.USER_PHONE, phoneEditText.getText().toString());
+                                    preferences.edit().putString(Consts.USER_PHONE, phoneEditText.getText().toString()).apply();
                                     preferences.edit().putBoolean(Consts.IS_SIGNED_UP, true).apply();
                                     Intent mainActivity = new Intent(getApplicationContext(), MainActivity.class);
                                     mainActivity.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);

@@ -69,6 +69,7 @@ public class AddNewTransactionActivity extends Activity {
     private float amount = 0;
     private String contact;
     private String senderName;
+    private String senderPhone;
     private DatabaseHelper databaseHelper;
     private QBChatService chatService;
     //private Spinner typeSpinner;
@@ -105,7 +106,8 @@ public class AddNewTransactionActivity extends Activity {
         isSignedUp = preferences.getBoolean(Consts.IS_SIGNED_UP, false);
         if (isSignedUp) {
             ((CheckBox) findViewById(R.id.checkbox_send_notification)).setChecked(true);
-            senderName = preferences.getString(Consts.USER_NAME,"");
+            senderName = preferences.getString(Consts.USER_NAME, "");
+            senderPhone = preferences.getString(Consts.USER_PHONE,"");
             if (!QBChatService.isInitialized()) {
                 QBChatService.init(this);
             }
@@ -143,6 +145,8 @@ public class AddNewTransactionActivity extends Activity {
                 }
             });*/
         }
+
+        // Initialization when activity started through particular contact add action
         if (getIntent().getStringExtra("action").equals("add")) {
             name = getIntent().getStringExtra(SearchManager.QUERY);
             RelativeLayout linearLayout = (RelativeLayout) findViewById(R.id.contact_details);
@@ -163,6 +167,80 @@ public class AddNewTransactionActivity extends Activity {
             balance = databaseHelper.getBalance(name);
             setBalanceText(balance);
             linearLayout.setVisibility(View.VISIBLE);
+        }
+
+        // Initialization when activity started from a received notification
+        if (getIntent().getStringExtra("action").equals("addNotification")){
+            Thread thread = new Thread(new Runnable() {
+                @Override
+                public void run() {
+                    // Search for contact name using contact number
+                    Uri uri = Uri.withAppendedPath(ContactsContract.PhoneLookup.CONTENT_FILTER_URI, Uri.encode(getIntent().getStringExtra("contact")));
+                    Cursor phoneLookup = getContentResolver().query(uri, new String[]{ContactsContract.PhoneLookup.DISPLAY_NAME}, null, null, null);
+                    if(phoneLookup!=null && phoneLookup.moveToFirst()){
+                        name = phoneLookup.getString(phoneLookup.getColumnIndex(ContactsContract.Data.DISPLAY_NAME));
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                //Following code copied from getContactImageAndNumbers
+                                RelativeLayout linearLayout = (RelativeLayout) findViewById(R.id.contact_details);
+                                TextView contactName = (TextView) linearLayout.findViewById(R.id.contact_detail_name);
+                                contactName.setText(name);
+                                Cursor cursor = databaseHelper.getItem(name);
+                                if (cursor.moveToFirst()) {
+                                    image_uri = cursor.getString(cursor.getColumnIndex("ImageUri"));
+                                    contact = cursor.getString(cursor.getColumnIndex("PhoneNo"));
+                                }
+                                getContactImageAndNumbers();
+                                ImageView imageView = (ImageView) linearLayout.findViewById(R.id.contact_detail_image);
+                                if (image_uri != null)
+                                    imageView.setImageURI(Uri.parse(image_uri));
+                                else
+                                    imageView.setImageResource(R.drawable.contact_no_image);
+                                balance = databaseHelper.getBalance(name);
+                                setBalanceText(balance);
+                                linearLayout.setVisibility(View.VISIBLE);
+                            }
+                        });
+                    }
+                }
+            });
+            thread.start();
+            amount = getIntent().getFloatExtra("amount", 0);
+            //Following code copied from onActivityResult
+            if (amount > 0) {
+                type = "Borrowed";
+                RadioGroup group = (RadioGroup) findViewById(R.id.type_options);
+                group.check(R.id.radio_button_borrowed);
+            }
+            else
+                amount = -1* amount;
+            Button amountView = (Button) findViewById(R.id.amount_edit_text_layout);
+            RelativeLayout relativeLayout = (RelativeLayout) findViewById(R.id.money_details);
+            TextView textView = (TextView) relativeLayout.findViewById(R.id.money_detail_balance);
+            textView.setText("Amount: " + amount);
+            textView = (TextView) findViewById(R.id.money_detail_name);
+            textView.setText(type);
+            amountView.setText("Amount: " + amount);
+            amountView.setTextColor(Color.BLACK);
+            if (type.equals("Lent")) {
+                textView.setTextColor(setColorGreen());
+            } else {
+                textView.setTextColor(setColorRed());
+            }
+            if (name == null)
+                getWindow().setLayout(WindowManager.LayoutParams.WRAP_CONTENT, convertDPToPx(context, 430));//560px - 374dp
+            else {
+                getWindow().setLayout(WindowManager.LayoutParams.WRAP_CONTENT, convertDPToPx(context, 525)); //740px - 494dp
+            }
+            relativeLayout.setVisibility(View.VISIBLE);
+            //Set details in detail edit text
+            detail = getIntent().getStringExtra("details");
+            EditText detailsText = (EditText) findViewById(R.id.details_edit_text);
+            detailsText.setText(detail);
+            // No need to send notification for this transaction
+            ((CheckBox) findViewById(R.id.checkbox_send_notification)).setChecked(false);
+            sendNotification = false;
         }
     }
 
@@ -893,14 +971,14 @@ public class AddNewTransactionActivity extends Activity {
 
     private QBChatMessage createChatMessage() {
         QBChatMessage chatMessage = new QBChatMessage();
-        String messageText = senderName + " : ";
-        if (type.equals("Lent") ) {
-            messageText += "I lent you " + amount;
-        } else
-            messageText += "I borrowed from you " + (-1 *amount);
+        String messageText = senderName + ":";
+        //if (type.equals("Lent") ) {
+        //    messageText += amount;
+        //} else
+            messageText += amount;
         if (detail != null && !detail.equals(""))
-            messageText += "\nDetails: " + detail;
-        messageText += "\nPlease make a note of this transaction";
+            messageText += "#" + detail;
+        messageText += "*" + senderPhone;
         chatMessage.setBody(messageText);
         chatMessage.setProperty("save_to_history", "1");
         chatMessage.setDateSent(System.currentTimeMillis() / 1000);
