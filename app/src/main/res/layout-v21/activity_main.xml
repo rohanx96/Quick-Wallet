@@ -6,10 +6,10 @@
     android:layout_height="match_parent"
     android:id="@+id/drawer_layout"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-    <LinearLayout
+    <!--<LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical">-->
         <android.support.design.widget.CoordinatorLayout
             android:layout_width="match_parent"
             android:orientation="vertical"
@@ -122,7 +122,7 @@
             </android.support.design.widget.FloatingActionButton>
 
         </android.support.design.widget.CoordinatorLayout>
-        <LinearLayout
+        <!--<LinearLayout
             android:id="@+id/ad_layout"
             android:layout_width="wrap_content"
             android:layout_height="0dp"
@@ -138,7 +138,7 @@
                 ads:adUnitId="@string/main_activity_banner_ad_unit_id">
             </com.google.android.gms.ads.AdView>
         </LinearLayout>
-    </LinearLayout>
+    </LinearLayout>-->
     <android.support.design.widget.NavigationView
         android:layout_width="wrap_content"
         android:layout_height="match_parent"

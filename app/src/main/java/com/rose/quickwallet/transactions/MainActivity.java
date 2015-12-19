@@ -511,7 +511,7 @@ public class MainActivity extends BaseActivity implements RecyclerViewCallback {
         }
     }
 
-    private void loadAd(){
+    /*private void loadAd(){
         AdView mAdView = (AdView) findViewById(R.id.adView);
         AdRequest.Builder builder = new AdRequest.Builder();
         builder.addTestDevice("D882CD568608B87702357166E3B3E8BD");
@@ -532,7 +532,7 @@ public class MainActivity extends BaseActivity implements RecyclerViewCallback {
                 adLayout.setVisibility(View.VISIBLE);
             }
         });
-    }
+    }*/
 
     public void onOpenDrawer(View v){
         drawerLayout.openDrawer(Gravity.LEFT);
