@@ -1,5 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
+    <Preference
+        android:title="My Account"
+        android:summary="Edit account details/Create an account"
+        android:key="accountSettings">
+    </Preference>
     <PreferenceCategory
         android:title="@string/notifications">
     <SwitchPreference

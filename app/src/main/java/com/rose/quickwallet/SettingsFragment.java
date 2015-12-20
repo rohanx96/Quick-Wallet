@@ -12,8 +12,11 @@ import android.os.Bundle;
 import android.preference.CheckBoxPreference;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
+import android.preference.PreferenceManager;
 import android.support.v7.app.NotificationCompat;
 
+import com.rose.quickwallet.quickblox.Consts;
+import com.rose.quickwallet.quickblox.GoCloudActivity;
 import com.rose.quickwallet.transactions.AddNewTransactionActivity;
 //import android.preference.PreferenceManager;
 //import android.preference.SwitchPreference;
@@ -34,6 +37,16 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
         intent.putExtra(Intent.EXTRA_SUBJECT, "QuickWallet App on PlayStore");
         //intent.putExtra(Intent.EXTRA_EMAIL, "rohanx96@gmail.com");
         preference.setIntent(Intent.createChooser(intent, "Send Email"));
+
+        Preference accountSettings = findPreference("accountSettings");
+        if(PreferenceManager.getDefaultSharedPreferences(getActivity()).getBoolean(Consts.IS_SIGNED_UP,false)){
+            Intent accountEdit = new Intent(getActivity(),MyAccountActivity.class);
+            accountSettings.setIntent(accountEdit);
+        }
+        else {
+            Intent goCloud = new Intent(getActivity(), GoCloudActivity.class);
+            accountSettings.setIntent(goCloud);
+        };
         /*final SwitchPreference securitySwitch = (SwitchPreference) findPreference("securitySwitch");
         securitySwitch.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override

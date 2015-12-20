@@ -49,6 +49,7 @@ import com.quickblox.users.model.QBUser;
 import com.rose.quickwallet.AlarmReceiver;
 import com.rose.quickwallet.BaseActivity;
 import com.rose.quickwallet.EnterPinActivity;
+import com.rose.quickwallet.MyAccountActivity;
 import com.rose.quickwallet.R;
 import com.rose.quickwallet.SettingsActivity;
 import com.rose.quickwallet.callbackhepers.ItemTouchHelperCallback;
@@ -576,11 +577,13 @@ public class MainActivity extends BaseActivity implements RecyclerViewCallback {
     private void setupNavigationHeader(){
         final TextView navViewHeaderText = (TextView)LayoutInflater.from(this).inflate(R.layout.nav_header_layout, navigationView).findViewById(R.id.nav_header_text);
         if(isSignedIn){
-            navViewHeaderText.setText("Sign Out");
+            navViewHeaderText.setText("My account");
             navViewHeaderText.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+                    Intent account = new Intent(MainActivity.this, MyAccountActivity.class);
+                    startActivity(account);
+                    /*AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
                     builder.setMessage("Are you sure you want to sign out?")
                             .setPositiveButton("Sign Out", new DialogInterface.OnClickListener() {
                                 @Override
@@ -620,7 +623,7 @@ public class MainActivity extends BaseActivity implements RecyclerViewCallback {
                                     drawerLayout.closeDrawer(Gravity.LEFT);
                                 }
                             })
-                            .show();
+                            .show();*/
                 }
             });
         }
