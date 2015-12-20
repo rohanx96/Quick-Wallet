@@ -11,6 +11,7 @@ public class Consts {
     public static final String AUTH_KEY = "4NJ8QhCzqavwGF5";
     public static final String AUTH_SECRET = "qHK3dTQvECTFP5b";
 
+    public static final String USER_ID = "userID";
     public static final String USER_NAME = "userName";
     public static final String USER_LOGIN = "userLogin";
     public static final String USER_PASSWORD = "userPassword";

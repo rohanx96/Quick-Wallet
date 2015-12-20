@@ -78,6 +78,7 @@ public class SignInActivity extends Activity {
                                 public void onSuccess(QBUser qbUser, Bundle bundle) {
                                     preferences.edit().putString(Consts.USER_PHONE, qbUser.getPhone()).apply();
                                     preferences.edit().putString(Consts.USER_NAME, qbUser.getFullName()).apply();
+                                    preferences.edit().putInt(Consts.USER_ID,qbUser.getId()).apply();
                                     preferences.edit().putBoolean(Consts.IS_SIGNED_UP, true).apply();
                                     progressDialog.hide();
                                     Intent mainActivity = new Intent(getApplicationContext(), MainActivity.class);

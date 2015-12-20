@@ -31,14 +31,13 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="10dp"
-                        android:id="@+id/account_emailId"
-                        android:text="EmailId"
+                        android:text="Email ID"
                         android:textColor="@color/colorPrimary"/>
                     <TextView
+                        android:id="@+id/account_emailId"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                        android:text="rohanx96@gmail.com"
                         android:layout_marginBottom="8dp"/>
                     <LinearLayout
                         android:layout_width="match_parent"
@@ -49,15 +48,13 @@
                         android:layout_marginTop="10dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:id="@+id/account_name"
                         android:text="Name"
                         android:textColor="@color/colorPrimary"/>
                     <TextView
-                        android:layout_below="@id/account_name"
+                        android:id="@+id/account_name"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                        android:text="Rohan Agarwal"
                         android:onClick="onEditName"
                         android:drawableRight="@drawable/ic_edit"/>
                     <LinearLayout
@@ -69,15 +66,13 @@
                         android:layout_marginTop="10dp"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:id="@+id/account_phone"
                         android:text="PhoneNo"
                         android:textColor="@color/colorPrimary"/>
                     <TextView
-                        android:layout_below="@id/account_name"
+                        android:id="@+id/account_phone"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                        android:text="+917069137278"
                         android:onClick="onEditContact"
                         android:drawableRight="@drawable/ic_edit" />
                 </LinearLayout>
@@ -88,12 +83,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:cardBackgroundColor="@color/borrowed_red"
+        android:background="@color/borrowed_red"
         android:layout_alignParentBottom="true">
     <Button
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:background="?attr/selectableItemBackground"
         android:textColor="@color/white"
-        android:text="SIGN OUT"/>
+        android:text="SIGN OUT"
+        android:onClick="onSignOut"/>
     </android.support.v7.widget.CardView>
 </RelativeLayout>

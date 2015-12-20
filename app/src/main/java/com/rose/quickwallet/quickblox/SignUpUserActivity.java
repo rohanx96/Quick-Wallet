@@ -83,6 +83,7 @@ public class SignUpUserActivity extends ActionBarActivity {
                                     progressDialog.hide();
                                     SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
                                     preferences.edit().putString(Consts.USER_NAME, nameEditText.getText().toString()).apply();
+                                    preferences.edit().putInt(Consts.USER_ID,qbUser.getId()).apply();
                                     preferences.edit().putString(Consts.USER_LOGIN, loginEditText.getText().toString()).apply();
                                     preferences.edit().putString(Consts.USER_PASSWORD, passwordEditText.getText().toString()).apply();
                                     preferences.edit().putString(Consts.USER_PHONE, phoneEditText.getText().toString()).apply();
