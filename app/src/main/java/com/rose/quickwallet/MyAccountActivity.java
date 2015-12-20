@@ -61,6 +61,18 @@ public class MyAccountActivity extends Activity {
         }
     }
 
+
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+    }
+
+    @Override
+    public void finish() {
+        super.finish();
+        overridePendingTransition(R.anim.fade_in_short, R.anim.slide_out_from_top); // enter animation for the previous activity that is brought up from stack
+    }
+
     public void onEditName(View view){
         final EditText nameInput = new EditText(this);
         LinearLayout layout = new LinearLayout(this);

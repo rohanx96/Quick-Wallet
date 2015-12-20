@@ -583,6 +583,7 @@ public class MainActivity extends BaseActivity implements RecyclerViewCallback {
                 public void onClick(View v) {
                     Intent account = new Intent(MainActivity.this, MyAccountActivity.class);
                     startActivity(account);
+                    overridePendingTransition(R.anim.slide_in_from_bottom, R.anim.fade_out); // this method should be called just after startActivity
                     /*AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
                     builder.setMessage("Are you sure you want to sign out?")
                             .setPositiveButton("Sign Out", new DialogInterface.OnClickListener() {
