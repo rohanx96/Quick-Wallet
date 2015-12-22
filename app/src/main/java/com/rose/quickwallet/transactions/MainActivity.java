@@ -2,9 +2,7 @@ package com.rose.quickwallet.transactions;
 
 import android.Manifest;
 import android.app.AlarmManager;
-import android.app.AlertDialog;
 import android.app.PendingIntent;
-import android.app.ProgressDialog;
 import android.app.SearchManager;
 import android.app.SearchableInfo;
 import android.content.DialogInterface;
@@ -31,20 +29,14 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.SearchView;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.google.android.gms.ads.AdListener;
-import com.google.android.gms.ads.AdRequest;
-import com.google.android.gms.ads.AdView;
 import com.quickblox.auth.QBAuth;
 import com.quickblox.auth.model.QBSession;
 import com.quickblox.core.QBEntityCallbackImpl;
 import com.quickblox.core.QBSettings;
-import com.quickblox.users.QBUsers;
 import com.quickblox.users.model.QBUser;
 import com.rose.quickwallet.AlarmReceiver;
 import com.rose.quickwallet.BaseActivity;
@@ -56,7 +48,6 @@ import com.rose.quickwallet.callbackhepers.ItemTouchHelperCallback;
 import com.rose.quickwallet.callbackhepers.RecyclerViewCallback;
 import com.rose.quickwallet.myWallet.WalletActivity;
 import com.rose.quickwallet.quickblox.Consts;
-import com.rose.quickwallet.quickblox.DialogUtils;
 import com.rose.quickwallet.quickblox.GoCloudActivity;
 import com.rose.quickwallet.quickblox.RetreiveUsersService;
 import com.rose.quickwallet.quickblox.pushnotifications.GCMClientHelper;
@@ -346,10 +337,10 @@ public class MainActivity extends BaseActivity implements RecyclerViewCallback {
         Intent intent = new Intent(this, AddNewTransactionActivity.class);
         intent.putExtra("action", "generic");
         intent.setAction("generic");
-        intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        /*intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
         intent.setFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
         intent.setFlags(Intent.FLAG_GRANT_PREFIX_URI_PERMISSION);
-        intent.setFlags(Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION);
+        intent.setFlags(Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION);*/
         startActivity(intent);
         overridePendingTransition(R.anim.add_activity_enter_animation, R.anim.no_animation);
 
@@ -402,8 +393,8 @@ public class MainActivity extends BaseActivity implements RecyclerViewCallback {
         //TextView totalLent = (TextView) recyclerView.findViewById(R.id.lent_header);
         TextView totalBorrowed = (TextView) header.findViewById(R.id.borrowed_header);
         //TextView totalBorrowed = (TextView) recyclerView.findViewById(R.id.borrowed_header);
-        totalLent.setText("Lent: " + databaseHelper.totalLent());
-        totalBorrowed.setText("Borrowed: " + databaseHelper.totalBorrowed());
+        totalLent.setText(getResources().getString(R.string.lent_colon) + databaseHelper.totalLent());
+        totalBorrowed.setText(getResources().getString(R.string.borrowed_colon) + databaseHelper.totalBorrowed());
         //recyclerView.getAdapter().notifyDataSetChanged();
         databaseHelper.close();
         Snackbar.make(findViewById(R.id.activity_coordinator_layout), "Any pending balance with " + item.getName() + " is now cleared", Snackbar.LENGTH_LONG).setAction("UNDO", new View.OnClickListener() {
@@ -429,10 +420,10 @@ public class MainActivity extends BaseActivity implements RecyclerViewCallback {
 
     public void onAdd(View v) {
         Intent intent = new Intent(getApplicationContext(), AddNewTransactionActivity.class);
-        intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+        /*intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
         intent.setFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
         intent.setFlags(Intent.FLAG_GRANT_PREFIX_URI_PERMISSION);
-        intent.setFlags(Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION);
+        intent.setFlags(Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION);*/
         intent.putExtra("action", "generic");
         startActivity(intent);
         //overridePendingTransition(R.anim.add_activity_enter_animation,R.anim.no_animation);
@@ -577,7 +568,7 @@ public class MainActivity extends BaseActivity implements RecyclerViewCallback {
     private void setupNavigationHeader(){
         final TextView navViewHeaderText = (TextView)LayoutInflater.from(this).inflate(R.layout.nav_header_layout, navigationView).findViewById(R.id.nav_header_text);
         if(isSignedIn){
-            navViewHeaderText.setText("My account");
+            navViewHeaderText.setText(getResources().getString(R.string.my_account));
             navViewHeaderText.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {

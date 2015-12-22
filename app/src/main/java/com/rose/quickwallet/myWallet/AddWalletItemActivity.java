@@ -6,15 +6,11 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.support.design.widget.Snackbar;
-import android.support.design.widget.TextInputLayout;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -41,7 +37,7 @@ public class AddWalletItemActivity extends Activity {
         context = getApplicationContext();
         getWindow().setLayout(WindowManager.LayoutParams.WRAP_CONTENT, convertDPToPx(context, 235)); // 335px - 220dp
         TextView textView = (TextView) findViewById(R.id.add_wallet_item_detail_name);
-        textView.setText("Expense");
+        textView.setText(getString(R.string.expense));
         textView.setTextColor(Color.RED);
         final Button amountView = (Button)findViewById(R.id.add_wallet_item_amount_wrapper);
         /*amountView.addTextChangedListener(new TextWatcher() {
@@ -108,7 +104,7 @@ public class AddWalletItemActivity extends Activity {
                     type = getIntent().getStringExtra("TYPE");
                     if(amount<0)
                         amount = -1 * amount;
-                    amountView.setText("Amount: " + Float.toString(amount));
+                    amountView.setText(getString(R.string.amount_colon) + Float.toString(amount));
                     TextView detailsText = (TextView) findViewById(R.id.add_wallet_item_detail);
                     detailsText.setText(details);
                     RadioGroup radioGroup = (RadioGroup)findViewById(R.id.type_radio_options);
@@ -123,10 +119,10 @@ public class AddWalletItemActivity extends Activity {
                             onEditWalletItem();
                         }
                     });
-                    doneButton.setText("Edit");
+                    doneButton.setText(getString(R.string.edit));
                     RelativeLayout relativeLayout = (RelativeLayout) findViewById(R.id.add_wallet_item_details);
                     TextView textView = (TextView) relativeLayout.findViewById(R.id.add_wallet_item_detail_balance);
-                    textView.setText("Amount: " + amount);
+                    textView.setText(getString(R.string.amount_colon) + amount);
                     textView = (TextView) findViewById(R.id.add_wallet_item_detail_name);
                     textView.setText(type);
                     amountView.setTextColor(Color.BLACK);
@@ -155,7 +151,7 @@ public class AddWalletItemActivity extends Activity {
                     amount = 0;
                     relativeLayout.setVisibility(View.GONE);
                     getWindow().setLayout(WindowManager.LayoutParams.WRAP_CONTENT, convertDPToPx(context, 235)); // 335px - 220dp
-                    amountView.setText("Enter Amount");
+                    amountView.setText(getString(R.string.enter_amount));
                 } else {
                     amount = result;
                     if(amount<0){
@@ -165,10 +161,10 @@ public class AddWalletItemActivity extends Activity {
                         group.check(R.id.radio_button_expenditure);
                     }
                     TextView textView = (TextView) relativeLayout.findViewById(R.id.add_wallet_item_detail_balance);
-                    textView.setText("Amount: " + amount);
+                    textView.setText(getString(R.string.amount_colon) + amount);
                     textView = (TextView) findViewById(R.id.add_wallet_item_detail_name);
                     textView.setText(type);
-                    amountView.setText("Amount: " + amount);
+                    amountView.setText(getString(R.string.amount_colon) + amount);
                     amountView.setTextColor(Color.BLACK);
                     if (type.equals("Income")) {
                         textView.setTextColor(setColorGreen());
@@ -196,12 +192,12 @@ public class AddWalletItemActivity extends Activity {
         TextView textView = (TextView) findViewById(R.id.add_wallet_item_detail_name);
         switch (v.getId()){
             case (R.id.radio_button_expenditure):
-                textView.setText("Expense");
+                textView.setText(getString(R.string.expense));
                 textView.setTextColor(setColorRed());
                 type = "Expense";
                 break;
             case R.id.radio_button_income:
-                textView.setText("Income");
+                textView.setText(getString(R.string.income));
                 textView.setTextColor(setColorGreen());
                 type = "Income";
         }
@@ -211,7 +207,7 @@ public class AddWalletItemActivity extends Activity {
         Button amountLayout = (Button) findViewById(R.id.add_wallet_item_amount_wrapper);
         if(amount==0) {
             amountLayout.setTextColor(Color.RED);
-            Toast.makeText(this,"Enter Amount",Toast.LENGTH_SHORT).show();
+            Toast.makeText(this,getString(R.string.enter_amount),Toast.LENGTH_SHORT).show();
             return;
         }
         TextView detailsText = (TextView) findViewById(R.id.add_wallet_item_detail);
@@ -223,7 +219,7 @@ public class AddWalletItemActivity extends Activity {
         databaseHelper.saveItemToDatabase(type,details,amount);
         databaseHelper.close();
         amount = 0;
-        amountLayout.setText("Enter Amount");
+        amountLayout.setText(getString(R.string.enter_amount));
         amountLayout.setTextColor(Color.BLACK);
         detailsText.setText(null);
         RelativeLayout relativeLayout = (RelativeLayout) findViewById(R.id.add_wallet_item_details);
@@ -235,7 +231,7 @@ public class AddWalletItemActivity extends Activity {
         Button amountLayout = (Button) findViewById(R.id.add_wallet_item_amount_wrapper);
         if(amount==0) {
             amountLayout.setTextColor(Color.RED);
-            Toast.makeText(this, "Enter Amount", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getString(R.string.enter_amount), Toast.LENGTH_SHORT).show();
             return;
         }
         TextView detailsText = (TextView) findViewById(R.id.add_wallet_item_detail);

@@ -43,7 +43,7 @@ public class WalletActivity extends BaseActivity implements DetailsRecyclerViewC
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         setupDrawerContent(navigationView);
-        setTitle("My Wallet");
+        setTitle(getString(R.string.my_wallet));
         /*AdView mAdView = (AdView) findViewById(R.id.adView);
         AdRequest.Builder builder = new AdRequest.Builder();
         builder.addTestDevice("D882CD568608B87702357166E3B3E8BD");
@@ -69,18 +69,18 @@ public class WalletActivity extends BaseActivity implements DetailsRecyclerViewC
         databaseHelper = new WalletDatabaseHelper(this);
         recyclerAdapter = new WalletRecyclerAdapter(databaseHelper.getData(),this);
         recyclerView.setAdapter(recyclerAdapter);
-        TextView fundsText = (TextView) findViewById(R.id.wallet_funds_text);
-        fundsText.setText("Funds in Wallet: " + databaseHelper.getBalance());
+        /*TextView fundsText = (TextView) findViewById(R.id.wallet_funds_text);
+        fundsText.setText(getString(R.string.funds) + databaseHelper.getBalance());
         TextView expensesToday = (TextView) findViewById(R.id.wallet_expenses_today);
-        expensesToday.setText("Total Expenses Today: " + databaseHelper.getTodaysExpense());
+        expensesToday.setText(getString(R.string.expense_today) + databaseHelper.getTodaysExpense());
         TextView incomeToday = (TextView) findViewById(R.id.wallet_income_today);
-        incomeToday.setText("Total Income Today: " + databaseHelper.getTodaysIncome());
+        incomeToday.setText(getString(R.string.income_today) + databaseHelper.getTodaysIncome());*/
     }
 
     @Override
     protected void onResume() {
         super.onResume();
-        setTitle("My Wallet");
+        setTitle(getString(R.string.my_wallet));
         navigationView.getMenu().findItem(R.id.nav_wallet).setChecked(true);
         final TextView navViewHeaderText = (TextView) LayoutInflater.from(this).inflate(R.layout.nav_header_layout,navigationView).findViewById(R.id.nav_header_text);
         navViewHeaderText.setText("");
@@ -88,11 +88,11 @@ public class WalletActivity extends BaseActivity implements DetailsRecyclerViewC
         recyclerAdapter.setDataList(databaseHelper.getData());
         recyclerView.getAdapter().notifyDataSetChanged();
         TextView fundsText = (TextView) findViewById(R.id.wallet_funds_text);
-        fundsText.setText("Funds in Wallet: " + databaseHelper.calculateBalance());
+        fundsText.setText(getString(R.string.funds) + databaseHelper.calculateBalance());
         TextView expensesToday = (TextView) findViewById(R.id.wallet_expenses_today);
-        expensesToday.setText("Total Expenses Today: " + databaseHelper.getTodaysExpense());
+        expensesToday.setText(getString(R.string.expense_today) + databaseHelper.getTodaysExpense());
         TextView incomeToday = (TextView) findViewById(R.id.wallet_income_today);
-        incomeToday.setText("Total Income Today: " + databaseHelper.getTodaysIncome());
+        incomeToday.setText(getString(R.string.income_today) + databaseHelper.getTodaysIncome());
         databaseHelper.close();
     }
 
@@ -113,11 +113,11 @@ public class WalletActivity extends BaseActivity implements DetailsRecyclerViewC
                 recyclerAdapter.setDataList(databaseHelper.getData());
                 recyclerView.getAdapter().notifyDataSetChanged();
                 TextView fundsText = (TextView) findViewById(R.id.wallet_funds_text);
-                fundsText.setText("Funds in Wallet: " + databaseHelper.getBalance());
+                fundsText.setText(getString(R.string.funds) + databaseHelper.getBalance());
                 TextView expensesToday = (TextView) findViewById(R.id.wallet_expenses_today);
-                expensesToday.setText("Total Expenses Today: " + databaseHelper.getTodaysExpense());
+                expensesToday.setText(getString(R.string.expense_today) + databaseHelper.getTodaysExpense());
                 TextView incomeToday = (TextView) findViewById(R.id.wallet_income_today);
-                incomeToday.setText("Total Income Today: " + databaseHelper.getTodaysIncome());
+                incomeToday.setText(getString(R.string.income_today) + databaseHelper.getTodaysIncome());
                 databaseHelper.close();
         }
         return super.onOptionsItemSelected(item);
@@ -133,11 +133,11 @@ public class WalletActivity extends BaseActivity implements DetailsRecyclerViewC
     public void onDeleteTransaction() {
         databaseHelper = new WalletDatabaseHelper(this);
         TextView fundsText = (TextView) findViewById(R.id.wallet_funds_text);
-        fundsText.setText("Funds in Wallet: " + databaseHelper.calculateBalance());
+        fundsText.setText(getString(R.string.funds) + databaseHelper.calculateBalance());
         TextView expensesToday = (TextView) findViewById(R.id.wallet_expenses_today);
-        expensesToday.setText("Total Expenses Today: " + databaseHelper.getTodaysExpense());
+        expensesToday.setText(getString(R.string.expense_today) + databaseHelper.getTodaysExpense());
         TextView incomeToday = (TextView) findViewById(R.id.wallet_income_today);
-        incomeToday.setText("Total Income Today: " + databaseHelper.getTodaysIncome());
+        incomeToday.setText(getString(R.string.income_today) + databaseHelper.getTodaysIncome());
         databaseHelper.close();
     }
 

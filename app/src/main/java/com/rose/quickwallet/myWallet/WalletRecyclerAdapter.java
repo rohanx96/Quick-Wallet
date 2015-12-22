@@ -60,7 +60,7 @@ public class WalletRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         else {
             WalletItemViewHolder viewHolder = (WalletItemViewHolder) holder;
             if (dataList.get(position).getDetails() == null || dataList.get(position).getDetails().equals(""))
-                viewHolder.walletDescription.setText("No details specified");
+                viewHolder.walletDescription.setText(context.getString(R.string.empty_detail_default_text));
             else viewHolder.walletDescription.setText(dataList.get(position).getDetails());
             if (dataList.get(position).getType().equals("Income")) {
                 bindIncome(viewHolder);
@@ -93,14 +93,14 @@ public class WalletRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
 
     public void bindIncome(WalletItemViewHolder viewHolder){
         //DetailsViewHolder viewHolder = (DetailsViewHolder) holder;
-        viewHolder.walletType.setText("Income");
+        viewHolder.walletType.setText(context.getString(R.string.income));
         viewHolder.walletTypeIcon.setImageResource(R.drawable.lent_icon);
         viewHolder.viewHolderContainer.setBackgroundColor(Color.WHITE);
     }
 
     public void bindExpense(WalletItemViewHolder viewHolder){
         //DetailsViewHolder viewHolder = (DetailsViewHolder) holder;
-        viewHolder.walletType.setText("Expense");
+        viewHolder.walletType.setText(context.getString(R.string.expense));
         viewHolder.walletTypeIcon.setImageResource(R.drawable.borrowed_icon);
         viewHolder.viewHolderContainer.setBackgroundColor(Color.WHITE);
     }
@@ -138,9 +138,9 @@ public class WalletRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
         }
     }
 
-    public ArrayList<WalletItem> getDataList() {
+    /**public ArrayList<WalletItem> getDataList() {
         return dataList;
-    }
+    }*/
 
     public void setDataList(ArrayList<WalletItem> dataList) {
         this.dataList = dataList;

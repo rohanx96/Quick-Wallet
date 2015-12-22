@@ -68,17 +68,17 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             setAnimation(itemHolder.container,position);
             itemHolder.nameView.setText(viewItem.getName());
             if (viewItem.getBalance() < 0) {
-                itemHolder.balanceView.setText("Borrowed: " + Float.toString(-1 * viewItem.getBalance()));
+                itemHolder.balanceView.setText(context.getString(R.string.borrowed_colon) + Float.toString(-1 * viewItem.getBalance()));
                 itemHolder.balanceView.setTextColor(Color.parseColor("#ffc94c4c"));
                 itemHolder.paidView.setVisibility(View.GONE);
             }
             else if (viewItem.getBalance() > 0) {
-                itemHolder.balanceView.setText("Lent: " + Float.toString(viewItem.getBalance()));
+                itemHolder.balanceView.setText(context.getString(R.string.lent_colon) + Float.toString(viewItem.getBalance()));
                 itemHolder.balanceView.setTextColor(Color.parseColor("#ff509f4c"));
                 itemHolder.paidView.setVisibility(View.GONE);
             }
             else if(viewItem.getBalance() == 0){
-                itemHolder.balanceView.setText("No Pending Balance");
+                itemHolder.balanceView.setText(context.getString(R.string.no_balance));
                 itemHolder.paidView.setVisibility(View.VISIBLE);
                 itemHolder.balanceView.setTextColor(Color.parseColor("#ff454545"));
             }
@@ -122,8 +122,8 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             ViewHolderHeader header = (ViewHolderHeader) holder;
             header.headerImage.setImageResource(R.drawable.toolbar_background);
             setAnimation(header.container, position);
-            header.totalLent.setText("Lent: " + getTotalLent());
-            header.totalBorrowed.setText("Borrowed: " + getTotalBorrowed());
+            header.totalLent.setText(context.getString(R.string.lent_colon) + getTotalLent());
+            header.totalBorrowed.setText(context.getString(R.string.borrowed_colon) + getTotalBorrowed());
             //Log.v("RecyclerView","Setting header image");
         }
     }
@@ -311,7 +311,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         this.dataList = dataList;
     }
 
-    public void refreshDataList(ArrayList<RecyclerViewItem> dataList, boolean shouldAnimate){
+    /*public void refreshDataList(ArrayList<RecyclerViewItem> dataList, boolean shouldAnimate){
         if(shouldAnimate){
             this.dataList.clear();
             for( int i=1;i<dataList.size();i++) {////////////////////
@@ -323,7 +323,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             this.dataList = dataList;
             //notifyDataSetChanged();
         }
-    }
+    }*/
 
     public float getTotalLent(){
         float lent=0;

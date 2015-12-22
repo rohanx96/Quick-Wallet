@@ -21,10 +21,10 @@ import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.rose.quickwallet.R;
 import com.rose.quickwallet.callbackhepers.DetailsRecyclerViewCallback;
 
-import org.w3c.dom.Text;
-
 /**
- * Created by rose on 28/7/15.
+ *
+ *Created by rose on 28/7/15
+ * .
  */
 public class DetailsActivity extends AppCompatActivity implements DetailsRecyclerViewCallback{
     private RecyclerView recyclerView;
@@ -113,9 +113,9 @@ public class DetailsActivity extends AppCompatActivity implements DetailsRecycle
         float balance = databaseHelper.getBalance(name);
         if(balance<0)
             balance = -1 * balance;
-        balanceText.setText("Current Balance: " + balance);
+        balanceText.setText(getString(R.string.current_balance_colon) + balance);
         if (balance == 0)
-            balanceText.setText("No pending balance");
+            balanceText.setText(getString(R.string.no_balance));
         databaseHelper.close();
     }
 
@@ -130,7 +130,7 @@ public class DetailsActivity extends AppCompatActivity implements DetailsRecycle
         DetailsRecyclerViewAdapter adapter = (DetailsRecyclerViewAdapter) recyclerView.getAdapter();
         adapter.setDataList(databaseHelper.getHistoryData(name));
         TextView balanceText = (TextView) findViewById(R.id.details_balance_text);
-        balanceText.setText("No pending balance");
+        balanceText.setText(R.string.no_balance);
         recyclerView.getAdapter().notifyDataSetChanged();
     }
 
@@ -149,9 +149,9 @@ public class DetailsActivity extends AppCompatActivity implements DetailsRecycle
         float balance = databaseHelper.getBalance(name);
         if(balance<0)
             balance = -1 * balance;
-        balanceText.setText("Current Balance: " + balance);
+        balanceText.setText(getString(R.string.current_balance_colon) + balance);
         if (balance == 0)
-            balanceText.setText("No pending balance");
+            balanceText.setText(getString(R.string.no_balance));
         databaseHelper.close();
     }
 }

@@ -179,6 +179,7 @@ public class AddNewTransactionActivity extends Activity {
                     Cursor phoneLookup = getContentResolver().query(uri, new String[]{ContactsContract.PhoneLookup.DISPLAY_NAME}, null, null, null);
                     if(phoneLookup!=null && phoneLookup.moveToFirst()){
                         name = phoneLookup.getString(phoneLookup.getColumnIndex(ContactsContract.Data.DISPLAY_NAME));
+                        phoneLookup.close();
                         runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
@@ -218,10 +219,10 @@ public class AddNewTransactionActivity extends Activity {
             Button amountView = (Button) findViewById(R.id.amount_edit_text_layout);
             RelativeLayout relativeLayout = (RelativeLayout) findViewById(R.id.money_details);
             TextView textView = (TextView) relativeLayout.findViewById(R.id.money_detail_balance);
-            textView.setText("Amount: " + amount);
+            textView.setText(getString(R.string.amount_colon) + amount);
             textView = (TextView) findViewById(R.id.money_detail_name);
             textView.setText(type);
-            amountView.setText("Amount: " + amount);
+            amountView.setText(getString(R.string.amount_colon) + amount);
             amountView.setTextColor(Color.BLACK);
             if (type.equals("Lent")) {
                 textView.setTextColor(setColorGreen());
@@ -314,7 +315,7 @@ public class AddNewTransactionActivity extends Activity {
                 if (result == 0) {
                     amount = 0;
                     relativeLayout.setVisibility(View.GONE);
-                    amountView.setText("Enter Amount");
+                    amountView.setText(getString(R.string.enter_amount));
                     if (name == null)
                         getWindow().setLayout(WindowManager.LayoutParams.WRAP_CONTENT, convertDPToPx(context, 345));//440px -294dp hdpi
                     else {
@@ -332,10 +333,10 @@ public class AddNewTransactionActivity extends Activity {
                         group.check(R.id.radio_button_borrowed);
                     }
                     TextView textView = (TextView) relativeLayout.findViewById(R.id.money_detail_balance);
-                    textView.setText("Amount: " + amount);
+                    textView.setText(getString(R.string.amount_colon) + amount);
                     textView = (TextView) findViewById(R.id.money_detail_name);
                     textView.setText(type);
-                    amountView.setText("Amount: " + amount);
+                    amountView.setText(getString(R.string.amount_colon) + amount);
                     amountView.setTextColor(Color.BLACK);
                     if (type.equals("Lent")) {
                         textView.setTextColor(setColorGreen());
@@ -413,9 +414,7 @@ public class AddNewTransactionActivity extends Activity {
             @Override
             public Cursor runQuery(CharSequence constraint) {
                 String selection = ContactsContract.Contacts.DISPLAY_NAME + " LIKE '%" + constraint + "%'";
-                String[] selectionArgs = null;
-                Cursor cur = getContentResolver().query(ContactsContract.Contacts.CONTENT_URI, null, selection, selectionArgs, null);
-                return cur;
+                return getContentResolver().query(ContactsContract.Contacts.CONTENT_URI, null, selection, null, null);
             }
         });
     }
@@ -607,12 +606,12 @@ public class AddNewTransactionActivity extends Activity {
     public void onAdd(View view) {
         Button amountLayout = (Button) findViewById(R.id.amount_edit_text_layout);
         if (name == null || name.equals("")) {
-            Toast.makeText(getApplicationContext(), "Please enter name", Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), getString(R.string.toast_help_enter_name), Toast.LENGTH_LONG).show();
             return;
         }
         if (amount == 0) {
             amountLayout.setTextColor(Color.RED);
-            Toast.makeText(this, "Enter Amount", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getString(R.string.enter_amount), Toast.LENGTH_SHORT).show();
             return;
         }
         loadingView.setLoading(true);
@@ -769,7 +768,7 @@ public class AddNewTransactionActivity extends Activity {
     public void setBalanceText(float balance) {
         TextView balanceDetail = (TextView) findViewById(R.id.contact_detail_balance);
         if (balance < 0) {
-            balanceDetail.setText("Pending Balance:\nBorrowed: " + Float.toString(-1 * balance));
+            balanceDetail.setText(getString(R.string.pending_balance_line) + getString(R.string.borrowed_colon) + Float.toString(-1 * balance));
             balanceDetail.setTextColor(setColorRed());
             //Button clearBalance = (Button) findViewById(R.id.clear_balance_button);
             //clearBalance.setVisibility(View.VISIBLE);
@@ -779,7 +778,7 @@ public class AddNewTransactionActivity extends Activity {
                 getWindow().setLayout(WindowManager.LayoutParams.WRAP_CONTENT, convertDPToPx(context, 525));
         }
         if (balance > 0) {
-            balanceDetail.setText("Pending Balance:\nLent: " + Float.toString(balance));
+            balanceDetail.setText(getString(R.string.pending_balance_line) + getString(R.string.lent_colon) + Float.toString(balance));
             balanceDetail.setTextColor(setColorGreen());
             //Button clearBalance = (Button) findViewById(R.id.clear_balance_button);
             //clearBalance.setVisibility(View.VISIBLE);
@@ -789,7 +788,7 @@ public class AddNewTransactionActivity extends Activity {
                 getWindow().setLayout(WindowManager.LayoutParams.WRAP_CONTENT, convertDPToPx(context, 525));
         }
         if (balance == 0) {
-            balanceDetail.setText("No pending Balance");
+            balanceDetail.setText(getString(R.string.no_balance));
             balanceDetail.setTextColor(Color.BLACK);
             /*Button clearBalance = (Button) findViewById(R.id.clear_balance_button);
             clearBalance.setVisibility(View.GONE);
@@ -935,7 +934,7 @@ public class AddNewTransactionActivity extends Activity {
     }*/
         int noOfIds = ids.size();
         if (noOfIds == 1) {
-            Toast.makeText(AddNewTransactionActivity.this, "Found user sending notification", Toast.LENGTH_SHORT).show();
+            Toast.makeText(AddNewTransactionActivity.this, getString(R.string.toast_found_user), Toast.LENGTH_SHORT).show();
             opponentUserID = ids.get(0);
             Log.i("userId", Integer.toString(opponentUserID));
             //--------databaseHelper = new DatabaseHelper(context);
@@ -1035,7 +1034,7 @@ public class AddNewTransactionActivity extends Activity {
 
             }
         });*/
-        StringifyArrayList<Integer> userIds = new StringifyArrayList<Integer>();
+        StringifyArrayList<Integer> userIds = new StringifyArrayList<>();
         userIds.add(msg.getRecipientId());
         QBEvent event = new QBEvent();
         event.setUserIds(userIds);
@@ -1064,7 +1063,7 @@ public class AddNewTransactionActivity extends Activity {
         QBMessages.createEvent(event, new QBEntityCallbackImpl<QBEvent>() {
             @Override
             public void onSuccess(QBEvent qbEvent, Bundle args) {
-                Toast.makeText(AddNewTransactionActivity.this, "Sent notification", Toast.LENGTH_LONG).show();
+                Toast.makeText(AddNewTransactionActivity.this, getString(R.string.toast_sent_notification), Toast.LENGTH_LONG).show();
                 Log.i("Push notification", "Sent");
             }
 
@@ -1086,7 +1085,7 @@ public class AddNewTransactionActivity extends Activity {
             Snackbar.make(findViewById(R.id.new_transaction), "Added Transaction: " + type + " " + name + " " + amount, Snackbar.LENGTH_SHORT).show();
         Button amountLayout = (Button) findViewById(R.id.amount_edit_text_layout);
         // Set amounts and other details to null and resize the dialog
-        amountLayout.setText("Enter Amount");
+        amountLayout.setText(getString(R.string.enter_amount));
         amountLayout.setTextColor(Color.BLACK);
         balance = balance + amount;
         setBalanceText(balance);
@@ -1112,7 +1111,7 @@ public class AddNewTransactionActivity extends Activity {
             sendNotification = checkBox.isChecked();
         else {
             checkBox.setChecked(false);
-            Toast.makeText(this, "This feature requires you to create an account", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, getString(R.string.toast_create_account), Toast.LENGTH_SHORT).show();
         }
     }
 
