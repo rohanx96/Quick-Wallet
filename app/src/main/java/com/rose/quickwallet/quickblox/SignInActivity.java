@@ -11,7 +11,6 @@ import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.quickblox.auth.QBAuth;
@@ -107,7 +106,7 @@ public class SignInActivity extends Activity {
                     });
                 }
                 else{
-                    loginEditText.setError("Please enter a valid E-Mail address");
+                    loginEditText.setError(getString(R.string.wrong_email));
                 }
                 break;
             case R.id.forgot_password_text:
@@ -117,7 +116,7 @@ public class SignInActivity extends Activity {
                     public void onSuccess() {
                         progressDialog.hide();
                         AlertDialog.Builder builder = new AlertDialog.Builder(SignInActivity.this);
-                        builder.setMessage("An email will be sent at " + loginEditText.getText().toString() + " . Please check your mail and follow the steps to reset your password")
+                        builder.setMessage(getString(R.string.reset_password_dialog_text_beg) + loginEditText.getText().toString() + getString(R.string.reset_password_dialog_text_end))
                                 .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
@@ -130,8 +129,8 @@ public class SignInActivity extends Activity {
                     @Override
                     public void onError(List errors) {
                         progressDialog.hide();
-                        loginEditText.setError("Please enter a valid E-Mail address");
-                        Toast.makeText(SignInActivity.this, "Please enter a valid email address", Toast.LENGTH_LONG).show();
+                        loginEditText.setError(getString(R.string.wrong_email));
+                        Toast.makeText(SignInActivity.this, getString(R.string.wrong_email), Toast.LENGTH_LONG).show();
                     }
                 });
                 break;

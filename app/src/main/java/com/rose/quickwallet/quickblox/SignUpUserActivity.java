@@ -1,14 +1,11 @@
 package com.rose.quickwallet.quickblox;
 
-import android.app.ActionBar;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.app.ActionBarActivity;
-import android.support.v7.app.AppCompatActivity;
-import android.telephony.PhoneNumberUtils;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
@@ -26,7 +23,9 @@ import com.rose.quickwallet.transactions.MainActivity;
 import java.util.List;
 
 /**
+ *
  * Created by rose on 6/10/15.
+ *
  */
 public class SignUpUserActivity extends ActionBarActivity {
 
@@ -105,17 +104,17 @@ public class SignUpUserActivity extends ActionBarActivity {
                                 }
                             });
                         } else
-                            phoneEditText.setError("Please enter a valid mobile number");
+                            phoneEditText.setError(getString(R.string.wrong_number));
                     }
                     else
-                        nameEditText.setError("Please enter name");
+                        nameEditText.setError(getString(R.string.toast_help_enter_name));
                 }
                 else
-                loginEditText.setError("Please enter a valid E-Mail address");
+                loginEditText.setError(getString(R.string.wrong_email));
                 break;
         }
     }
-    public final static boolean isValidEmail(CharSequence target) {
+    public final boolean isValidEmail(CharSequence target) {
         return !TextUtils.isEmpty(target) && android.util.Patterns.EMAIL_ADDRESS.matcher(target).matches();
     }
 }

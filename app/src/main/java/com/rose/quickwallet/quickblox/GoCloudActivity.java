@@ -9,7 +9,9 @@ import com.rose.quickwallet.R;
 import com.rose.quickwallet.transactions.MainActivity;
 
 /**
+ *
  * Created by rose on 11/10/15.
+ *
  */
 public class GoCloudActivity extends Activity {
     @Override

@@ -7,7 +7,6 @@
     <string name="amount_hint">Enter Amount</string>
     <string name="detail_text">Enter details(if required)</string>
     <string name="add_amount">Enter Amount</string>
-    <string name="add_buuton">Add</string>
     <string name="search_hint_text">Search</string>
     <string name="find_contacts">Enter Name</string>
     <string name="clear_balance">Clear Pending Balance</string>
@@ -38,19 +37,27 @@
     <string name="no_balance">No Pending Balance</string>
     <string name="current_balance_colon">Current Balance: \</string>
     <!--<string name="pending_balance">Pending Balance</string>-->
-    <string name="pending_balance_line">Pendng Balance:\n</string>
+    <string name="pending_balance_line">Pending Balance:\n</string>
+    <string name="clear_balance_text">Clear Balance</string>
     <string name="empty_detail_default_text">No details specified</string>
+    <string name="last_trans_clear_balance">Last Transaction: Clear Balance</string>
 
     <string name="toast_help_enter_name">Please enter name</string>
     <string name="toast_found_user">Found user sending notification</string>
     <string name="toast_sent_notification">Sent Notification</string>
     <string name="toast_create_account">This feature requires you to create an account</string>
+    <string name="toast_no_user">No user found with associated contact number</string>
+    <string name="snackbar_balance_cleared_beg">Any pending balance with \</string>
+    <string name="snackbar_balance_cleared_end">\  is now cleared.</string>
 
     <string name="add">Add</string>
     <string name="view_history">History</string>
     <string name="cancel">Cancel</string>
     <string name="edit">Edit</string>
     <string name="enter_amount">Enter Amount</string>
+    <string name="enter_phone">Enter PhoneNo</string>
+    <string name="undo">UNDO</string>
+    <string name="done">Done</string>
 
     <!--<string name="dev_banner_ad_unit_id">ca-app-pub-3940256099942544/6300978111</string>
     <string name="main_activity_banner_ad_unit_id">ca-app-pub-7975954632775689/1175277850</string>
@@ -71,9 +78,26 @@
     <string name="password">Enter Password</string>
     <string name="sign_up">SIGN UP</string>
     <string name="sign_out">SIGN OUT</string>
+    <string name="wrong_email">Please enter a valid E-Mail address</string>
+    <string name="wrong_number">Please enter a valid mobile number</string>
+    <string name="reset_password_dialog_text_beg">An email will be sent at \</string>
+    <string name="reset_password_dialog_text_end"> . Please check your mail and follow the steps to reset your password</string>
     <string name="please_wait">Please Wait</string>
+    <string name="editing_profile">Editing profile</string>
+    <string name="signing_out">Signing out</string>
     <string name="dlg_ok">OK</string>
     <string name="dlg_cancel">Cancel</string>
     <string name="contact_choser_dialog_footer_text">Please note that setting the contact correctly is essential in sending notifications</string>
     <string name="contact_chooser_dialog_header_text">Choose contact to associate</string>
+
+    <string name="gcm_noti_lent_message">I lent you \</string>
+    <string name="gcm_noti_borrowed_message">I borrowed from you \</string>
+    <string name="gcm_noti_details_message">\nDetails: \</string>
+    <string name="gcm_noti_end_message">\nPlease make a note of this transaction.</string>
+    <string name="gcm_noti_summary">Tap to add transaction</string>
+    <string name="noti_pending_transaction">You have pending transactions</string>
+
+    <string name="enter_new_pin">Enter new PIN</string>
+    <string name="enter_saved_pin">Enter saved PIN</string>
+    <string name="wrong_pin_length">Please enter a PIN of four characters</string>
 </resources>

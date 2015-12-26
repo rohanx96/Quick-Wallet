@@ -1,7 +1,9 @@
 package com.rose.quickwallet.transactions;
 
 /**
+ *
  * Created by rose on 3/8/15.
+ *
  */
 public class DetailsRecyclerViewItem {
     private String type;

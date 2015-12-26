@@ -11,7 +11,9 @@ import android.telephony.PhoneNumberUtils;
 import java.util.ArrayList;
 
 /**
+ *
  * Created by rose on 17/10/15.
+ *
  */
 public class QuickbloxUsersDatabaseHelper {
     private final String DATABASE_NAME = "QuickbloxUsers.db";

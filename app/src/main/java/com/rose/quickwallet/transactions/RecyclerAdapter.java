@@ -157,7 +157,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             viewItem.setTime(item.getTime());
             viewItem.setAmount(item.getAmount());
             item.setIsExpanded(false);
-            item.setLastTransaction("Last Transaction: Clear Balance");
+            item.setLastTransaction(context.getString(R.string.last_trans_clear_balance));
             dataList.remove(position);///////////////////////
             //recyclerViewCallback.removeItem(position);
             item.setBalance(0);
@@ -165,8 +165,8 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             //notifyItemRangeChanged(position, dataList.size());
             /*if(expandedPosition>position && expandedPosition!=Integer.MAX_VALUE )
                 expandedPosition--;**/
-            Log.i("RecyclerView", "Removed item at" + position);
-            Log.i("RecyclerView", "Item Name" + item.getName());
+            //Log.i("RecyclerView", "Removed item at" + position);
+            //Log.i("RecyclerView", "Item Name" + item.getName());
             dataList.add(item);
             notifyItemInserted(dataList.size() - 1);/////////////////////////////
             //notifyItemMoved(position,dataList.size());

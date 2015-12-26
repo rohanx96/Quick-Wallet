@@ -7,7 +7,6 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.util.Log;
-import android.widget.Toast;
 
 import com.quickblox.auth.QBAuth;
 import com.quickblox.auth.model.QBSession;
@@ -26,7 +25,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
+ *
  * Created by rose on 17/10/15.
+ *
  */
 public class RetreiveUsersService extends IntentService {
 
@@ -50,7 +51,7 @@ public class RetreiveUsersService extends IntentService {
         preferences = PreferenceManager.getDefaultSharedPreferences(this);
         boolean isSignedIn = preferences.getBoolean(com.rose.quickwallet.quickblox.Consts.IS_SIGNED_UP, false);
         if (isSignedIn) {
-            Log.i("retrieveUsersService", "Inside retreive users service");
+            //Log.i("retrieveUsersService", "Inside retreive users service");
             if(intent.getBooleanExtra("createSession",false)) {
                 QBSettings.getInstance().fastConfigInit(com.rose.quickwallet.quickblox.Consts.APP_ID, com.rose.quickwallet.quickblox.Consts.AUTH_KEY, com.rose.quickwallet.quickblox.Consts.AUTH_SECRET);
                 final QBUser user = new QBUser();
@@ -65,7 +66,7 @@ public class RetreiveUsersService extends IntentService {
                         QBAuth.createSession(user,new QBEntityCallbackImpl<QBSession>() {
                         @Override
                         public void onSuccess(QBSession session, Bundle params) {
-                            Log.i("retrieveUsersService", "Success creating session");
+                            //Log.i("retrieveUsersService", "Success creating session");
                             retrieveAllUsersFromPage(preferences.getInt(com.rose.quickwallet.quickblox.Consts.SHARED_PREFERENCES_USERS_CURRENT_PAGE, 1));
                             sendNotifications();
                         }
@@ -128,7 +129,7 @@ public class RetreiveUsersService extends IntentService {
         QBUsers.getUsers(pagedRequestBuilder, new QBEntityCallbackImpl<ArrayList<QBUser>>() {
             @Override
             public void onSuccess(ArrayList<QBUser> users, Bundle params) {
-                Log.i("retrieveUsersService", users.size() + "users returned");
+                //Log.i("retrieveUsersService", users.size() + "users returned");
                 QuickbloxUsersDatabaseHelper databaseHelper = new QuickbloxUsersDatabaseHelper(RetreiveUsersService.this);
                 for(QBUser user : users){
                     databaseHelper.insertUser(user.getPhone(),user.getId());

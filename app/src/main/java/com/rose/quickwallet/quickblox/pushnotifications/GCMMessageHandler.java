@@ -37,12 +37,12 @@ public class GCMMessageHandler extends GcmListenerService {
     @Override
     public void onMessageReceived(String from, Bundle data) {
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
-        Log.i("GCMNotification","Message received");
+        //Log.i("GCMNotification","Message received");
         //MESSAGE_NOTIFICATION_ID = count;
         count++;
         int ID = MESSAGE_NOTIFICATION_ID + count;
         preferences.edit().putInt("GCMNotificationID", ID).commit();
-        Log.i("GCMNotification", "Count: " + count);
+        //Log.i("GCMNotification", "Count: " + count);
         processNotification(from, data, ID);
     }
 
@@ -68,25 +68,25 @@ public class GCMMessageHandler extends GcmListenerService {
         String details="";
         if (messageValue != null) {
             name = messageValue.substring(0, messageValue.indexOf(':'));
-            Log.i("name ",name);
+            //Log.i("name ",name);
             if(messageValue.indexOf('#')!= -1) { // checks if details are present in message
                 amount = Float.parseFloat(messageValue.substring(messageValue.indexOf(':') + 1, messageValue.indexOf('#')));
                 details = messageValue.substring(messageValue.indexOf('#') + 1, messageValue.indexOf('*'));
             }
             else
                 amount = Float.parseFloat(messageValue.substring(messageValue.indexOf(':') + 1, messageValue.indexOf('*')));
-            Log.i("amount notification ",Float.toString(amount));
-            Log.i("details ",details);
+            //Log.i("amount notification ",Float.toString(amount));
+            //Log.i("details ",details);
             contact = messageValue.substring(messageValue.indexOf('*')+1);
-            Log.i("contact ",contact);
+            //Log.i("contact ",contact);
         }
         String message = name + " : ";
         if(amount<0)
-            message +="I borrowed from you " + -1*amount;
-        else message+="I lent you " + amount;
+            message +=getString(R.string.gcm_noti_borrowed_message) + -1*amount;
+        else message+=getString(R.string.gcm_noti_lent_message) + amount;
         if(!details.equals(""))
-            message +="\nDetails: " + details;
-        message+="\nPlease make a note of this transaction";
+            message +=getString(R.string.gcm_noti_details_message) + details;
+        message+=getString(R.string.gcm_noti_end_message);
         /*Intent intent = new Intent(this, MainActivity.class);
         intent.putExtra(Consts.EXTRA_MESSAGE, messageValue);*/
         Intent addActivity = new Intent(this,AddNewTransactionActivity.class);
@@ -102,7 +102,7 @@ public class GCMMessageHandler extends GcmListenerService {
                 mBuilder.setSmallIcon(R.drawable.ic_notification)
                         .setContentTitle(getResources().getString(R.string.app_name))
                         .setContentText(message)
-                        .setStyle(new NotificationCompat.BigTextStyle().bigText(message).setSummaryText("Tap to add transaction"))
+                        .setStyle(new NotificationCompat.BigTextStyle().bigText(message).setSummaryText(getString(R.string.gcm_noti_summary)))
                         .setAutoCancel(true)
                         .setDefaults(Notification.DEFAULT_ALL);
         mBuilder.setContentIntent(contentIntent);

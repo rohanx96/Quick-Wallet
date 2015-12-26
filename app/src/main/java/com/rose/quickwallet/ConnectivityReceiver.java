@@ -9,7 +9,9 @@ import android.util.Log;
 import com.rose.quickwallet.quickblox.RetreiveUsersService;
 
 /**
+ *
  * Created by rose on 19/7/15.
+ *
  */
 public class ConnectivityReceiver extends BroadcastReceiver {
 
@@ -21,7 +23,7 @@ public class ConnectivityReceiver extends BroadcastReceiver {
         while(true) {
             if(netInfo!=null && netInfo.isConnectedOrConnecting()){
                 if(netInfo.isConnected()) {
-                    Log.v("Service", "Refreshing started");
+                    //Log.v("Service", "Refreshing started");
                     Intent retrieveUsers = new Intent(context, RetreiveUsersService.class);
                     retrieveUsers.putExtra("createSession", true);
                     context.startService(retrieveUsers);

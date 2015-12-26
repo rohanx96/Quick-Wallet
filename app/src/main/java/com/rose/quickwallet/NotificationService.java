@@ -14,7 +14,9 @@ import com.rose.quickwallet.transactions.RecyclerViewItem;
 import java.util.ArrayList;
 
 /**
+ *
  * Created by rose on 15/8/15.
+ *
  */
 public class NotificationService extends IntentService {
     public NotificationService() {
@@ -58,14 +60,14 @@ public class NotificationService extends IntentService {
         }
         if(lentBalance!=0 || borrowedBalance!=0 ){
             Intent startApplication = new Intent(this,MainActivity.class);
-            intent.putExtra("action","generic");
-            inboxStyle.setSummaryText("Lent: " + lentBalance + "         Borrowed: " + -1 * borrowedBalance);
+            intent.putExtra("action", "generic");
+            inboxStyle.setSummaryText(getString(R.string.lent_colon) + lentBalance + "         " + getString(R.string.borrowed_colon) + -1 * borrowedBalance);
             NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
             NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this);
             notificationBuilder.setAutoCancel(true)
                     .setStyle(inboxStyle)
-                    .setContentTitle("You have pending transactions")
-                    .setContentText("Lent: " + lentBalance + "        Borrowed: " + -1*borrowedBalance)
+                    .setContentTitle(getString(R.string.noti_pending_transaction))
+                    .setContentText(getString(R.string.lent_colon) + lentBalance + "         " + getString(R.string.borrowed_colon) + -1 * borrowedBalance)
                     .setContentIntent(PendingIntent.getActivity(this,0,startApplication,0))
                     .setSmallIcon(R.drawable.ic_notification)
                     .setDefaults(Notification.DEFAULT_ALL);

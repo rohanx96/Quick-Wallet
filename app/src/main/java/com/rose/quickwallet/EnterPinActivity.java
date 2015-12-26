@@ -7,8 +7,6 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Base64;
-import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -17,13 +15,10 @@ import android.widget.TextView;
 import com.rose.quickwallet.transactions.AddNewTransactionActivity;
 import com.rose.quickwallet.transactions.MainActivity;
 
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-
 /**
+ *
  * Created by rose on 23/8/15.
+ *
  */
 public class EnterPinActivity extends Activity {
     private EditText editText1;
@@ -36,11 +31,11 @@ public class EnterPinActivity extends Activity {
         setContentView(R.layout.enter_pin_activity);
         if(getIntent().getAction().equals("SAVE_PASSWORD")) {
             TextView enterPin = (TextView) findViewById(R.id.enter_pin_text);
-            enterPin.setText("Enter new PIN");
+            enterPin.setText(getString(R.string.enter_new_pin));
         }
         if(getIntent().getAction().equals("CHANGE_PIN")){
             TextView enterPin = (TextView) findViewById(R.id.enter_pin_text);
-            enterPin.setText("Enter saved PIN");
+            enterPin.setText(getString(R.string.enter_saved_pin));
         }
         editText1 = (EditText) findViewById(R.id.pin_text_1);
         editText2 = (EditText) findViewById(R.id.pin_text_2);
@@ -174,7 +169,7 @@ public class EnterPinActivity extends Activity {
         if(getIntent().getAction().equals("SAVE_PASSWORD")){
             if(enteredPassword.length()<4){
                 TextView errorText = (TextView)findViewById(R.id.pin_error_text);
-                errorText.setText("Please enter a PIN of four characters");
+                errorText.setText(getString(R.string.wrong_pin_length));
                 errorText.setVisibility(View.VISIBLE);
             }
             else {

@@ -126,8 +126,8 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
         addActivity.putExtra("action","generic");
         addActivity.setAction("notification");
         builder.setSmallIcon(R.drawable.ic_notification)
-                .setContentTitle("QuickWallet")
-                .setContentText("Tap to add a transaction")
+                .setContentTitle(getString(R.string.app_name))
+                .setContentText(getString(R.string.gcm_noti_summary))
                 .setContentIntent(PendingIntent.getActivity(getActivity(), 456, addActivity, PendingIntent.FLAG_CANCEL_CURRENT))
                 .setOngoing(true);
         notificationManager.notify(5672, builder.build());

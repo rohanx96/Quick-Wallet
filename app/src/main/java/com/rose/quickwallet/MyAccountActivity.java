@@ -81,13 +81,13 @@ public class MyAccountActivity extends Activity {
         nameInput.setLayoutParams(parameters);
         layout.addView(nameInput);
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Enter Name");
+        builder.setTitle(getString(R.string.enter_amount));
         builder.setView(layout);
         builder.setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(final DialogInterface dialog, int which) {
                 final ProgressDialog pDialog = new ProgressDialog(MyAccountActivity.this);
-                pDialog.setMessage("Editing profile");
+                pDialog.setMessage(getString(R.string.editing_profile));
                 pDialog.show();
                 dialog.dismiss();
                 QBUser user = new QBUser(userId);
@@ -110,7 +110,7 @@ public class MyAccountActivity extends Activity {
                 dialog.dismiss();
             }
         });
-        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+        builder.setNegativeButton(getString(R.string.cancel), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();
@@ -128,13 +128,13 @@ public class MyAccountActivity extends Activity {
         contactInput.setInputType(InputType.TYPE_CLASS_PHONE);
         layout.addView(contactInput);
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("Enter PhoneNo");
+        builder.setTitle(getString(R.string.enter_phone));
         builder.setView(layout);
         builder.setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(final DialogInterface dialog, int which) {
                 final ProgressDialog pDialog = new ProgressDialog(MyAccountActivity.this);
-                pDialog.setMessage("Editing profile");
+                pDialog.setMessage(getString(R.string.editing_profile));
                 pDialog.show();
                 QBUser user = new QBUser(userId);
                 //user.setPhone(((EditText) LayoutInflater.from(MyAccountActivity.this).inflate(R.layout.edit_text,null,false).findViewById(R.id.edit_account_info)).getText().toString());
@@ -156,7 +156,7 @@ public class MyAccountActivity extends Activity {
                 dialog.dismiss();
             }
         });
-        builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+        builder.setNegativeButton(getString(R.string.cancel), new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 dialog.dismiss();
@@ -168,7 +168,7 @@ public class MyAccountActivity extends Activity {
     public void onSignOut(View view){
         GCMClientHelper pushClientManager = new GCMClientHelper(this, Consts.PROJECT_NUMBER);
         final ProgressDialog progressDialog = new ProgressDialog(this);
-        progressDialog.setMessage("Signing Out ...");
+        progressDialog.setMessage(getString(R.string.signing_out));
         progressDialog.show();
         pushClientManager.unsubscribeFromPushNotifications();
         QBUsers.signOut(new QBEntityCallbackImpl() {

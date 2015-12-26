@@ -40,14 +40,14 @@ public class EditTransactionDetails extends Activity {
         context = getApplicationContext();
         getWindow().setLayout(WindowManager.LayoutParams.WRAP_CONTENT, convertDPToPx(context, 235)); // 335px - 220dp
         TextView textView = (TextView) findViewById(R.id.edit_item_detail_name);
-        textView.setText("Lent");
-        textView.setTextColor(Color.RED);
+        textView.setText(getString(R.string.lent));
+        //textView.setTextColor(Color.RED);
         name = getIntent().getStringExtra("NAME");
         time = getIntent().getLongExtra("TIME", 0);
         amount = getIntent().getFloatExtra("AMOUNT", 0);
         details = getIntent().getStringExtra("DETAILS");
         type = getIntent().getStringExtra("TYPE");
-        Log.v("Time", Long.toString(time));
+        //Log.v("Time", Long.toString(time));
         final EditText amountView = (EditText)findViewById(R.id.edit_item_amount);
         amountView.addTextChangedListener(new TextWatcher() {
             @Override
@@ -78,14 +78,14 @@ public class EditTransactionDetails extends Activity {
                 } else {
                     amount = Float.parseFloat(amountView.getText().toString());
                     TextView textView = (TextView) relativeLayout.findViewById(R.id.edit_item_detail_balance);
-                    textView.setText("Amount: " + amountView.getText().toString());
+                    textView.setText(getString(R.string.amount_colon) + amountView.getText().toString());
                     textView = (TextView) findViewById(R.id.edit_item_detail_name);
                     textView.setText(type);
                     if (type.equals("Lent")) {
-                        textView.setTextColor(Color.GREEN);
+                        textView.setTextColor(getResources().getColor(R.color.lent_green));
                         //amount = amount;
                     } else {
-                        textView.setTextColor(Color.RED);
+                        textView.setTextColor(getResources().getColor(R.color.borrowed_red));
                         //amount = -1*amount;
                     }
                     /*if (name == null)
@@ -126,12 +126,12 @@ public class EditTransactionDetails extends Activity {
         TextView textView = (TextView) findViewById(R.id.edit_item_detail_name);
         switch (v.getId()){
             case (R.id.radio_button_borrowed_edit):
-                textView.setText("Borrowed");
+                textView.setText(getString(R.string.borrowed));
                 textView.setTextColor(Color.RED);
                 type = "Borrowed";
                 break;
             case R.id.radio_button_lent_edit:
-                textView.setText("Lent");
+                textView.setText(getString(R.string.lent));
                 textView.setTextColor(Color.GREEN);
                 type = "Lent";
         }
@@ -140,7 +140,7 @@ public class EditTransactionDetails extends Activity {
     public void onEditWalletItem(View v){
         TextInputLayout amountLayout = (TextInputLayout) findViewById(R.id.edit_item_amount_wrapper);
         if(amount==0) {
-            amountLayout.setError("Please Enter amount");
+            amountLayout.setError(getString(R.string.enter_amount));
             amountLayout.setErrorEnabled(true);
             return;
         }

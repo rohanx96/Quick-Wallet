@@ -48,7 +48,7 @@ public class DetailsRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
     public void onBindViewHolder(RecyclerView.ViewHolder holder, final int position) {
         DetailsViewHolder viewHolder = (DetailsViewHolder) holder;
         if(dataList.get(position).getDetail() == null || dataList.get(position).getDetail().equals(""))
-            viewHolder.detailsDescription.setText("No details specified");
+            viewHolder.detailsDescription.setText(context.getString(R.string.empty_detail_default_text));
         else viewHolder.detailsDescription.setText(dataList.get(position).getDetail());
         if(dataList.get(position).getType().equals("Lent")) {
             bindLent(viewHolder);
@@ -106,20 +106,20 @@ public class DetailsRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
 
     public void bindLent(DetailsViewHolder viewHolder){
         //DetailsViewHolder viewHolder = (DetailsViewHolder) holder;
-        viewHolder.detailsType.setText("Lent");
+        viewHolder.detailsType.setText(context.getString(R.string.lent));
         viewHolder.detailsTypeIcon.setImageResource(R.drawable.lent_icon);
         viewHolder.viewHolderContainer.setBackgroundColor(Color.WHITE);
     }
 
     public void bindBorrowed(DetailsViewHolder viewHolder){
         //DetailsViewHolder viewHolder = (DetailsViewHolder) holder;
-        viewHolder.detailsType.setText("Borrowed");
+        viewHolder.detailsType.setText(context.getString(R.string.borrowed));
         viewHolder.detailsTypeIcon.setImageResource(R.drawable.borrowed_icon);
         viewHolder.viewHolderContainer.setBackgroundColor(Color.WHITE);
     }
     public void bindClearBalance(DetailsViewHolder viewHolder){
         //DetailsViewHolder viewHolder = (DetailsViewHolder) holder;
-        viewHolder.detailsType.setText("Clear Balance");
+        viewHolder.detailsType.setText(context.getString(R.string.clear_balance_text));
         viewHolder.detailsTypeIcon.setImageResource(R.drawable.paid);
         //viewHolder.viewHolderContainer.setBackgroundResource(R.drawable.oval_background);
         viewHolder.viewHolderContainer.setBackgroundColor(Color.WHITE);
@@ -177,9 +177,9 @@ public class DetailsRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
         }
     }
 
-    public ArrayList<DetailsRecyclerViewItem> getDataList() {
+    /**public ArrayList<DetailsRecyclerViewItem> getDataList() {
         return dataList;
-    }
+    }*/
 
     public void setDataList(ArrayList<DetailsRecyclerViewItem> dataList) {
         this.dataList = dataList;

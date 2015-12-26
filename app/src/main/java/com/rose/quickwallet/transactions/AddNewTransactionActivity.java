@@ -962,7 +962,7 @@ public class AddNewTransactionActivity extends Activity {
                 }
             }
             else {
-                Toast.makeText(AddNewTransactionActivity.this, "No user found with the associated contact number", Toast.LENGTH_SHORT).show();
+                Toast.makeText(AddNewTransactionActivity.this, getString(R.string.toast_no_user), Toast.LENGTH_SHORT).show();
                 resetDetailsAfterTransactionAdded(); // reset data if no user found
             }
         }

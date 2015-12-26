@@ -397,7 +397,7 @@ public class MainActivity extends BaseActivity implements RecyclerViewCallback {
         totalBorrowed.setText(getResources().getString(R.string.borrowed_colon) + databaseHelper.totalBorrowed());
         //recyclerView.getAdapter().notifyDataSetChanged();
         databaseHelper.close();
-        Snackbar.make(findViewById(R.id.activity_coordinator_layout), "Any pending balance with " + item.getName() + " is now cleared", Snackbar.LENGTH_LONG).setAction("UNDO", new View.OnClickListener() {
+        Snackbar.make(findViewById(R.id.activity_coordinator_layout), getString(R.string.snackbar_balance_cleared_beg) + item.getName() + getString(R.string.snackbar_balance_cleared_end), Snackbar.LENGTH_LONG).setAction(getString(R.string.undo), new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 DatabaseHelper databaseHelper = new DatabaseHelper(getApplicationContext());
