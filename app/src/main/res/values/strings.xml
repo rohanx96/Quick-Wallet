@@ -1,30 +1,18 @@
 <resources>
     <string name="app_name">Quick Wallet</string>
-    <string name="find_contact">Enter Name</string>
-    <string name="hello_world">Hello world!</string>
 
+    <string name="enter_name">Enter Name</string>
     <string name="action_settings">Settings</string>
     <string name="amount_hint">Enter Amount</string>
     <string name="detail_text">Enter details(if required)</string>
     <string name="add_amount">Enter Amount</string>
     <string name="search_hint_text">Search</string>
-    <string name="find_contacts">Enter Name</string>
     <string name="clear_balance">Clear Pending Balance</string>
     <string name="enter_details_hint">Enter Transaction Details</string>
     <string name="clear_history">Clear History</string>
     <string name="transactions">Transactions</string>
-    <string name="settings">Settings</string>
-    <string name="notifications">Notifications</string>
-    <string name="pref_notifications_summary">Enable/Disable notifications</string>
-    <string name="pref_notification_interval">Set interval between notificatins</string>
-    <string name="pref_notification_persistent">Persistent Notification</string>
-    <string name="pref_notification_persistent_summary">Create a persistent notification for directly adding transactions from anywhere</string>
-    <string-array name="type_spinner_entries">
-        <item name="Lent">Lent</item>
-        <item name="Borrowed">Borrowed</item>
-    </string-array>
-    <string name="play_dev_link">https://play.google.com/store/apps/dev?id=6203448337154291323</string>
-
+    <string name="send_notification">Send notification</string>
+    <string name="add_transaction">Add transaction</string>
 
     <string name="expenditure">Expenditure</string>
     <string name="expense">Expense</string>
@@ -54,10 +42,20 @@
     <string name="view_history">History</string>
     <string name="cancel">Cancel</string>
     <string name="edit">Edit</string>
+    <string name="enter">Enter</string>
     <string name="enter_amount">Enter Amount</string>
     <string name="enter_phone">Enter PhoneNo</string>
     <string name="undo">UNDO</string>
     <string name="done">Done</string>
+    <string name="delete">Delete</string>
+    <string name="done_U">DONE</string>
+    <string name="security">Security</string>
+    <string name="about">About</string>
+    <string name="version">Version</string>
+    <string name="tutorial">Tutorial</string>
+    <string name="help_and_feedback">Help and Feedback</string>
+    <string name="or">OR</string>
+    <string name="skip">SKIP</string>
 
     <!--<string name="dev_banner_ad_unit_id">ca-app-pub-3940256099942544/6300978111</string>
     <string name="main_activity_banner_ad_unit_id">ca-app-pub-7975954632775689/1175277850</string>
@@ -69,22 +67,26 @@
     <string name="expense_today">Total Expenses today: \</string>
 
 
-    <string name="help_and_feedback">Help and Feedback</string>
-
-
 
     <string name="my_account">My Account</string>
+    <string name="emailid">Email ID</string>
     <string name="login">Phone No</string>
-    <string name="password">Enter Password</string>
+    <string name="name">Name</string>
+    <string name="password">Password</string>
+    <string name="sign_in">SIGN IN</string>
     <string name="sign_up">SIGN UP</string>
     <string name="sign_out">SIGN OUT</string>
     <string name="wrong_email">Please enter a valid E-Mail address</string>
     <string name="wrong_number">Please enter a valid mobile number</string>
+    <string name="forgot_password">Forgot Password?</string>
     <string name="reset_password_dialog_text_beg">An email will be sent at \</string>
     <string name="reset_password_dialog_text_end"> . Please check your mail and follow the steps to reset your password</string>
+
     <string name="please_wait">Please Wait</string>
     <string name="editing_profile">Editing profile</string>
     <string name="signing_out">Signing out</string>
+    <string name="adding_transaction">Adding Transaction</string>
+
     <string name="dlg_ok">OK</string>
     <string name="dlg_cancel">Cancel</string>
     <string name="contact_choser_dialog_footer_text">Please note that setting the contact correctly is essential in sending notifications</string>
@@ -97,7 +99,40 @@
     <string name="gcm_noti_summary">Tap to add transaction</string>
     <string name="noti_pending_transaction">You have pending transactions</string>
 
+    <string name="enter_pin">Enter PIN to unlock</string>
     <string name="enter_new_pin">Enter new PIN</string>
     <string name="enter_saved_pin">Enter saved PIN</string>
     <string name="wrong_pin_length">Please enter a PIN of four characters</string>
+    <string name="wrong_pin">Sorry, wrong Pin. Enter again</string>
+
+    <string name="settings">Settings</string>
+    <string name="notifications">Notifications</string>
+    <string name="pref_my_account">Edit account details/Create an account</string>
+    <string name="pref_notifications_summary">Enable/Disable notifications</string>
+    <string name="pref_notification_interval">Set interval between notificatins</string>
+    <string name="pref_notification_persistent">Persistent Notification</string>
+    <string name="pref_notification_persistent_summary">Create a persistent notification for directly adding transactions from anywhere</string>
+    <string name="pref_lock_app">Lock Application</string>
+    <string name="pref_lock_app_summary">If enabled a PIN is required to enter application</string>
+    <string name="pref_change_pin">Change PIN</string>
+    <string name="pref_help">Help and Feedback</string>
+    <string name="pref_help_summary">Send an email to developer</string>
+    <string name="pref_get_more">Get More</string>
+    <string name="pref_get_more_summary">View developer\'s other work on Google Play</string>
+    <string-array name="type_spinner_entries">
+        <item name="Lent">Lent</item>
+        <item name="Borrowed">Borrowed</item>
+    </string-array>
+    <string name="play_dev_link">https://play.google.com/store/apps/dev?id=6203448337154291323</string>
+
+    <string name="go_cloud_summary">Creating an account enables you to send and receive notifications when you add transactions or someone adds transactions involving you</string>
+    <string name="go_cloud_create_account">Create an account</string>
+    <string name="go_cloud_sign_in">Sign in with your existing account</string>
+    <string name="go_cloud_continue">Continue without creating an account</string>
+
+    <string name="tutorial_one_description">Click on the \'+\' button to add transactions. Use the searchbar at top to search added transactions by person\'s name</string>
+    <string name="tutorial_two_description">Swipe on list items to clear pending balance</string>
+    <string name="tutorial_three_description">Create an account to send and receive notifications when transactions are added involving you</string>
+    <string name="tutorial_four_description">View complete history. Click on a transaction to edit or delete it</string>
+    <string name="tutorial_five_description">Manage your wallet. Keep track of your daily income and expenses</string>
 </resources>

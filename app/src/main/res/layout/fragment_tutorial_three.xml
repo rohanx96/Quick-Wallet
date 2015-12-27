@@ -32,7 +32,7 @@
         android:background="@color/cardview_dark_background"
         android:paddingLeft="10dp"
         android:paddingRight="10dp"
-        android:text="Create an account to send and receive notifications when transactions are added involving you"
+        android:text="@string/tutorial_three_description"
         android:gravity="center"/>
     <LinearLayout
         android:layout_width="match_parent"

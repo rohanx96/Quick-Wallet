@@ -27,7 +27,7 @@
             android:checked="false"
             android:icon="@drawable/settings_box"/>
         <item
-            android:title="Tutorial"
+            android:title="@string/tutorial"
             android:id="@+id/nav_tutorial"
             android:checkable="false"
             android:icon="@drawable/ic_tutorial"/>

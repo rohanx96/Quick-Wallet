@@ -18,7 +18,7 @@
         android:id="@+id/nav_header_text"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Create account"
+        android:text="@string/go_cloud_create_account"
         android:textColor="@color/white"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"/>
 </LinearLayout>

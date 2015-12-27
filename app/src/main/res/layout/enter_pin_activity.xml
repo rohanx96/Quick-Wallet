@@ -8,7 +8,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:text="Enter Pin to unlock"
+        android:text="@string/enter_pin"
         android:textAppearance="@style/TextAppearance.AppCompat.Medium"
         android:layout_centerInParent="true"
         />
@@ -53,7 +53,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:text="Sorry, wrong Pin. Enter again"
+        android:text="@string/wrong_pin"
         android:gravity="center_horizontal"
         android:visibility="gone"
         android:textColor="@android:color/holo_red_dark"/>
@@ -66,14 +66,14 @@
             android:id="@+id/pin_enter_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Enter"
+            android:text="@string/enter"
             android:onClick="onEnter"
             android:layout_weight="1"/>
         <Button
             android:id="@+id/pin_cancel_button"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Cancel"
+            android:text="@string/cancel"
             android:layout_weight="1"
             android:onClick="onCancel"/>
     </LinearLayout>

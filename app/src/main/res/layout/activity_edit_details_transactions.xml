@@ -80,12 +80,12 @@
             android:id="@+id/edit_item_detail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Enter Details (if required)" />
+            android:hint="@string/enter_details_hint" />
     </android.support.design.widget.TextInputLayout>
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:text="Edit"
+        android:text="@string/edit"
         android:onClick="onEditWalletItem"/>
 </RelativeLayout>

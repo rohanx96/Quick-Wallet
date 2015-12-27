@@ -76,7 +76,7 @@
             fab:fab_colorPressed="@color/colorAccent"
             fab:fab_size="mini"
             fab:fab_icon="@drawable/delete"
-            fab:fab_title="Delete"/>
+            fab:fab_title="@string/delete"/>
         <com.getbase.floatingactionbutton.FloatingActionButton
             android:id="@+id/clear_history_floating_button"
             android:layout_width="wrap_content"
@@ -85,7 +85,7 @@
             fab:fab_colorPressed="@color/colorAccent"
             fab:fab_size="mini"
             fab:fab_icon="@drawable/delete"
-            fab:fab_title="Clear History"/>
+            fab:fab_title="@string/clear_history"/>
         <!--<com.getbase.floatingactionbutton.FloatingActionButton
             android:id="@+id/notification_floating_button"
             android:layout_width="wrap_content"
@@ -102,7 +102,7 @@
             fab:fab_colorPressed="@color/colorAccent"
             fab:fab_size="mini"
             fab:fab_icon="@drawable/plus"
-            fab:fab_title="Add Transaction"/>
+            fab:fab_title="@string/add_transaction"/>
     </com.getbase.floatingactionbutton.FloatingActionsMenu>
     <!--<android.support.design.widget.FloatingActionButton
         android:layout_height="wrap_content"

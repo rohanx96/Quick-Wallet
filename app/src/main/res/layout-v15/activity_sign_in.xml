@@ -17,7 +17,7 @@
         android:inputType="textEmailAddress"
         android:singleLine="true"
         android:drawableLeft="@drawable/ic_email"
-        android:hint="Email" />
+        android:hint="@string/emailid" />
 
     <EditText
         android:id="@+id/password_edittext"
@@ -25,7 +25,7 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-        android:hint="Password"
+        android:hint="@string/password"
         android:imeOptions="actionSend"
         android:padding="10dp"
         android:inputType="textPassword"
@@ -40,7 +40,7 @@
         android:layout_below="@+id/password_edittext"
         android:layout_centerHorizontal="true"
         android:onClick="onClick"
-        android:text="Sign in"
+        android:text="@string/sign_in"
         android:background="@color/teal"
         android:textColor="@color/white"/>
     <TextView
@@ -51,7 +51,7 @@
         android:padding="10dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Forgot Password?"
+        android:text="@string/forgot_password"
         android:textColor="@color/white"
         android:onClick="onClick"/>
     <TextView
@@ -60,7 +60,7 @@
         android:layout_centerHorizontal="true"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Create an account"
+        android:text="@string/go_cloud_create_account"
         android:textColor="@color/white"
         android:onClick="onClick"/>
 </RelativeLayout>

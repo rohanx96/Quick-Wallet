@@ -30,7 +30,7 @@
         android:layout_weight="8"
         android:textColor="@color/white"
         android:background="@color/cardview_dark_background"
-        android:text="Click on the '+' button to add transactions. Use the searchbar at top to search added transactions by person's name"
+        android:text="@string/tutorial_one_description"
         android:gravity="center"/>
     <LinearLayout
         android:layout_width="match_parent"

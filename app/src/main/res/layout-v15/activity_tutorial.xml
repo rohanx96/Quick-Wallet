@@ -1,6 +1,5 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@android:color/transparent">
@@ -32,7 +31,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentLeft="true"
-            android:text="SKIP"
+            android:text="@string/skip"
             android:textSize="18sp"
             android:textColor="@color/white"
             android:background="@android:color/transparent"/>
@@ -51,7 +50,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
-            android:text="DONE"
+            android:text="@string/done_U"
             android:textSize="18sp"
             android:textColor="@color/white"
             android:background="@android:color/transparent"

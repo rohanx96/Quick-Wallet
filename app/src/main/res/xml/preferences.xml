@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
     <Preference
-        android:title="My Account"
-        android:summary="Edit account details/Create an account"
+        android:title="@string/my_account"
+        android:summary="@string/pref_my_account"
         android:key="accountSettings">
     </Preference>
     <PreferenceCategory
@@ -24,36 +24,36 @@
         <CheckBoxPreference
             android:title="@string/pref_notification_persistent"
             android:summary="@string/pref_notification_persistent_summary"
-            android:dependency="notificationSwitch"
             android:defaultValue="false"
             android:key="notificationPersistent"/>
+            <!--android:dependency="notificationSwitch"/>-->
     </PreferenceCategory>
-    <PreferenceCategory android:title="Security">
+    <PreferenceCategory android:title="@string/security">
         <CheckBoxPreference
-            android:title="Lock Application"
-            android:summary="If enabled a PIN is required to enter application"
+            android:title="@string/pref_lock_app"
+            android:summary="@string/pref_lock_app_summary"
             android:defaultValue="false"
             android:key="securitySwitch"/>
         <Preference
-            android:title="Change PIN"
+            android:title="@string/pref_change_pin"
             android:key="securityChangePIN"
             android:dependency="securitySwitch"/>
     </PreferenceCategory>
-    <PreferenceCategory android:title="About">
+    <PreferenceCategory android:title="@string/about">
         <Preference
-            android:title="Version"
+            android:title="@string/version"
             android:summary="4.0.qb.1"/>
         <Preference
-            android:title="Help and Feedback"
-            android:summary="Send an email to developer"
+            android:title="@string/pref_help"
+            android:summary="@string/pref_help_summary"
             android:key="aboutEmail">
             <!--<intent
                 android:action= "emaildev"
                 android:data="@string/email"/>-->
         </Preference>
         <Preference
-            android:title="Get More"
-            android:summary="View developer's other work on Google Play">
+            android:title="@string/pref_get_more"
+            android:summary="@string/pref_get_more_summary">
             <intent
                 android:data="@string/play_dev_link"
                 android:action="android.intent.action.VIEW" />

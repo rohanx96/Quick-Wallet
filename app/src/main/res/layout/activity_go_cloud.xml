@@ -14,7 +14,7 @@
         android:padding="22dp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Creating an account enables you to send and receive notifications when you add transactions or someone adds transactions involving you"
+        android:text="@string/go_cloud_summary"
         android:textColor="@color/white"
         android:gravity="center_horizontal"
         android:textAppearance="@android:style/TextAppearance.DeviceDefault.Small"/>
@@ -23,7 +23,7 @@
         android:layout_below="@id/go_cloud_detail"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Create an account"
+        android:text="@string/go_cloud_create_account"
         android:background="@color/teal"
         android:textColor="@color/white"
         android:onClick="onClick"/>
@@ -33,7 +33,7 @@
         android:layout_below="@+id/sign_up_button_go_cloud"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="OR"
+        android:text="@string/or"
         android:textColor="@color/white"
         android:gravity="center_horizontal"/>
     <Button
@@ -41,7 +41,7 @@
         android:layout_below="@id/or_text_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Sign in with your exisiting account"
+        android:text="@string/go_cloud_sign_in"
         android:background="@color/teal"
         android:textColor="@color/white"
         android:onClick="onClick"/>
@@ -49,7 +49,7 @@
         android:id="@+id/continue_go_cloud"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Continue without creating an account"
+        android:text="@string/go_cloud_continue"
         android:layout_alignParentBottom="true"
         android:background="@color/colorPrimary"
         android:textColor="@color/white"

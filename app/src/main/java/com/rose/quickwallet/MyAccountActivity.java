@@ -81,7 +81,7 @@ public class MyAccountActivity extends Activity {
         nameInput.setLayoutParams(parameters);
         layout.addView(nameInput);
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle(getString(R.string.enter_amount));
+        builder.setTitle(getString(R.string.enter_name));
         builder.setView(layout);
         builder.setPositiveButton("Confirm", new DialogInterface.OnClickListener() {
             @Override

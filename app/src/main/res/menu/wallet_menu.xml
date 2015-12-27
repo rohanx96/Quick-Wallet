@@ -2,7 +2,7 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
-        android:title="Clear History"
+        android:title="@string/clear_history"
         android:id="@+id/wallet_menu_clear_history"
         app:showAsAction="never"
         android:icon="@drawable/delete"

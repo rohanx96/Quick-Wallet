@@ -46,7 +46,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_toLeftOf="@id/type_radio_options"
-        android:text="Enter Amount"
+        android:text="@string/enter_amount"
         android:onClick="startCalCActivity"/>
     <RelativeLayout
         android:id="@+id/add_wallet_item_details"
@@ -91,13 +91,13 @@
             android:id="@+id/add_wallet_item_detail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="Enter Details (if required)" />
+            android:hint="@string/enter_details_hint" />
     </android.support.design.widget.TextInputLayout>
     <Button
         android:id="@+id/done_button_add_wallet_item"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        android:text="Add"
+        android:text="@string/add"
         android:onClick="onAddWalletItem"/>
 </RelativeLayout>
