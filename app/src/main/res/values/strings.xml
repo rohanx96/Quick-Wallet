@@ -56,6 +56,7 @@
     <string name="help_and_feedback">Help and Feedback</string>
     <string name="or">OR</string>
     <string name="skip">SKIP</string>
+    <string name="share">Share</string>
 
     <!--<string name="dev_banner_ad_unit_id">ca-app-pub-3940256099942544/6300978111</string>
     <string name="main_activity_banner_ad_unit_id">ca-app-pub-7975954632775689/1175277850</string>
@@ -117,6 +118,7 @@
     <string name="pref_change_pin">Change PIN</string>
     <string name="pref_help">Help and Feedback</string>
     <string name="pref_help_summary">Send an email to developer</string>
+    <string name="pref_share_summary">Share this application with your friends to easily manage transactions</string>
     <string name="pref_get_more">Get More</string>
     <string name="pref_get_more_summary">View developer\'s other work on Google Play</string>
     <string-array name="type_spinner_entries">
@@ -135,4 +137,6 @@
     <string name="tutorial_three_description">Create an account to send and receive notifications when transactions are added involving you</string>
     <string name="tutorial_four_description">View complete history. Click on a transaction to edit or delete it</string>
     <string name="tutorial_five_description">Manage your wallet. Keep track of your daily income and expenses</string>
+
+    <string name="share_msg_text">Quick Wallet\nhttps://play.google.com/store/apps/details?id=com.rose.quickwallet\nGet this application and we can easily manage our transactions</string>
 </resources>

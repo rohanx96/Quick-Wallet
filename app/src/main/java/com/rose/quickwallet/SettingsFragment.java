@@ -22,7 +22,9 @@ import com.rose.quickwallet.transactions.AddNewTransactionActivity;
 //import android.preference.SwitchPreference;
 
 /**
+ *
  * Created by rose on 16/8/15.
+ *
  */
 public class SettingsFragment extends PreferenceFragment implements SharedPreferences.OnSharedPreferenceChangeListener{
     @Override
@@ -47,6 +49,12 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
             Intent goCloud = new Intent(getActivity(), GoCloudActivity.class);
             accountSettings.setIntent(goCloud);
         };
+
+        Preference shareSetting = findPreference("shareApp");
+        Intent share = new Intent(Intent.ACTION_SEND);
+        share.setType("text/plain");
+        share.putExtra(Intent.EXTRA_TEXT,getString(R.string.share_msg_text));
+        shareSetting.setIntent(Intent.createChooser(share,"Share using"));
         /*final SwitchPreference securitySwitch = (SwitchPreference) findPreference("securitySwitch");
         securitySwitch.setOnPreferenceClickListener(new Preference.OnPreferenceClickListener() {
             @Override

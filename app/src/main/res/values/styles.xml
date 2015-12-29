@@ -33,5 +33,9 @@
         <item name="colorAccent">@color/colorPrimary</item>
     </style>
 
-    <style name="DemoTheme" parent="Theme.AppCompat"/>
+    <style name="SettingsTheme" parent="Theme.AppCompat.Light.DarkActionBar" >
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
 </resources>

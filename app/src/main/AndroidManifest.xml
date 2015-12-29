@@ -67,7 +67,7 @@
 
         <activity
             android:name=".SettingsActivity"
-            android:theme="@style/WalletTheme"/>
+            android:theme="@style/SettingsTheme"/>
 
         <!--This meta-data tag is required to use Google Play Services.-->
         <meta-data android:name="com.google.android.gms.version"
@@ -103,7 +103,7 @@
             android:screenOrientation="portrait"/>
 
         <activity android:name=".tutorial.TutorialActivity"
-            android:theme="@style/DemoTheme"/>
+            android:theme="@style/SettingsTheme"/>
         <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ End of activities ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
 
 

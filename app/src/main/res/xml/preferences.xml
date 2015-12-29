@@ -52,6 +52,11 @@
                 android:data="@string/email"/>-->
         </Preference>
         <Preference
+            android:title="@string/share"
+            android:summary="@string/pref_share_summary"
+            android:key="shareApp">
+        </Preference>
+        <Preference
             android:title="@string/pref_get_more"
             android:summary="@string/pref_get_more_summary">
             <intent
