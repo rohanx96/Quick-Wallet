@@ -490,16 +490,18 @@ public class MainActivity extends BaseActivity implements RecyclerViewCallback {
         if(ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.READ_CONTACTS) != PackageManager.PERMISSION_GRANTED){
             if(ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.READ_CONTACTS)){
                 android.support.v7.app.AlertDialog.Builder dialogBuilder = new android.support.v7.app.AlertDialog.Builder(this);
-                dialogBuilder.setMessage("The read contact permission is required to provide you with results from your contacts when adding transactions and to display the contact's name and image. No other detail from the contacts are read or used. Please grant the permission when prompted for proper functionality.")
-                        .setPositiveButton("Got it", new DialogInterface.OnClickListener() {
+                dialogBuilder.setMessage(getString(R.string.request_permissions_contacts))
+                        .setPositiveButton(getString(R.string.dlg_ok), new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
                                 dialog.dismiss();
+                                ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.READ_CONTACTS}, 2);
                             }
                         });
                 dialogBuilder.show();
             }
-            ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.READ_CONTACTS},2);
+            else
+                ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.READ_CONTACTS},2);
         }
     }
 

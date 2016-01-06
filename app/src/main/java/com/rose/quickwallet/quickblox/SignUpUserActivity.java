@@ -1,10 +1,15 @@
 package com.rose.quickwallet.quickblox;
 
+import android.Manifest;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.ActionBarActivity;
 import android.text.TextUtils;
 import android.view.View;
@@ -51,6 +56,7 @@ public class SignUpUserActivity extends ActionBarActivity {
             public void onError(List<String> errors) {
             }
         });
+        requestPermissions();
     }
 
     private void initUI() {
@@ -116,5 +122,24 @@ public class SignUpUserActivity extends ActionBarActivity {
     }
     public final boolean isValidEmail(CharSequence target) {
         return !TextUtils.isEmpty(target) && android.util.Patterns.EMAIL_ADDRESS.matcher(target).matches();
+    }
+
+    public void requestPermissions(){
+        if(ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.READ_PHONE_STATE) != PackageManager.PERMISSION_GRANTED){
+            if(ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.READ_PHONE_STATE)){
+                android.support.v7.app.AlertDialog.Builder dialogBuilder = new android.support.v7.app.AlertDialog.Builder(this);
+                dialogBuilder.setMessage(getString(R.string.request_permission_telephone))
+                        .setPositiveButton("Got it", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                                ActivityCompat.requestPermissions(SignUpUserActivity.this, new String[]{Manifest.permission.READ_PHONE_STATE}, 2);
+                            }
+                        });
+                dialogBuilder.show();
+            }
+            else
+                ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.READ_PHONE_STATE},2);
+        }
     }
 }

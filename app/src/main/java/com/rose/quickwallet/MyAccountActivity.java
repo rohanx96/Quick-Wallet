@@ -8,10 +8,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AlertDialog;
-//import android.support.v7.app.AppCompatDialog;
-//import android.view.Gravity;
 import android.text.InputType;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
@@ -31,6 +28,7 @@ import java.util.List;
 
 /**
  * Created by rose on 20/12/15.
+ *
  */
 public class MyAccountActivity extends Activity {
     SharedPreferences preferences;

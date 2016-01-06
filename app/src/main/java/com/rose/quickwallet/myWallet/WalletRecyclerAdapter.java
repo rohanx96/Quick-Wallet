@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
-import android.support.v7.internal.view.ContextThemeWrapper;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -147,7 +146,7 @@ public class WalletRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     }
 
     public void onItemClick(final int position){
-        android.support.v7.app.AlertDialog.Builder dialogBuilder= new android.support.v7.app.AlertDialog.Builder(new ContextThemeWrapper(context,R.style.myDialog));
+        android.support.v7.app.AlertDialog.Builder dialogBuilder= new android.support.v7.app.AlertDialog.Builder(context);
         dialogBuilder.setItems(R.array.transaction_click_dialog_options, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
