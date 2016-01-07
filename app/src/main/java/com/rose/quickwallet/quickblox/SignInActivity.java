@@ -105,8 +105,27 @@ public class SignInActivity extends Activity {
 
                         @Override
                         public void onError(List<String> errors) {
-                            progressDialog.hide();
-                            DialogUtils.showLong(getApplicationContext(), errors.get(0));
+                            // create session if already not created due to internet connectivity changed (unavailable in OnCreate)
+                            if(errors.get(0).equals("Token is required")){
+                                QBSettings.getInstance().fastConfigInit(Consts.APP_ID, Consts.AUTH_KEY, Consts.AUTH_SECRET);
+                                QBAuth.createSession(new QBEntityCallbackImpl<QBSession>() {
+                                    @Override
+                                    public void onSuccess(QBSession qbSession, Bundle bundle) {
+                                        progressDialog.hide();
+                                        Toast.makeText(SignInActivity.this, getString(R.string.toast_retry), Toast.LENGTH_LONG).show();
+                                    }
+
+                                    @Override
+                                    public void onError(List<String> errors) {
+                                        progressDialog.hide();
+                                        Toast.makeText(SignInActivity.this, getString(R.string.toast_check_internet), Toast.LENGTH_SHORT).show();
+                                    }
+                                });
+                            }
+                            else {
+                                progressDialog.hide();
+                                DialogUtils.showLong(getApplicationContext(), errors.get(0));
+                            }
                         }
                     });
                 }

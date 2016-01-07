@@ -635,24 +635,25 @@ public class AddNewTransactionActivity extends Activity {
         // if user signed up and contact not saved make the user choose the associated contact and send chat message
         if (contact == null && isSignedUp) {
             if(sendNotification) {
-                ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(context, R.layout.dialog_contact_choser_item);
-                arrayAdapter.addAll(phoneNos);
-                DialogPlus dialog = DialogPlus.newDialog(this)
-                        .setAdapter(arrayAdapter)
-                        .setOnItemClickListener(new OnItemClickListener() {
-                            @Override
-                            public void onItemClick(DialogPlus dialog, Object item, View view, int position) {
-                                Log.i("Position : ", Integer.toString(position));
-                                if (position == 0 || position == phoneNos.length + 1)
-                                    return;
-                                else {
-                                    phoneNos[position - 1] = phoneNos[position - 1].replaceAll("[^0-9+]", "");
-                                    contact = phoneNos[position - 1];
-                                    if (isSignedUp && opponentUserID == -1) {
-                                        //userNumber = 1;
-                                        //retrieveAllUsersFromPage(1);
-                                        getUserIDandSendMessage();
-                                    } else if (isSignedUp && opponentUserID != -1) {
+                if(phoneNos.length > 0) { // no contact choser dialog shown if no number found in the contact
+                    ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(context, R.layout.dialog_contact_choser_item);
+                    arrayAdapter.addAll(phoneNos);
+                    DialogPlus dialog = DialogPlus.newDialog(this)
+                            .setAdapter(arrayAdapter)
+                            .setOnItemClickListener(new OnItemClickListener() {
+                                @Override
+                                public void onItemClick(DialogPlus dialog, Object item, View view, int position) {
+                                    Log.i("Position : ", Integer.toString(position));
+                                    if (position == 0 || position == phoneNos.length + 1)
+                                        return;
+                                    else {
+                                        phoneNos[position - 1] = phoneNos[position - 1].replaceAll("[^0-9+]", "");
+                                        contact = phoneNos[position - 1];
+                                        if (isSignedUp && opponentUserID == -1) {
+                                            //userNumber = 1;
+                                            //retrieveAllUsersFromPage(1);
+                                            getUserIDandSendMessage();
+                                        } else if (isSignedUp && opponentUserID != -1) {
                                 /*Chat chat = new PrivateChatImpl(AddNewTransactionActivity.this, opponentUserID);
                                 try {
                                     chat.sendMessage(createChatMessage());
@@ -661,19 +662,24 @@ public class AddNewTransactionActivity extends Activity {
                                 } catch (SmackException sme) {
                                     Log.e("Mess", "failed to send a message", sme);
                                 }*/
-                                        //DialogUtils.showLong(context, "Sending chat message to " + opponentUserID);
-                                        databaseHelper.saveData(name, image_uri, amount, type, detail, contact, opponentUserID);
-                                        sendChatMessage(true);
+                                            //DialogUtils.showLong(context, "Sending chat message to " + opponentUserID);
+                                            databaseHelper.saveData(name, image_uri, amount, type, detail, contact, opponentUserID);
+                                            sendChatMessage(true);
+                                        }
+                                        dialog.dismiss();
                                     }
-                                    dialog.dismiss();
                                 }
-                            }
-                        })
-                        .setFooter(R.layout.dialog_contact_choser_footer)
-                        .setHeader(R.layout.dialog_contact_choser_header)
-                        .setPadding(10, 10, 10, 10)
-                        .create();
-                dialog.show();
+                            })
+                            .setFooter(R.layout.dialog_contact_choser_footer)
+                            .setHeader(R.layout.dialog_contact_choser_header)
+                            .setPadding(10, 10, 10, 10)
+                            .create();
+                    dialog.show();
+                }
+                else { // no number so just add transaction without sending notification
+                    databaseHelper.saveData(name, image_uri, amount, type, detail, contact, opponentUserID);
+                    resetDetailsAfterTransactionAdded();
+                }
             /*final android.support.v7.app.AlertDialog.Builder dialogBuilder = new android.support.v7.app.AlertDialog.Builder(this);
             LayoutInflater inflater = LayoutInflater.from(context);
             View view1 = inflater.inflate(R.layout.dialog_contact_choser_footer, null);
@@ -971,13 +977,14 @@ public class AddNewTransactionActivity extends Activity {
     private QBChatMessage createChatMessage() {
         QBChatMessage chatMessage = new QBChatMessage();
         String messageText = senderName + ":";
-        //if (type.equals("Lent") ) {
-        //    messageText += amount;
-        //} else
-            messageText += amount;
+        if (type.equals("Lent") ) {
+            messageText += getString(R.string.gcm_noti_lent_message) + "("+amount+")";
+        } else
+            messageText += getString(R.string.gcm_noti_borrowed_message) + "("+ -1*amount +")" ;
         if (detail != null && !detail.equals(""))
-            messageText += "#" + detail;
-        messageText += "*" + senderPhone;
+            messageText += "[" + detail + "]";
+        messageText+= getString(R.string.gcm_noti_end_message);
+        messageText += "\n<" + senderPhone +">";
         chatMessage.setBody(messageText);
         chatMessage.setProperty("save_to_history", "1");
         chatMessage.setDateSent(System.currentTimeMillis() / 1000);

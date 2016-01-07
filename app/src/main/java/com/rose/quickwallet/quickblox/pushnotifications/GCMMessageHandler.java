@@ -61,39 +61,51 @@ public class GCMMessageHandler extends GcmListenerService {
 
         NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
 
+        Intent addActivity = new Intent(this,AddNewTransactionActivity.class);
+
         final String messageValue = extras.getString("message");
-        String name ="";
-        String contact = "";
-        float amount = 0;
-        String details="";
+        String message="";
+
         if (messageValue != null) {
-            name = messageValue.substring(0, messageValue.indexOf(':'));
-            //Log.i("name ",name);
-            if(messageValue.indexOf('#')!= -1) { // checks if details are present in message
-                amount = Float.parseFloat(messageValue.substring(messageValue.indexOf(':') + 1, messageValue.indexOf('#')));
-                details = messageValue.substring(messageValue.indexOf('#') + 1, messageValue.indexOf('*'));
+            if (messageValue.indexOf('<') != -1) {
+                String name ="";
+                String contact = "";
+                float amount = 0;
+                String details="";
+                name = messageValue.substring(0, messageValue.indexOf(':'));
+                //Log.i("name ",name);
+                if (messageValue.indexOf('[') != -1) //{ // checks if details are present in message
+                    //amount = Float.parseFloat(messageValue.substring(messageValue.indexOf('(') + 1, messageValue.indexOf(')')));
+                    details = messageValue.substring(messageValue.indexOf('[') + 1, messageValue.indexOf(']'));
+                //} else
+                if(messageValue.contains("lent"))
+                    amount = Float.parseFloat(messageValue.substring(messageValue.indexOf('(') + 1, messageValue.indexOf(')')));
+                else
+                    amount = -1 * Float.parseFloat(messageValue.substring(messageValue.indexOf('(') + 1, messageValue.indexOf(')')));
+                //Log.i("amount notification ",Float.toString(amount));
+                //Log.i("details ",details);
+                contact = messageValue.substring(messageValue.indexOf('<') + 1,messageValue.indexOf('>'));
+                //Log.i("contact ",contact);
+
+                message = name + " : ";
+                if (amount < 0)
+                    message += getString(R.string.gcm_noti_borrowed_message) +  -1 * amount;
+                else message += getString(R.string.gcm_noti_lent_message) +  amount;
+                if (!details.equals(""))
+                    message += getString(R.string.gcm_noti_details_message) + details;
+                message += getString(R.string.gcm_noti_end_message);
+                addActivity.putExtra("action","addNotification");
+                addActivity.putExtra("contact",contact);
+                addActivity.putExtra("details",details);
+                addActivity.putExtra("amount",amount);
             }
-            else
-                amount = Float.parseFloat(messageValue.substring(messageValue.indexOf(':') + 1, messageValue.indexOf('*')));
-            //Log.i("amount notification ",Float.toString(amount));
-            //Log.i("details ",details);
-            contact = messageValue.substring(messageValue.indexOf('*')+1);
-            //Log.i("contact ",contact);
+            else{
+                message = messageValue;
+                addActivity.putExtra("action","generic");
+            }
         }
-        String message = name + " : ";
-        if(amount<0)
-            message +=getString(R.string.gcm_noti_borrowed_message) + -1*amount;
-        else message+=getString(R.string.gcm_noti_lent_message) + amount;
-        if(!details.equals(""))
-            message +=getString(R.string.gcm_noti_details_message) + details;
-        message+=getString(R.string.gcm_noti_end_message);
         /*Intent intent = new Intent(this, MainActivity.class);
         intent.putExtra(Consts.EXTRA_MESSAGE, messageValue);*/
-        Intent addActivity = new Intent(this,AddNewTransactionActivity.class);
-        addActivity.putExtra("action","addNotification");
-        addActivity.putExtra("contact",contact);
-        addActivity.putExtra("details",details);
-        addActivity.putExtra("amount",amount);
         addActivity.setAction("notificationID " + System.currentTimeMillis());
 
         PendingIntent contentIntent = PendingIntent.getActivity(this,ID, addActivity, 0);

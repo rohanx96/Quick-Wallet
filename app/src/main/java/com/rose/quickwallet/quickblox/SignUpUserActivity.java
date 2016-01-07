@@ -14,6 +14,7 @@ import android.support.v7.app.ActionBarActivity;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
 
 import com.quickblox.auth.QBAuth;
 import com.quickblox.auth.model.QBSession;
@@ -105,8 +106,27 @@ public class SignUpUserActivity extends ActionBarActivity {
 
                                 @Override
                                 public void onError(List<String> strings) {
-                                    progressDialog.hide();
-                                    DialogUtils.showLong(getApplicationContext(), strings.get(0));
+                                    // create session if already not created due to internet connectivity changed (unavailable in OnCreate)
+                                    if(strings.get(0).equals("Token is required")){
+                                        QBSettings.getInstance().fastConfigInit(Consts.APP_ID, Consts.AUTH_KEY, Consts.AUTH_SECRET);
+                                        QBAuth.createSession(new QBEntityCallbackImpl<QBSession>() {
+                                            @Override
+                                            public void onSuccess(QBSession qbSession, Bundle bundle) {
+                                                progressDialog.hide();
+                                                Toast.makeText(SignUpUserActivity.this, getString(R.string.toast_retry), Toast.LENGTH_LONG).show();
+                                            }
+
+                                            @Override
+                                            public void onError(List<String> errors) {
+                                                progressDialog.hide();
+                                                Toast.makeText(SignUpUserActivity.this, getString(R.string.toast_check_internet), Toast.LENGTH_SHORT).show();
+                                            }
+                                        });
+                                    }
+                                    else {
+                                        progressDialog.hide();
+                                        DialogUtils.showLong(getApplicationContext(), strings.get(0));
+                                    }
                                 }
                             });
                         } else

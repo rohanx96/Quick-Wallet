@@ -35,6 +35,8 @@
     <string name="toast_sent_notification">Sent Notification</string>
     <string name="toast_create_account">This feature requires you to create an account</string>
     <string name="toast_no_user">No user found with associated contact number</string>
+    <string name="toast_check_internet">Please check your internet connection</string>
+    <string name="toast_retry">Please try again</string>
     <string name="snackbar_balance_cleared_beg">Any pending balance with \</string>
     <string name="snackbar_balance_cleared_end">\  is now cleared.</string>
 
