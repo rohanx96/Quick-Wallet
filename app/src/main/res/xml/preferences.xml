@@ -42,7 +42,7 @@
     <PreferenceCategory android:title="@string/about">
         <Preference
             android:title="@string/version"
-            android:summary="4.0.qb.1"/>
+            android:summary="6.0.qb.2"/>
         <Preference
             android:title="@string/pref_help"
             android:summary="@string/pref_help_summary"
