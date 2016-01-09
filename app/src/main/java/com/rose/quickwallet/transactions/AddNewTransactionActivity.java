@@ -88,7 +88,7 @@ public class AddNewTransactionActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.add_transaction_activity);
+        setContentView(R.layout.activity_add_transaction);
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
         if (preferences.getBoolean("securitySwitch", false) && getIntent().getAction().equals("notification")) {
             Intent enterPassword = new Intent(this, EnterPinActivity.class);
@@ -96,11 +96,11 @@ public class AddNewTransactionActivity extends Activity {
             startActivity(enterPassword);
             finish();
         }
-        loadingView = (LoadingView) findViewById(R.id.add_transaction_loading_view);
+        //loadingView = (LoadingView) findViewById(R.id.add_transaction_loading_view);
         context = getApplicationContext();
         databaseHelper = new DatabaseHelper(this);
         //getWindow().setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, convertDPToPx(context, 305)); //440px -294dp
-        getWindow().setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, convertDPToPx(context, 345)); //440px -294dp
+        //getWindow().setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, convertDPToPx(context, 345)); //440px -294dp
         //getWindow().setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, convertDPToPx(context, 365)); //440px -294dp
         setupSearchView();
         isSignedUp = preferences.getBoolean(Consts.IS_SIGNED_UP, false);
@@ -149,6 +149,8 @@ public class AddNewTransactionActivity extends Activity {
         // Initialization when activity started through particular contact add action
         if (getIntent().getStringExtra("action").equals("add")) {
             name = getIntent().getStringExtra(SearchManager.QUERY);
+            RelativeLayout relativeLayout =(RelativeLayout) findViewById(R.id.no_name_details);
+            relativeLayout.setVisibility(View.GONE);
             RelativeLayout linearLayout = (RelativeLayout) findViewById(R.id.contact_details);
             TextView contactName = (TextView) linearLayout.findViewById(R.id.contact_detail_name);
             contactName.setText(name);
@@ -184,6 +186,8 @@ public class AddNewTransactionActivity extends Activity {
                             @Override
                             public void run() {
                                 //Following code copied from getContactImageAndNumbers
+                                RelativeLayout relativeLayout =(RelativeLayout) findViewById(R.id.no_name_details);
+                                relativeLayout.setVisibility(View.GONE);
                                 RelativeLayout linearLayout = (RelativeLayout) findViewById(R.id.contact_details);
                                 TextView contactName = (TextView) linearLayout.findViewById(R.id.contact_detail_name);
                                 contactName.setText(name);
