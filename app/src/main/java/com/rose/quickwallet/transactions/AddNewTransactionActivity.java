@@ -20,6 +20,7 @@ import android.util.TypedValue;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
+import android.view.animation.AlphaAnimation;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
@@ -28,7 +29,7 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.FilterQueryProvider;
 import android.widget.ImageView;
-import android.widget.RadioGroup;
+//import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
@@ -83,6 +84,11 @@ public class AddNewTransactionActivity extends Activity {
     private LoadingView loadingView;
     private SimpleCursorAdapter simpleCursorAdapter;
     AutoCompleteTextView searchText;
+    private TextView txtResult; // Reference to EditText of result
+    private float result = 0;     // Result of computation
+    private String inStr = "0"; // Current input string
+    // Previous operator: '+', '-', '*', '/', '=' or ' ' (no operator)
+    private char lastOperator = ' ';
 
     //private int READ_CONTACT_PERMISSION_CODE = 2;
     @Override
@@ -99,6 +105,7 @@ public class AddNewTransactionActivity extends Activity {
         //loadingView = (LoadingView) findViewById(R.id.add_transaction_loading_view);
         context = getApplicationContext();
         databaseHelper = new DatabaseHelper(this);
+        setupCalc();
         //getWindow().setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, convertDPToPx(context, 305)); //440px -294dp
         //getWindow().setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, convertDPToPx(context, 345)); //440px -294dp
         //getWindow().setLayout(ViewGroup.LayoutParams.WRAP_CONTENT, convertDPToPx(context, 365)); //440px -294dp
@@ -215,30 +222,30 @@ public class AddNewTransactionActivity extends Activity {
             //Following code copied from onActivityResult
             if (amount > 0) {
                 type = "Borrowed";
-                RadioGroup group = (RadioGroup) findViewById(R.id.type_options);
-                group.check(R.id.radio_button_borrowed);
+                //RadioGroup group = (RadioGroup) findViewById(R.id.type_options);
+                //group.check(R.id.radio_button_borrowed);
             }
             else
                 amount = -1* amount;
-            Button amountView = (Button) findViewById(R.id.amount_edit_text_layout);
-            RelativeLayout relativeLayout = (RelativeLayout) findViewById(R.id.money_details);
-            TextView textView = (TextView) relativeLayout.findViewById(R.id.money_detail_balance);
+            //Button amountView = (Button) findViewById(R.id.amount_edit_text_layout);
+            //RelativeLayout relativeLayout = (RelativeLayout) findViewById(R.id.money_details);
+            TextView textView = (TextView) findViewById(R.id.money_detail_balance);
             textView.setText(getString(R.string.amount_colon) + amount);
             textView = (TextView) findViewById(R.id.money_detail_name);
             textView.setText(type);
-            amountView.setText(getString(R.string.amount_colon) + amount);
-            amountView.setTextColor(Color.BLACK);
+            //amountView.setText(getString(R.string.amount_colon) + amount);
+            //amountView.setTextColor(Color.BLACK);
             if (type.equals("Lent")) {
                 textView.setTextColor(setColorGreen());
             } else {
                 textView.setTextColor(setColorRed());
             }
-            if (name == null)
+            /*if (name == null)
                 getWindow().setLayout(WindowManager.LayoutParams.WRAP_CONTENT, convertDPToPx(context, 430));//560px - 374dp
             else {
                 getWindow().setLayout(WindowManager.LayoutParams.WRAP_CONTENT, convertDPToPx(context, 525)); //740px - 494dp
-            }
-            relativeLayout.setVisibility(View.VISIBLE);
+            }*/
+            //relativeLayout.setVisibility(View.VISIBLE);
             //Set details in detail edit text
             detail = getIntent().getStringExtra("details");
             EditText detailsText = (EditText) findViewById(R.id.details_edit_text);
@@ -309,7 +316,7 @@ public class AddNewTransactionActivity extends Activity {
         }
     }*/
 
-    @Override
+    /*@Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == 234) {
             Button amountView = (Button) findViewById(R.id.amount_edit_text_layout);
@@ -362,7 +369,7 @@ public class AddNewTransactionActivity extends Activity {
             } else if (resultCode == RESULT_CANCELED) {
             }
         }
-    }
+    }*/
 
     private void setupSearchView() {
         /*SearchManager searchManager = (SearchManager) getSystemService(Context.SEARCH_SERVICE);
@@ -395,6 +402,9 @@ public class AddNewTransactionActivity extends Activity {
                 image_uri = null;
                 searchText.setText("");
                 getContactImageAndNumbers();
+                RelativeLayout relativeLayout = (RelativeLayout) findViewById(R.id.no_name_details);
+                relativeLayout.setVisibility(View.GONE);
+                relativeLayout.startAnimation(new AlphaAnimation(1.0f, 0.0f));
                 RelativeLayout linearLayout = (RelativeLayout) findViewById(R.id.contact_details);
                 TextView contactName = (TextView) linearLayout.findViewById(R.id.contact_detail_name);
                 contactName.setText(name);
@@ -512,6 +522,9 @@ public class AddNewTransactionActivity extends Activity {
             //TextView balanceDetail = (TextView)linearLayout.findViewById(R.id.contact_detail_balance);
             balance = databaseHelper.getBalance(name);
             setBalanceText(balance);
+            RelativeLayout relativeLayout = (RelativeLayout) findViewById(R.id.no_name_details);
+            relativeLayout.setVisibility(View.GONE);
+            relativeLayout.startAnimation(new AlphaAnimation(1.0f, 0.0f));
             linearLayout.setVisibility(View.VISIBLE);
         }
     }
@@ -608,17 +621,17 @@ public class AddNewTransactionActivity extends Activity {
     }*/
 
     public void onAdd(View view) {
-        Button amountLayout = (Button) findViewById(R.id.amount_edit_text_layout);
+        //Button amountLayout = (Button) findViewById(R.id.amount_edit_text_layout);
         if (name == null || name.equals("")) {
             Toast.makeText(getApplicationContext(), getString(R.string.toast_help_enter_name), Toast.LENGTH_LONG).show();
             return;
         }
         if (amount == 0) {
-            amountLayout.setTextColor(Color.RED);
+            //amountLayout.setTextColor(Color.RED);
             Toast.makeText(this, getString(R.string.enter_amount), Toast.LENGTH_SHORT).show();
             return;
         }
-        loadingView.setLoading(true);
+        //loadingView.setLoading(true);
         //CheckBox notification = (CheckBox) findViewById(R.id.checkbox_send_notification);
         //sendNotification = notification.isChecked();
         //------------databaseHelper = new DatabaseHelper(getApplicationContext());
@@ -782,20 +795,20 @@ public class AddNewTransactionActivity extends Activity {
             balanceDetail.setTextColor(setColorRed());
             //Button clearBalance = (Button) findViewById(R.id.clear_balance_button);
             //clearBalance.setVisibility(View.VISIBLE);
-            if (amount == 0) {
+            /*if (amount == 0) {
                 getWindow().setLayout(WindowManager.LayoutParams.WRAP_CONTENT, convertDPToPx(context, 442));// 640px -427dp
             } else
-                getWindow().setLayout(WindowManager.LayoutParams.WRAP_CONTENT, convertDPToPx(context, 525));
+                getWindow().setLayout(WindowManager.LayoutParams.WRAP_CONTENT, convertDPToPx(context, 525));*/
         }
         if (balance > 0) {
             balanceDetail.setText(getString(R.string.pending_balance_line) + getString(R.string.lent_colon) + Float.toString(balance));
             balanceDetail.setTextColor(setColorGreen());
             //Button clearBalance = (Button) findViewById(R.id.clear_balance_button);
             //clearBalance.setVisibility(View.VISIBLE);
-            if (amount == 0) {
+            /*if (amount == 0) {
                 getWindow().setLayout(WindowManager.LayoutParams.WRAP_CONTENT, convertDPToPx(context, 442)); //640
             } else
-                getWindow().setLayout(WindowManager.LayoutParams.WRAP_CONTENT, convertDPToPx(context, 525));
+                getWindow().setLayout(WindowManager.LayoutParams.WRAP_CONTENT, convertDPToPx(context, 525));*/
         }
         if (balance == 0) {
             balanceDetail.setText(getString(R.string.no_balance));
@@ -806,10 +819,10 @@ public class AddNewTransactionActivity extends Activity {
                 getWindow().setLayout(WindowManager.LayoutParams.WRAP_CONTENT, convertDPToPx(context, 390)); //560
             } else
                 getWindow().setLayout(WindowManager.LayoutParams.WRAP_CONTENT, convertDPToPx(context, 485));*/
-            if (amount == 0) {
+            /*if (amount == 0) {
                 getWindow().setLayout(WindowManager.LayoutParams.WRAP_CONTENT, convertDPToPx(context, 442)); //640
             } else
-                getWindow().setLayout(WindowManager.LayoutParams.WRAP_CONTENT, convertDPToPx(context, 525));
+                getWindow().setLayout(WindowManager.LayoutParams.WRAP_CONTENT, convertDPToPx(context, 525));*/
         }
     }
 
@@ -1014,7 +1027,7 @@ public class AddNewTransactionActivity extends Activity {
 
             @Override
             public void onError(List<String> errors) {
-                if(errors.toString().equals("[Connection failed. Please check your internet connection.]")) {
+                if (errors.toString().equals("[Connection failed. Please check your internet connection.]")) {
                     PendingNotificationsDatabaseHelper databaseHelper = new PendingNotificationsDatabaseHelper(getApplicationContext());
                     databaseHelper.insertNotification(msg.getBody(), msg.getRecipientId());
                     databaseHelper.closeDatabase();
@@ -1089,31 +1102,31 @@ public class AddNewTransactionActivity extends Activity {
     }
 
     private void resetDetailsAfterTransactionAdded() {
-        loadingView.setLoading(false);
+        //loadingView.setLoading(false);
         if(amount<0)
             Snackbar.make(findViewById(R.id.new_transaction), "Added Transaction: " + type + " " + name + " " + -1*amount, Snackbar.LENGTH_SHORT).show();
         else
             Snackbar.make(findViewById(R.id.new_transaction), "Added Transaction: " + type + " " + name + " " + amount, Snackbar.LENGTH_SHORT).show();
-        Button amountLayout = (Button) findViewById(R.id.amount_edit_text_layout);
+        //Button amountLayout = (Button) findViewById(R.id.amount_edit_text_layout);
         // Set amounts and other details to null and resize the dialog
-        amountLayout.setText(getString(R.string.enter_amount));
-        amountLayout.setTextColor(Color.BLACK);
+        //amountLayout.setText(getString(R.string.enter_amount));
+        //amountLayout.setTextColor(Color.BLACK);
         balance = balance + amount;
         setBalanceText(balance);
         amount = 0;
         contact = null;
         EditText detailText = (EditText) findViewById(R.id.details_edit_text);
         detailText.setText(null);
-        RelativeLayout relativeLayout = (RelativeLayout) findViewById(R.id.money_details);
-        relativeLayout.setVisibility(View.GONE);
-        if (name == null)
+        //RelativeLayout relativeLayout = (RelativeLayout) findViewById(R.id.money_details);
+        //relativeLayout.setVisibility(View.GONE);
+        /*if (name == null)
             getWindow().setLayout(WindowManager.LayoutParams.WRAP_CONTENT, convertDPToPx(context, 305));//440px -294dp hdpi
         else {
             if (balance == 0)
                 getWindow().setLayout(WindowManager.LayoutParams.WRAP_CONTENT, convertDPToPx(context, 390));//560px - 374dp
             else
                 getWindow().setLayout(WindowManager.LayoutParams.WRAP_CONTENT, convertDPToPx(context, 440));//640px -427dp
-        }
+        }*/
     }
 
     public void onCheckboxClick(View view){
@@ -1123,6 +1136,137 @@ public class AddNewTransactionActivity extends Activity {
         else {
             checkBox.setChecked(false);
             Toast.makeText(this, getString(R.string.toast_create_account), Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    public void setupCalc(){
+        // Retrieve a reference to the EditText field for displaying the result.
+        txtResult = (TextView) findViewById(R.id.money_detail_balance);
+        txtResult.setText("0");
+
+        // Register listener (this class) for all the buttons
+        BtnListener listener = new BtnListener();
+        ((Button) findViewById(R.id.btnNum0Id)).setOnClickListener(listener);
+        ((Button) findViewById(R.id.btnNum1Id)).setOnClickListener(listener);
+        ((Button) findViewById(R.id.btnNum2Id)).setOnClickListener(listener);
+        ((Button) findViewById(R.id.btnNum3Id)).setOnClickListener(listener);
+        ((Button) findViewById(R.id.btnNum4Id)).setOnClickListener(listener);
+        ((Button) findViewById(R.id.btnNum5Id)).setOnClickListener(listener);
+        ((Button) findViewById(R.id.btnNum6Id)).setOnClickListener(listener);
+        ((Button) findViewById(R.id.btnNum7Id)).setOnClickListener(listener);
+        ((Button) findViewById(R.id.btnNum8Id)).setOnClickListener(listener);
+        ((Button) findViewById(R.id.btnNum9Id)).setOnClickListener(listener);
+        ((Button) findViewById(R.id.btnAddId)).setOnClickListener(listener);
+        ((Button) findViewById(R.id.btnSubId)).setOnClickListener(listener);
+        ((Button) findViewById(R.id.btnMulId)).setOnClickListener(listener);
+        ((Button) findViewById(R.id.btnDivId)).setOnClickListener(listener);
+        ((Button) findViewById(R.id.btnClearId)).setOnClickListener(listener);
+        ((Button) findViewById(R.id.btnEqualId)).setOnClickListener(listener);
+        ((Button) findViewById(R.id.btnDecimal)).setOnClickListener(listener);
+        ((Button) findViewById(R.id.btnDelId)).setOnClickListener(listener);
+    }
+
+    private class BtnListener implements View.OnClickListener {
+        // On-click event handler for all the buttons
+        @Override
+        public void onClick(View view) {
+            switch (view.getId()) {
+                // Number buttons: '0' to '9'
+                case R.id.btnNum0Id:
+                case R.id.btnNum1Id:
+                case R.id.btnNum2Id:
+                case R.id.btnNum3Id:
+                case R.id.btnNum4Id:
+                case R.id.btnNum5Id:
+                case R.id.btnNum6Id:
+                case R.id.btnNum7Id:
+                case R.id.btnNum8Id:
+                case R.id.btnNum9Id:
+                case R.id.btnDecimal:
+                    String inDigit = ((Button) view).getText().toString();
+                    if(!inStr.contains(".")){
+                        if (inStr.equals("0")) {
+                            inStr = inDigit; // no leading zero
+                        }
+                        else {
+                            inStr += inDigit; // accumulate input digit
+                        }
+                    }
+                    else {
+                        inStr += inDigit; // accumulate input digit
+                    }
+                    txtResult.setText(inStr);
+                    // Clear buffer if last operator is '='
+                    if (lastOperator == '=') {
+                        result = 0;
+                        lastOperator = ' ';
+                    }
+                    break;
+
+                // Operator buttons: '+', '-', '*', '/' and '='
+                case R.id.btnAddId:
+                    compute();
+                    lastOperator = '+';
+                    break;
+                case R.id.btnSubId:
+                    compute();
+                    lastOperator = '-';
+                    break;
+                case R.id.btnMulId:
+                    compute();
+                    lastOperator = '*';
+                    break;
+                case R.id.btnDivId:
+                    compute();
+                    lastOperator = '/';
+                    break;
+                case R.id.btnEqualId:
+                    compute();
+                    lastOperator = '=';
+                    break;
+
+                // Clear button
+                case R.id.btnClearId:
+                    result = 0;
+                    inStr = "0";
+                    lastOperator = ' ';
+                    txtResult.setText("0");
+                    break;
+                case R.id.btnDelId:
+                    if(inStr.length()>1)
+                        inStr = inStr.substring(0,inStr.length()-1);
+                    else if(inStr.length()==1)
+                        inStr = "0";
+                    txtResult.setText(inStr);
+                    break;
+            }
+        }
+
+        // User pushes '+', '-', '*', '/' or '=' button.
+        // Perform computation on the previous result and the current input number,
+        // based on the previous operator.
+        private void compute() {
+            float inNum = Float.parseFloat(inStr);
+            inStr = "0";
+            if (lastOperator == ' ') {
+                result = inNum;
+            } else if (lastOperator == '+') {
+                result += inNum;
+            } else if (lastOperator == '-') {
+                result -= inNum;
+            } else if (lastOperator == '*') {
+                result *= inNum;
+            } else if (lastOperator == '/') {
+                result /= inNum;
+            } else if (lastOperator == '=') {
+                // Keep the result for the next operation
+            }
+            txtResult.setText(String.valueOf(result));
+            TextView amountType = (TextView) findViewById(R.id.money_detail_name);
+            if(result<0)
+                amountType.setText(getString(R.string.borrowed));
+            else
+                amountType.setText(getString(R.string.lent));
         }
     }
 

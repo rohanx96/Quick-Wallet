@@ -41,7 +41,7 @@
         <activity android:name=".transactions.AddNewTransactionActivity"
             android:permission="android.permission.READ_CONTACTS"
             android:launchMode="singleTop"
-            android:theme="@style/Theme.AppCompat.Light.Dialog"
+            android:theme="@style/WalletTheme"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH"/>

@@ -8,14 +8,14 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_marginPercent="4%"
-        app:layout_marginBottomPercent="1%"
         app:layout_widthPercent="100%"
+        app:layout_heightPercent="45%"
         app:cardBackgroundColor="@color/white"
         app:cardElevation="6dp">
         <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center">
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
             <RelativeLayout
                 android:id="@+id/no_name_details"
                 android:layout_width="match_parent"
@@ -24,8 +24,9 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp">
                 <ImageView
-                    android:layout_width="70dp"
-                    android:layout_height="70dp"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:padding="5dp"
                     android:id="@+id/no_contact_image"
                     android:src="@drawable/contact_no_image"
                     android:layout_alignParentLeft="true"
@@ -37,7 +38,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true"
                     android:imeOptions="actionSearch"
-                    android:layout_marginLeft="25dp"
+                    android:layout_marginLeft="15dp"
                     android:imeActionLabel="Done"
                     android:background="@color/white"
                     android:hint="@string/enter_name" />
@@ -48,7 +49,6 @@
                     android:layout_alignParentRight="true"
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
-                    android:padding="5dp"
                     android:src="@drawable/ic_send"
                     android:background="?attr/selectableItemBackground"
                     android:onClick="onClickSearch"/>
@@ -61,8 +61,9 @@
                 android:visibility="invisible"
                 android:padding="10dp">
                 <ImageView
-                    android:layout_width="70dp"
-                    android:layout_height="70dp"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:padding="5dp"
                     android:id="@+id/contact_detail_image"
                     android:adjustViewBounds="true" />
                 <TextView
@@ -82,69 +83,94 @@
                     android:layout_toRightOf="@+id/contact_detail_image"/>
             </RelativeLayout>
 
-        </RelativeLayout>
-
-    </android.support.v7.widget.CardView>
-
-    <android.support.v7.widget.CardView
-        android:id="@+id/details_card"
-        android:layout_below="@id/name_card"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:layout_marginTopPercent="1%"
-        app:layout_marginBottomPercent="1%"
-        app:layout_marginPercent="4%"
-        app:layout_heightPercent="8%"
-        app:cardBackgroundColor="@color/white"
-        app:cardElevation="6dp">
-    <EditText
-        android:id="@+id/details_edit_text"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/checkbox_send_notification"
-        android:hint="@string/enter_details_hint"
-        android:layout_gravity="center_vertical"
-        android:layout_marginLeft="10dp"
-        android:layout_marginRight="10dp"
-        android:maxLines="1" />
-        </android.support.v7.widget.CardView>
-    <android.support.v7.widget.CardView
-        android:id="@+id/checkbox_card"
-        android:layout_below="@id/details_card"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_centerHorizontal="true"
-        app:layout_marginPercent="4%"
-        app:layout_marginTopPercent="1%"
-        app:layout_heightPercent="8%"
-        app:cardBackgroundColor="@color/white"
-        app:cardElevation="6dp">
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"
-            android:gravity="center"
-            android:layout_gravity="center">
+            <EditText
+                android:id="@+id/details_edit_text"
+                android:layout_below="@id/contact_details"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="@string/enter_details_hint"
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:maxLines="1" />
             <CheckBox
                 android:id="@+id/checkbox_send_notification"
+                android:layout_below="@id/details_edit_text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:padding="5dp"
+                android:layout_centerHorizontal="true"
                 android:checked="false"
                 android:onClick="onCheckboxClick"
                 android:text="@string/send_notification">
             </CheckBox>
-        </LinearLayout>
+            <RelativeLayout
+                android:id="@+id/money_details"
+                android:layout_below="@id/checkbox_send_notification"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:padding="10dp">
+                <ImageView
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:id="@+id/money_detail_image"
+                    android:adjustViewBounds="true"
+                    android:src="@drawable/money_icon"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/money_detail_name"
+                    android:textSize="15sp"
+                    android:textStyle="bold"
+                    android:layout_centerVertical="true"
+                    android:text="@string/amount_colon"
+                    android:layout_marginLeft="20dp"
+                    android:layout_toRightOf="@+id/money_detail_image"/>
+                <TextView
+                    android:id="@+id/money_detail_balance"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:layout_centerVertical="true"
+                    android:gravity="end"
+                    android:layout_toRightOf="@+id/money_detail_name"
+                    android:text="0"
+                    android:textSize="20sp"
+                    android:padding="10dp"/>
+            </RelativeLayout>
+            </RelativeLayout>
     </android.support.v7.widget.CardView>
-    <android.support.v7.widget.CardView
+
+    <!--<android.support.v7.widget.CardView
+        android:id="@+id/details_card"
+        android:layout_below="@id/name_card"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_marginTopPercent="0%"
+        app:layout_marginBottomPercent="0%"
+        app:layout_marginPercent="4%"
+        app:layout_heightPercent="22%"
+        app:cardBackgroundColor="@color/white"
+        app:cardElevation="6dp">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
+            android:orientation="vertical"
+            android:gravity="center_horizontal"
+            android:layout_gravity="center_horizontal">
+        </LinearLayout>
+        </android.support.v7.widget.CardView>-->
+
+    <!--<android.support.v7.widget.CardView
         android:id="@+id/amount_card"
         android:layout_above="@+id/tableId"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         app:cardBackgroundColor="@color/white"
         app:layout_marginPercent="4%"
-        app:layout_heightPercent="13%"
+        app:layout_heightPercent="15%"
         app:layout_widthPercent="100%"
         app:cardElevation="6dp">
         <RelativeLayout
@@ -152,7 +178,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
-            android:layout_below="@id/type_options"
             android:padding="10dp">
             <ImageView
                 android:layout_width="70dp"
@@ -167,21 +192,21 @@
                 android:textSize="15sp"
                 android:textStyle="bold"
                 android:layout_centerVertical="true"
-                android:text="@string/enter_amount"
+                android:text="@string/amount_colon"
                 android:layout_marginLeft="20dp"
                 android:layout_toRightOf="@+id/money_detail_image"/>
             <TextView
-                android:id="@+id/txtResultId"
+                android:id="@+id/money_detail_balance"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@color/white"
                 android:gravity="end|center_vertical"
                 android:layout_toRightOf="@+id/money_detail_name"
                 android:text="0"
-                android:textSize="25sp"
+                android:textSize="20sp"
                 android:padding="10dp"/>
         </RelativeLayout>
-        </android.support.v7.widget.CardView>
+        </android.support.v7.widget.CardView>-->
 
     <!--<LinearLayout
         android:id="@+id/calc_divider"
@@ -197,7 +222,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:layout_widthPercent="63%"
-            app:layout_heightPercent="33%"
+            app:layout_heightPercent="39%"
             android:layout_weight="3">
             <TableRow
                 android:layout_height="match_parent"
@@ -206,6 +231,8 @@
                 <android.support.v7.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    app:cardCornerRadius="0dp"
+                    app:cardElevation="0dp"
                     android:layout_weight="4"
                     app:cardBackgroundColor="@color/white">
                     <Button
@@ -222,6 +249,8 @@
                 <android.support.v7.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    app:cardCornerRadius="0dp"
+                    app:cardElevation="0dp"
                     android:layout_weight="1"
                     app:cardBackgroundColor="@color/white">
                     <Button
@@ -236,6 +265,8 @@
                 <android.support.v7.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    app:cardCornerRadius="0dp"
+                    app:cardElevation="0dp"
                     android:layout_weight="1"
                     app:cardBackgroundColor="@color/white">
                     <Button
@@ -250,6 +281,8 @@
                 <android.support.v7.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    app:cardCornerRadius="0dp"
+                    app:cardElevation="0dp"
                     android:layout_weight="1"
                     app:cardBackgroundColor="@color/white">
                     <Button
@@ -268,6 +301,8 @@
                 <android.support.v7.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    app:cardCornerRadius="0dp"
+                    app:cardElevation="0dp"
                     android:layout_weight="1"
                     app:cardBackgroundColor="@color/white">
                     <Button
@@ -282,6 +317,8 @@
                 <android.support.v7.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    app:cardCornerRadius="0dp"
+                    app:cardElevation="0dp"
                     android:layout_weight="1"
                     app:cardBackgroundColor="@color/white">
                     <Button
@@ -296,6 +333,8 @@
                 <android.support.v7.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    app:cardCornerRadius="0dp"
+                    app:cardElevation="0dp"
                     android:layout_weight="1"
                     app:cardBackgroundColor="@color/white">
                     <Button
@@ -314,6 +353,8 @@
                 <android.support.v7.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    app:cardCornerRadius="0dp"
+                    app:cardElevation="0dp"
                     android:layout_weight="1"
                     app:cardBackgroundColor="@color/white">
                     <Button
@@ -328,6 +369,8 @@
                 <android.support.v7.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    app:cardCornerRadius="0dp"
+                    app:cardElevation="0dp"
                     android:layout_weight="1"
                     app:cardBackgroundColor="@color/white">
                     <Button
@@ -342,6 +385,8 @@
                 <android.support.v7.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    app:cardCornerRadius="0dp"
+                    app:cardElevation="0dp"
                     android:layout_weight="1"
                     app:cardBackgroundColor="@color/white">
                     <Button
@@ -349,6 +394,8 @@
                         android:text="3"
                         android:layout_width="fill_parent"
                         android:layout_height="match_parent"
+                        app:cardCornerRadius="0dp"
+                        app:cardElevation="0dp"
                         android:layout_weight="1"
                         android:background="?attr/selectableItemBackground"
                         android:textSize="@dimen/calc_button_txt_size"/>
@@ -360,6 +407,8 @@
                 <android.support.v7.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    app:cardCornerRadius="0dp"
+                    app:cardElevation="0dp"
                     android:layout_weight="1"
                     app:cardBackgroundColor="@color/white">
                     <Button
@@ -367,12 +416,16 @@
                         android:text="0"
                         android:layout_width="fill_parent"
                         android:layout_height="match_parent"
+                        app:cardCornerRadius="0dp"
+                        app:cardElevation="0dp"
                         android:background="?attr/selectableItemBackground"
                         android:textSize="@dimen/calc_button_txt_size"/>
                 </android.support.v7.widget.CardView>
                 <android.support.v7.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    app:cardCornerRadius="0dp"
+                    app:cardElevation="0dp"
                     android:layout_weight="1"
                     app:cardBackgroundColor="@color/white">
                     <Button
@@ -386,6 +439,8 @@
                 <android.support.v7.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    app:cardCornerRadius="0dp"
+                    app:cardElevation="0dp"
                     android:layout_weight="1"
                     app:cardBackgroundColor="@color/white">
                     <Button
@@ -404,7 +459,7 @@
             android:layout_toRightOf="@id/tableId"
             android:layout_above="@+id/calc_action_buttons"
             android:layout_width="match_parent"
-            app:layout_heightPercent="33%"
+            app:layout_heightPercent="39%"
             android:layout_height="match_parent"
             app:layout_widthPercent="21%"
             android:layout_weight="1"
@@ -412,6 +467,8 @@
             <android.support.v7.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                app:cardCornerRadius="0dp"
+                app:cardElevation="0dp"
                 android:layout_weight="1"
                 android:clickable="true"
                 app:cardBackgroundColor="@color/white">
@@ -427,6 +484,8 @@
             <android.support.v7.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                app:cardCornerRadius="0dp"
+                app:cardElevation="0dp"
                 android:layout_weight="1"
                 app:cardBackgroundColor="@color/white">
                 <Button
@@ -442,6 +501,8 @@
             <android.support.v7.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                app:cardCornerRadius="0dp"
+                app:cardElevation="0dp"
                 android:layout_weight="1"
                 app:cardBackgroundColor="@color/white">
                 <Button
@@ -457,6 +518,8 @@
             <android.support.v7.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                app:cardCornerRadius="0dp"
+                app:cardElevation="0dp"
                 android:layout_weight="1"
                 app:cardBackgroundColor="@color/white">
                 <Button
@@ -464,6 +527,8 @@
                     android:text="+"
                     android:layout_width="fill_parent"
                     android:layout_height="match_parent"
+                    app:cardCornerRadius="0dp"
+                    app:cardElevation="0dp"
                     android:layout_weight="1"
                     android:background="?attr/selectableItemBackground"
                     android:textColor="@color/colorPrimary"
@@ -472,6 +537,8 @@
             <android.support.v7.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
+                app:cardCornerRadius="0dp"
+                app:cardElevation="0dp"
                 android:layout_weight="1"
                 app:cardBackgroundColor="@color/colorPrimary">
                 <Button
@@ -494,7 +561,7 @@
         android:layout_toRightOf="@id/calc_operation_buttons"
         android:layout_above="@+id/calc_action_buttons"
         android:layout_width="match_parent"
-        app:layout_heightPercent="33%"
+        app:layout_heightPercent="39%"
         android:layout_height="match_parent"
         app:layout_widthPercent="16%"
         android:layout_weight="1"
@@ -502,30 +569,36 @@
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        app:cardCornerRadius="0dp"
+        app:cardElevation="0dp"
         android:layout_weight="1"
         android:clickable="true"
         app:cardBackgroundColor="@color/white">
         <Button
-            android:id="@+id/lent"
+            android:id="@+id/radio_button_lent"
             android:text="L\ne\nn\nt"
             android:layout_width="fill_parent"
             android:layout_height="match_parent"
             android:background="?attr/selectableItemBackground"
-            android:textColor="@color/colorPrimary" />
+            android:textColor="@color/colorPrimary"
+            android:onClick="onTypeRadioButtonSelected"/>
     </android.support.v7.widget.CardView>
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        app:cardCornerRadius="0dp"
+        app:cardElevation="0dp"
         android:layout_weight="1"
         app:cardBackgroundColor="@color/white">
         <Button
-            android:id="@+id/borrowed"
-            android:text="B\no\nr\n\r\no\nw"
+            android:id="@+id/radio_button_borrowed"
+            android:text="B\no\nr\nr\no\nw"
             android:layout_width="fill_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:background="?attr/selectableItemBackground"
-            android:textColor="@color/colorPrimary"/>
+            android:textColor="@color/colorPrimary"
+            android:onClick="onTypeRadioButtonSelected"/>
     </android.support.v7.widget.CardView>
     </LinearLayout>
 
@@ -556,6 +629,6 @@
             android:id="@+id/button2"
             android:layout_weight="1"
             android:background="@color/white"
-            android:onClick="onDone"/>
+            android:onClick="onAdd"/>
     </LinearLayout>
 </android.support.percent.PercentRelativeLayout>
