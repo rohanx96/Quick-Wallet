@@ -1,15 +1,22 @@
 <android.support.percent.PercentRelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/new_transaction"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/colorPrimary">
-    <android.support.v7.widget.CardView
-        android:id="@+id/name_card"
+
+    <io.codetail.widget.RevealFrameLayout
+        android:id="@+id/name_card_ripple"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_marginPercent="4%"
         app:layout_widthPercent="100%"
-        app:layout_heightPercent="45%"
+        app:layout_heightPercent="45%">
+    <android.support.v7.widget.CardView
+        android:id="@+id/name_card"
+        android:visibility="invisible"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         app:cardBackgroundColor="@color/white"
         app:cardElevation="6dp">
         <RelativeLayout
@@ -140,6 +147,7 @@
             </RelativeLayout>
             </RelativeLayout>
     </android.support.v7.widget.CardView>
+    </io.codetail.widget.RevealFrameLayout>
 
     <!--<android.support.v7.widget.CardView
         android:id="@+id/details_card"
@@ -218,6 +226,7 @@
     </LinearLayout>-->
         <TableLayout
             android:id="@+id/tableId"
+            android:visibility="invisible"
             android:layout_above="@+id/calc_action_buttons"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -605,6 +614,7 @@
 
     <LinearLayout
         android:id="@+id/calc_action_buttons"
+        android:visibility="invisible"
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

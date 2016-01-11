@@ -1,18 +1,25 @@
 package com.rose.quickwallet.transactions;
 
 import android.Manifest;
+import android.animation.Animator;
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.app.SearchManager;
 import android.app.SearchableInfo;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
+import android.graphics.Canvas;
+import android.graphics.Paint;
 import android.net.Uri;
 import android.os.Build;
 import android.preference.PreferenceManager;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
@@ -29,6 +36,8 @@ import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.SearchView;
 import android.widget.TextView;
@@ -278,7 +287,7 @@ public class MainActivity extends BaseActivity implements RecyclerViewCallback {
         /*ItemTouchHelperCallback itemTouchHelperCallback = new ItemTouchHelperCallback((RecyclerAdapter) recyclerView.getAdapter());
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(itemTouchHelperCallback);
         itemTouchHelper.attachToRecyclerView(recyclerView);*/
-
+        ((FloatingActionButton) findViewById(R.id.fab_add)).setImageResource(R.drawable.plus);
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
@@ -334,15 +343,19 @@ public class MainActivity extends BaseActivity implements RecyclerViewCallback {
      }*/
 
     public void start(View view) {
-        Intent intent = new Intent(this, AddNewTransactionActivity.class);
-        intent.putExtra("action", "generic");
-        intent.setAction("generic");
+        /*RippleAnimation animation = new RippleAnimation(this);
+        RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+        layoutParams.addRule(RelativeLayout.CENTER_IN_PARENT,RelativeLayout.TRUE);
+        addContentView(animation,layoutParams);
+        startRippleAnimation(animation);*/
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab_add);
+        fab.setImageResource(R.color.colorAccent);
+        startRippleAnimation(fab);
         /*intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
         intent.setFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
         intent.setFlags(Intent.FLAG_GRANT_PREFIX_URI_PERMISSION);
         intent.setFlags(Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION);*/
-        startActivity(intent);
-        overridePendingTransition(R.anim.add_activity_enter_animation, R.anim.no_animation);
+
 
     }
 
@@ -658,4 +671,92 @@ public class MainActivity extends BaseActivity implements RecyclerViewCallback {
             startActivity(intent);
         }
     }*/
+
+    /**private class RippleAnimation extends View {
+
+
+        public RippleAnimation(Context context) {
+            super(context);
+        }
+
+
+        @Override
+        protected void onDraw(Canvas canvas) {
+            Paint paint = new Paint();
+            paint.setAntiAlias(true);
+            paint.setColor(getResources().getColor(R.color.colorAccent));
+            paint.setStyle(Paint.Style.FILL);
+            int[] location = new int[2];
+            FloatingActionButton fab = (FloatingActionButton) MainActivity.this.findViewById(R.id.fab_add);
+            fab.getLocationOnScreen(location);
+            canvas.drawCircle(location[0],location[1],64, paint);
+        }
+
+        public void startAnimation(){
+
+        }
+    }*/
+
+    public void startRippleAnimation(final View view){
+        AnimatorSet animatorSet;
+        ArrayList<Animator> animators;
+        animatorSet= new AnimatorSet();
+        animators = new ArrayList<>();
+        final ObjectAnimator scaleXAnimator = ObjectAnimator.ofFloat(view, "ScaleX", 1.0f,25.0f);
+        //scaleXAnimator.setRepeatCount(ObjectAnimator.INFINITE);
+        //scaleXAnimator.setRepeatMode(ObjectAnimator.RESTART);
+        //scaleXAnimator.setStartDelay(i * rippleDelay);
+        scaleXAnimator.setDuration(500);
+        animators.add(scaleXAnimator);
+        final ObjectAnimator scaleYAnimator = ObjectAnimator.ofFloat(view, "ScaleY", 1.0f, 25.0f);
+        //scaleYAnimator.setRepeatCount(ObjectAnimator.INFINITE);
+        //scaleYAnimator.setRepeatMode(ObjectAnimator.RESTART);
+        //scaleYAnimator.setStartDelay(i * rippleDelay);
+        scaleYAnimator.setDuration(500);
+        animators.add(scaleYAnimator);
+        animatorSet.playTogether(animators);
+        animatorSet.start();
+        animatorSet.addListener(new Animator.AnimatorListener() {
+            @Override
+            public void onAnimationStart(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animator animation) {
+                Intent intent = new Intent(MainActivity.this, AddNewTransactionActivity.class);
+                intent.putExtra("action", "generic");
+                intent.setAction("generic");
+                startActivity(intent);
+                startReverseRipple(view);
+                //overridePendingTransition(R.anim.slide_in_from_bottom, R.anim.stay);
+            }
+
+            @Override
+            public void onAnimationCancel(Animator animation) {
+
+            }
+
+            @Override
+            public void onAnimationRepeat(Animator animation) {
+
+            }
+        });
+    }
+
+    public void startReverseRipple(View view){
+        AnimatorSet animatorSet;
+        ArrayList<Animator> animators;
+        animatorSet= new AnimatorSet();
+        animators = new ArrayList<>();
+        final ObjectAnimator scaleXAnimator = ObjectAnimator.ofFloat(view, "ScaleX", 25.0f,1.0f);
+        scaleXAnimator.setDuration(500);
+        animators.add(scaleXAnimator);
+        final ObjectAnimator scaleYAnimator = ObjectAnimator.ofFloat(view, "ScaleY",25.0f, 1.0f);
+        scaleYAnimator.setDuration(500);
+        animators.add(scaleYAnimator);
+        animatorSet.setStartDelay(1500);
+        animatorSet.playTogether(animators);
+        animatorSet.start();
+    }
 }

@@ -1,5 +1,6 @@
 package com.rose.quickwallet.transactions;
 
+import android.animation.Animator;
 import android.app.Activity;
 import android.app.SearchManager;
 import android.content.Context;
@@ -18,8 +19,7 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
-import android.view.ViewGroup;
-import android.view.WindowManager;
+import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.AlphaAnimation;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -29,7 +29,6 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.FilterQueryProvider;
 import android.widget.ImageView;
-//import android.widget.RadioGroup;
 import android.widget.RelativeLayout;
 import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
@@ -57,6 +56,9 @@ import org.buraktamturk.loadingview.LoadingView;
 import java.util.ArrayList;
 import java.util.List;
 
+import io.codetail.animation.SupportAnimator;
+import io.codetail.animation.ViewAnimationUtils;
+
 /**
  * Adds transaction to local database and send chat message to corresponding user
  * Created by rose on 23/7/15.
@@ -81,7 +83,7 @@ public class AddNewTransactionActivity extends Activity {
     private boolean isSignedUp = false;
     private int opponentUserID = -1;
     private String[] phoneNos;
-    private LoadingView loadingView;
+    //private LoadingView loadingView;
     private SimpleCursorAdapter simpleCursorAdapter;
     AutoCompleteTextView searchText;
     private TextView txtResult; // Reference to EditText of result
@@ -259,6 +261,7 @@ public class AddNewTransactionActivity extends Activity {
     @Override
     protected void onResume() {
         super.onResume();
+        startReveal();
         if (!QBChatService.isInitialized()) {
             QBChatService.init(this);
             chatService = QBChatService.getInstance();
@@ -832,6 +835,10 @@ public class AddNewTransactionActivity extends Activity {
             TextView textView = (TextView) findViewById(R.id.money_detail_name);
             textView.setText(type);
             textView.setTextColor(setColorGreen());
+            if(amount<0) {
+                amount = -1 * amount;
+                txtResult.setText(String.valueOf(amount));
+            }
 
             //amount = -1 * amount;
         } else if (v.getId() == R.id.radio_button_borrowed) {
@@ -839,6 +846,10 @@ public class AddNewTransactionActivity extends Activity {
             TextView textView = (TextView) findViewById(R.id.money_detail_name);
             textView.setText(type);
             textView.setTextColor(setColorRed());
+            if(amount<0){
+                amount = -1*amount;
+                txtResult.setText(String.valueOf(amount));
+            }
         }
     }
 
@@ -1114,6 +1125,11 @@ public class AddNewTransactionActivity extends Activity {
         balance = balance + amount;
         setBalanceText(balance);
         amount = 0;
+        type = "Lent";
+        TextView amountType = (TextView) findViewById(R.id.money_detail_name);
+        amountType.setText(getString(R.string.amount_colon));
+        amountType.setTextColor(getResources().getColor(R.color.cardview_shadow_start_color));
+        txtResult.setText("0");
         contact = null;
         EditText detailText = (EditText) findViewById(R.id.details_edit_text);
         detailText.setText(null);
@@ -1170,6 +1186,7 @@ public class AddNewTransactionActivity extends Activity {
         // On-click event handler for all the buttons
         @Override
         public void onClick(View view) {
+            TextView amountType = (TextView) findViewById(R.id.money_detail_name);
             switch (view.getId()) {
                 // Number buttons: '0' to '9'
                 case R.id.btnNum0Id:
@@ -1196,6 +1213,7 @@ public class AddNewTransactionActivity extends Activity {
                         inStr += inDigit; // accumulate input digit
                     }
                     txtResult.setText(inStr);
+                    amount= Float.parseFloat(inStr);
                     // Clear buffer if last operator is '='
                     if (lastOperator == '=') {
                         result = 0;
@@ -1231,12 +1249,15 @@ public class AddNewTransactionActivity extends Activity {
                     inStr = "0";
                     lastOperator = ' ';
                     txtResult.setText("0");
+                    amountType.setText(getString(R.string.amount_colon));
                     break;
                 case R.id.btnDelId:
                     if(inStr.length()>1)
                         inStr = inStr.substring(0,inStr.length()-1);
-                    else if(inStr.length()==1)
+                    else if(inStr.length()==1) {
                         inStr = "0";
+                        amountType.setText(getString(R.string.amount_colon));
+                    }
                     txtResult.setText(inStr);
                     break;
             }
@@ -1262,11 +1283,16 @@ public class AddNewTransactionActivity extends Activity {
                 // Keep the result for the next operation
             }
             txtResult.setText(String.valueOf(result));
+            amount = result;
             TextView amountType = (TextView) findViewById(R.id.money_detail_name);
-            if(result<0)
-                amountType.setText(getString(R.string.borrowed));
-            else
-                amountType.setText(getString(R.string.lent));
+            if(result<0) {
+                //amountType.setText(getString(R.string.borrowed));
+                amountType.setTextColor(setColorRed());
+            }
+            else {
+                //amountType.setText(getString(R.string.lent));
+                amountType.setTextColor(setColorGreen());
+            }
         }
     }
 
@@ -1286,7 +1312,7 @@ public class AddNewTransactionActivity extends Activity {
     @Override
     public void finish() {
         super.finish();
-        overridePendingTransition(0,R.anim.add_activity_exit_animation);
+        overridePendingTransition(0, R.anim.slide_out_from_top);
     }
 
     private void logoutFormChat(){
@@ -1308,5 +1334,41 @@ public class AddNewTransactionActivity extends Activity {
 
             }
         });
+    }
+
+    public void startReveal(){
+        // previously invisible view
+        final View myView = findViewById(R.id.name_card);
+        myView.addOnLayoutChangeListener(new View.OnLayoutChangeListener() {
+            @Override
+            public void onLayoutChange(View v, int left, int top, int right, int bottom, int oldLeft, int oldTop, int oldRight, int oldBottom) {
+                myView.removeOnLayoutChangeListener(this);
+                myView.setVisibility(View.VISIBLE);
+                // get the center for the clipping circle
+                int cx = (myView.getLeft() + myView.getRight()) / 2;
+                int cy = (myView.getTop() + myView.getBottom()) / 2;
+
+                // get the final radius for the clipping circle
+                int dx = Math.max(cx, myView.getWidth() - cx);
+                int dy = Math.max(cy, myView.getHeight() - cy);
+                float finalRadius = (float) Math.hypot(dx, dy);
+
+                SupportAnimator animator =
+                        ViewAnimationUtils.createCircularReveal(myView, cx, cy, 0, finalRadius);
+                animator.setInterpolator(new AccelerateDecelerateInterpolator());
+                animator.setDuration(700);
+                animator.start();
+            }
+        });
+        View calc = findViewById(R.id.tableId);
+        //TranslateAnimation animation = new TranslateAnimation(0,0,calc.getHeight(),0);
+        //animation.setInterpolator(new AccelerateDecelerateInterpolator());
+        //animation.setDuration(2000);
+        //calc.startAnimation(animation);*/
+        calc.setVisibility(View.VISIBLE);
+
+        View buttons = findViewById(R.id.calc_action_buttons);
+        //buttons.startAnimation(new TranslateAnimation(0,0,0,buttons.getHeight()));
+        buttons.setVisibility(View.VISIBLE);
     }
 }
