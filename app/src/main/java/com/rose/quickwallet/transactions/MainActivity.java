@@ -155,6 +155,7 @@ public class MainActivity extends BaseActivity implements RecyclerViewCallback {
                         public void run() {
                             Intent retrieveUsers = new Intent(getApplicationContext(), RetreiveUsersService.class);
                             retrieveUsers.putExtra("createSession",false);
+                            retrieveUsers.putExtra("sendNotifications",false);
                             startService(retrieveUsers);
                         }
                     });

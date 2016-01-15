@@ -52,6 +52,7 @@ public class EnterPinActivity extends Activity {
                 return false;
             }
         });*/
+        editText1.requestFocus();
         editText1.addTextChangedListener(new TextWatcher() {
 
             public void onTextChanged(CharSequence s, int start, int before,
@@ -140,6 +141,8 @@ public class EnterPinActivity extends Activity {
 
                 if (s.length() >= 1) {
                     editText4.clearFocus();
+                    if(getIntent().getAction().equals("ENTER_PASSWORD") || getIntent().getAction().equals("ENTER_PASSWORD_NOTIFICATION"))
+                        onEnter(enterButton);
                     enterButton.requestFocus();
                 }
                 if(s.length() == 0){

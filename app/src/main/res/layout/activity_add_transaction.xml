@@ -87,7 +87,17 @@
                     android:id="@+id/contact_detail_balance"
                     android:layout_below="@+id/contact_detail_name"
                     android:layout_alignLeft="@+id/contact_detail_name"
-                    android:layout_toRightOf="@+id/contact_detail_image"/>
+                    android:layout_toRightOf="@+id/contact_detail_image"
+                    android:layout_toLeftOf="@+id/close_name"/>
+                <ImageButton
+                    android:id="@+id/close_name"
+                    android:src="@drawable/ic_close"
+                    android:background="@color/transparent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:onClick="onClickDeleteName"/>
             </RelativeLayout>
 
             <EditText

@@ -46,7 +46,7 @@ public class RetreiveUsersService extends IntentService {
         super("RetreiveUsersService");
     }
     @Override
-    protected void onHandleIntent(Intent intent) {
+    protected void onHandleIntent(final Intent intent) {
         // Start
         preferences = PreferenceManager.getDefaultSharedPreferences(this);
         boolean isSignedIn = preferences.getBoolean(com.rose.quickwallet.quickblox.Consts.IS_SIGNED_UP, false);
@@ -85,7 +85,11 @@ public class RetreiveUsersService extends IntentService {
                     @Override
                     public void run() {
                         //Toast.makeText(getApplicationContext(), "test", Toast.LENGTH_SHORT).show();
-                        retrieveAllUsersFromPage(preferences.getInt(com.rose.quickwallet.quickblox.Consts.SHARED_PREFERENCES_USERS_CURRENT_PAGE, 1));
+                        if(intent.getBooleanExtra("sendNotifications",false)){
+                            sendNotifications();
+                        }
+                        else
+                            retrieveAllUsersFromPage(preferences.getInt(com.rose.quickwallet.quickblox.Consts.SHARED_PREFERENCES_USERS_CURRENT_PAGE, 1));
                         //sendNotifications();
                     }
                 });

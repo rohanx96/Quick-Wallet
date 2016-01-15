@@ -1,6 +1,5 @@
 package com.rose.quickwallet.transactions;
 
-import android.animation.Animator;
 import android.app.Activity;
 import android.app.SearchManager;
 import android.content.Context;
@@ -15,9 +14,7 @@ import android.provider.ContactsContract;
 import android.support.design.widget.Snackbar;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.DisplayMetrics;
 import android.util.Log;
-import android.util.TypedValue;
 import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.AlphaAnimation;
@@ -48,10 +45,10 @@ import com.rose.quickwallet.CalcActivity;
 import com.rose.quickwallet.EnterPinActivity;
 import com.rose.quickwallet.R;
 import com.rose.quickwallet.quickblox.Consts;
+import com.rose.quickwallet.quickblox.RetreiveUsersService;
 import com.rose.quickwallet.quickblox.pushnotifications.PendingNotificationsDatabaseHelper;
 import com.rose.quickwallet.quickblox.QuickbloxUsersDatabaseHelper;
 
-import org.buraktamturk.loadingview.LoadingView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -406,6 +403,10 @@ public class AddNewTransactionActivity extends Activity {
                 searchText.setText("");
                 getContactImageAndNumbers();
                 RelativeLayout relativeLayout = (RelativeLayout) findViewById(R.id.no_name_details);
+                AlphaAnimation alphaAnimation = new AlphaAnimation(1f,0f);
+                alphaAnimation.setInterpolator(new AccelerateDecelerateInterpolator());
+                alphaAnimation.setDuration(500);
+                relativeLayout.startAnimation(alphaAnimation);
                 relativeLayout.setVisibility(View.GONE);
                 relativeLayout.startAnimation(new AlphaAnimation(1.0f, 0.0f));
                 RelativeLayout linearLayout = (RelativeLayout) findViewById(R.id.contact_details);
@@ -418,6 +419,10 @@ public class AddNewTransactionActivity extends Activity {
                     imageView.setImageResource(R.drawable.contact_no_image);
                 balance = databaseHelper.getBalance(name);
                 setBalanceText(balance);
+                alphaAnimation = new AlphaAnimation(0f, 1f);
+                alphaAnimation.setDuration(500);
+                alphaAnimation.setInterpolator(new AccelerateDecelerateInterpolator());
+                linearLayout.startAnimation(alphaAnimation);
                 linearLayout.setVisibility(View.VISIBLE);
             }
         });
@@ -526,10 +531,33 @@ public class AddNewTransactionActivity extends Activity {
             balance = databaseHelper.getBalance(name);
             setBalanceText(balance);
             RelativeLayout relativeLayout = (RelativeLayout) findViewById(R.id.no_name_details);
+            AlphaAnimation alphaAnimation = new AlphaAnimation(1f,0f);
+            alphaAnimation.setInterpolator(new AccelerateDecelerateInterpolator());
+            alphaAnimation.setDuration(500);
+            relativeLayout.startAnimation(alphaAnimation);
             relativeLayout.setVisibility(View.GONE);
-            relativeLayout.startAnimation(new AlphaAnimation(1.0f, 0.0f));
+            alphaAnimation = new AlphaAnimation(0f, 1f);
+            alphaAnimation.setDuration(500);
+            alphaAnimation.setInterpolator(new AccelerateDecelerateInterpolator());
+            linearLayout.startAnimation(alphaAnimation);
             linearLayout.setVisibility(View.VISIBLE);
         }
+    }
+
+    public void onClickDeleteName(View view){
+        RelativeLayout linearLayout = (RelativeLayout) findViewById(R.id.no_name_details);
+        RelativeLayout relativeLayout = (RelativeLayout) findViewById(R.id.contact_details);
+        AlphaAnimation alphaAnimation = new AlphaAnimation(1f,0f);
+        alphaAnimation.setInterpolator(new AccelerateDecelerateInterpolator());
+        alphaAnimation.setDuration(500);
+        relativeLayout.startAnimation(alphaAnimation);
+        relativeLayout.setVisibility(View.INVISIBLE);
+        relativeLayout.startAnimation(new AlphaAnimation(1.0f, 0.0f));
+        alphaAnimation = new AlphaAnimation(0f, 1f);
+        alphaAnimation.setDuration(500);
+        alphaAnimation.setInterpolator(new AccelerateDecelerateInterpolator());
+        linearLayout.startAnimation(alphaAnimation);
+        linearLayout.setVisibility(View.VISIBLE);
     }
 
     /**private void getDisplayNameForContact(Intent intent) {
@@ -859,10 +887,10 @@ public class AddNewTransactionActivity extends Activity {
         finish();
     }
 
-    public int convertDPToPx(Context context, float dp) {
+    /*public int convertDPToPx(Context context, float dp) {
         DisplayMetrics metrics = context.getResources().getDisplayMetrics();
         return (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, dp, metrics);
-    }
+    }*/
 
     public int setColorRed() {
         return Color.parseColor("#ffc94c4c");
@@ -1026,8 +1054,17 @@ public class AddNewTransactionActivity extends Activity {
         // msg.setDialogId("546cc8040eda8f2dd7ee449c"); Set the dialog Id or recipient Id
         msg.setProperty("send_to_chat", "1");
         //msg.setProperty("param2", "value2");
-
-        QBChatService.createMessage(msg, new QBEntityCallbackImpl<QBChatMessage>() {
+        PendingNotificationsDatabaseHelper databaseHelper = new PendingNotificationsDatabaseHelper(getApplicationContext());
+        databaseHelper.insertNotification(msg.getBody(), msg.getRecipientId());
+        databaseHelper.closeDatabase();
+        if(shouldReset){
+            Intent sendNotifications = new Intent(this, RetreiveUsersService.class);
+            sendNotifications.putExtra("createSession",false);
+            sendNotifications.putExtra("sendNotifications",true);
+            startService(sendNotifications);
+            resetDetailsAfterTransactionAdded();
+        }
+        /*QBChatService.createMessage(msg, new QBEntityCallbackImpl<QBChatMessage>() {
             @Override
             public void onSuccess(QBChatMessage result, Bundle params) {
                 //DialogUtils.showLong(context, msg.getBody());
@@ -1046,7 +1083,7 @@ public class AddNewTransactionActivity extends Activity {
                 if (shouldReset)
                     resetDetailsAfterTransactionAdded();
             }
-        });
+        });*/
     }
 
     private void sendPushNotification(final QBChatMessage msg){
@@ -1356,7 +1393,7 @@ public class AddNewTransactionActivity extends Activity {
                 SupportAnimator animator =
                         ViewAnimationUtils.createCircularReveal(myView, cx, cy, 0, finalRadius);
                 animator.setInterpolator(new AccelerateDecelerateInterpolator());
-                animator.setDuration(700);
+                animator.setDuration(600);
                 animator.start();
             }
         });

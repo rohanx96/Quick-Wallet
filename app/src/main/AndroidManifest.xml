@@ -21,7 +21,8 @@
 
         <activity
             android:name=".EnterPinActivity"
-            android:theme="@style/WalletTheme"/>
+            android:theme="@style/WalletTheme"
+            android:windowSoftInputMode="stateVisible"/>
 
         <activity
             android:name=".transactions.MainActivity"
