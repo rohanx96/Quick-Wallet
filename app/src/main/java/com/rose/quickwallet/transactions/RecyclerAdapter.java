@@ -217,7 +217,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                     addIntent.putExtra("action","add");
                     addIntent.putExtra(SearchManager.QUERY,getDataList().get(getAdapterPosition()).getName());//////////////////////
                     context.startActivity(addIntent);
-                    activity.overridePendingTransition(R.anim.add_activity_enter_animation,R.anim.no_animation);
+                    activity.overridePendingTransition(R.anim.slide_in_from_bottom,R.anim.stay);
                 }
             });
             viewHistoryButton = (Button) itemView.findViewById(R.id.view_history_button_recycler);

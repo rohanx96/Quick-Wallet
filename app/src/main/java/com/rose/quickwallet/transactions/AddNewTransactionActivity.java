@@ -18,6 +18,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.AlphaAnimation;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
@@ -1407,5 +1408,10 @@ public class AddNewTransactionActivity extends Activity {
         View buttons = findViewById(R.id.calc_action_buttons);
         //buttons.startAnimation(new TranslateAnimation(0,0,0,buttons.getHeight()));
         buttons.setVisibility(View.VISIBLE);
+    }
+
+    public void hideKeyboard(View v){
+            InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(v.getWindowToken(), 0);
     }
 }

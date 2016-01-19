@@ -43,7 +43,8 @@
             android:permission="android.permission.READ_CONTACTS"
             android:launchMode="singleTop"
             android:theme="@style/WalletTheme"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateVisible">
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH"/>
             </intent-filter>
