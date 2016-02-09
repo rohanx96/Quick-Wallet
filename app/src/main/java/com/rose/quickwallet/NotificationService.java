@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) 2016. Rohan Agarwal (rOhanX96)
+ */
+
 package com.rose.quickwallet;
 
 import android.app.IntentService;

@@ -63,20 +63,12 @@ import java.util.List;
 
 
 public class MainActivity extends BaseActivity implements RecyclerViewCallback {
-    //ArrayList<Map<String,String>> contactsData = new ArrayList<>();
-    //SimpleCursorAdapter simpleCursorAdapter;
-    //AutoCompleteTextView searchText;
-    //Uri uri = ContactsContract.Contacts.CONTENT_URI;
     private RecyclerView recyclerView;
     private RecyclerAdapter adapter;
-    //private CoordinatorLayout coordinatorLayout;
     private boolean isSignedIn =false;
     private GCMClientHelper pushClientManager;
     private SharedPreferences preferences;
     boolean shouldAnimate = false;
-    //private DrawerLayout drawerLayout;
-    //private NavigationView navigationView;
-    //private String searchQuery;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -108,14 +100,6 @@ public class MainActivity extends BaseActivity implements RecyclerViewCallback {
         });
         thread.start();
 
-        /*if(Build.VERSION.SDK_INT < 21) {
-            setSupportActionBar((Toolbar) findViewById(R.id.toolbar_main_activity));
-            setTitle("");
-            setupSearchEditText();
-        }
-        else
-            setupSearchView();*/
-
         shouldAnimate = true;
         drawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         navigationView = (NavigationView) findViewById(R.id.nav_view);
@@ -124,17 +108,11 @@ public class MainActivity extends BaseActivity implements RecyclerViewCallback {
         //loadAd();
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-        //coordinatorLayout = (CoordinatorLayout) findViewById(R.id.activity_coordinator_layout);
         adapter = new RecyclerAdapter(new ArrayList<RecyclerViewItem>(), MainActivity.this);
         recyclerView.setAdapter(adapter);
         ItemTouchHelperCallback itemTouchHelperCallback = new ItemTouchHelperCallback((RecyclerAdapter) recyclerView.getAdapter());
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(itemTouchHelperCallback);
         itemTouchHelper.attachToRecyclerView(recyclerView);
-        /*DatabaseHelper databaseHelper = new DatabaseHelper(getApplicationContext());
-        ItemTouchHelperCallback itemTouchHelperCallback = new ItemTouchHelperCallback((RecyclerAdapter) recyclerView.getAdapter());
-        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(itemTouchHelperCallback);
-        itemTouchHelper.attachToRecyclerView(recyclerView);
-        databaseHelper.close();*/
 
         if(isSignedIn){
             QBSettings.getInstance().fastConfigInit(Consts.APP_ID, Consts.AUTH_KEY, Consts.AUTH_SECRET);
@@ -171,9 +149,8 @@ public class MainActivity extends BaseActivity implements RecyclerViewCallback {
                         public void onFailure(String ex) {
                             super.onFailure(ex);
                             //Toast.makeText(MainActivity.this,"unable to create session",Toast.LENGTH_LONG).show();
-                            // If there is an error registering, don't just keep trying to register.
-                            // Require the user to click a button again, or perform
-                            // exponential back-off when retrying.
+                            // If there is an error registering, don't just keep trying to register. Require the user to click a button again,
+                            // or perform exponential back-off when retrying.
                         }
                     });
                 }
@@ -192,7 +169,7 @@ public class MainActivity extends BaseActivity implements RecyclerViewCallback {
                 boolean isFirstStart = preferences.getBoolean("isFirstStart",true);
                 // if it was the first app start
                 if(isFirstStart) {
-                    drawerLayout.openDrawer(Gravity.LEFT);
+                    drawerLayout.openDrawer(Gravity.START);
                     SharedPreferences.Editor e = preferences.edit();
                     // we save the value "false", indicating that it is no longer the first appstart
                     e.putBoolean("isFirstStart", false);
@@ -203,55 +180,6 @@ public class MainActivity extends BaseActivity implements RecyclerViewCallback {
         });
         t.start();
 
-        /*searchText = (AutoCompleteTextView) findViewById(R.id.search_text_view);
-        searchText.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-            }
-
-            @Override
-            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
-                if (simpleCursorAdapter != null) {
-                    simpleCursorAdapter.getFilter().filter(charSequence);
-                    searchText.setAdapter(simpleCursorAdapter);
-                }
-            }
-
-            @Override
-            public void afterTextChanged(Editable editable) {
-            }
-        });
-        searchText.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                TextView textView = (TextView)view.findViewById(R.id.contact_name);
-                searchText.setText(textView.getText());
-            }
-        });*/
-        /*recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
-        DatabaseHelper databaseHelper = new DatabaseHelper(getApplicationContext());
-        RecyclerAdapter adapter = new RecyclerAdapter(databaseHelper.getData(),this);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-        recyclerView.setAdapter(adapter);
-        databaseHelper.close();*/
-        /*final ContentResolver cr = getContentResolver();
-        //Cursor cur = cr.query(uri, null, null, null, null);
-        String from[] = {ContactsContract.Contacts.DISPLAY_NAME, ContactsContract.CommonDataKinds.Phone.PHOTO_URI};
-        int to[] = {R.id.contact_name, R.id.contact_image};
-        simpleCursorAdapter = new SimpleCursorAdapter(this, R.layout.search_contacts_list_item, null, from, to, SimpleCursorAdapter.FLAG_REGISTER_CONTENT_OBSERVER);
-        simpleCursorAdapter.setFilterQueryProvider(new FilterQueryProvider() {
-            @Override
-            public Cursor runQuery(CharSequence constraint) {
-                String selection = ContactsContract.Contacts.DISPLAY_NAME + " LIKE '" + constraint + "%'";
-                String[] selectionArgs = null;
-                Cursor cur = cr.query(uri, null, selection, selectionArgs, null);
-                return cur;
-            }
-        });
-        /*if(getIntent().getAction().equals(Intent.ACTION_SEARCH))
-            search(getIntent().getStringExtra(SearchManager.QUERY));*/
-        //searchText.setAdapter(simpleCursorAdapter);
-        //cur.close();
         if (Build.VERSION.SDK_INT >= 21) {
             TransitionInflater inflater = TransitionInflater.from(getApplication());
             getWindow().setSharedElementExitTransition(inflater.inflateTransition(R.transition.shared_contact_image_transition));
@@ -281,9 +209,6 @@ public class MainActivity extends BaseActivity implements RecyclerViewCallback {
         ((SimpleItemAnimator)recyclerView.getItemAnimator()).setSupportsChangeAnimations(false);
         recyclerView.getAdapter().notifyDataSetChanged();
         shouldAnimate = false;
-        /*ItemTouchHelperCallback itemTouchHelperCallback = new ItemTouchHelperCallback((RecyclerAdapter) recyclerView.getAdapter());
-        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(itemTouchHelperCallback);
-        itemTouchHelper.attachToRecyclerView(recyclerView);*/
         ((FloatingActionButton) findViewById(R.id.fab_add)).setImageResource(R.drawable.plus);
         Thread thread = new Thread(new Runnable() {
             @Override
@@ -300,11 +225,6 @@ public class MainActivity extends BaseActivity implements RecyclerViewCallback {
                 //recyclerView.getAdapter().notifyDataSetChanged();
                 //databaseHelper.close();
                 setServiceAlarm();
-                /*SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(MainActivity.this);
-                if(preferences.getBoolean("notificationPersistent",false))
-                    createPersistentNotification();
-                else
-                    cancelPersistentNotification();*/
             }
         });
         thread.start();
@@ -312,39 +232,15 @@ public class MainActivity extends BaseActivity implements RecyclerViewCallback {
             setupSearchEditText();
         else
             setupSearchView();
-        //((TextView)recyclerView.findViewById(R.id.lent_header)).setText("Lent: " + databaseHelper.totalLent());
-
-        //TraceCompat.endSection();
-        /*DatabaseHelper databaseHelper = new DatabaseHelper(getApplicationContext());
-        RecyclerAdapter adapter = new RecyclerAdapter(databaseHelper.getData(),this);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
-        recyclerView.setAdapter(adapter);
-        ItemTouchHelperCallback itemTouchHelperCallback = new ItemTouchHelperCallback((RecyclerAdapter)recyclerView.getAdapter());
-        ItemTouchHelper itemTouchHelper = new ItemTouchHelper(itemTouchHelperCallback);
-        itemTouchHelper.attachToRecyclerView(recyclerView);
-        databaseHelper.close();*/
-        //displayTutorial();
     }
 
     @Override
     public void onBackPressed() {
-
         super.onBackPressed();
     }
 
-    /**public void onTextChanged(CharSequence s, int start, int before, int count) {
-        if (simpleCursorAdapter != null) {
-            simpleCursorAdapter.getFilter().filter(s);
-            searchText.setAdapter(simpleCursorAdapter);
-     }
-     }*/
-
+    /* OnClick method for fab button to start AddNewTransaction Activity */
     public void start(View view) {
-        /*RippleAnimation animation = new RippleAnimation(this);
-        RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
-        layoutParams.addRule(RelativeLayout.CENTER_IN_PARENT,RelativeLayout.TRUE);
-        addContentView(animation,layoutParams);
-        startRippleAnimation(animation);*/
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab_add);
         fab.setImageResource(R.color.colorAccent);
         startRippleAnimation(fab);
@@ -359,12 +255,6 @@ public class MainActivity extends BaseActivity implements RecyclerViewCallback {
                 overridePendingTransition(0, R.anim.stay);
             }
         },250);
-        /*intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-        intent.setFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
-        intent.setFlags(Intent.FLAG_GRANT_PREFIX_URI_PERMISSION);
-        intent.setFlags(Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION);*/
-
-
     }
 
     public void setupSearchView() {
@@ -375,13 +265,13 @@ public class MainActivity extends BaseActivity implements RecyclerViewCallback {
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String s) {
-                search(s);
+                search(s); //Search for the string s. Look at the method definition below for execution details
                 return false;
             }
 
             @Override
             public boolean onQueryTextChange(String s) {
-                search(s);
+                search(s); //Search for the string s. Look at the method definition for execution details
                 return false;
             }
         });
@@ -399,6 +289,7 @@ public class MainActivity extends BaseActivity implements RecyclerViewCallback {
         }
     }
 
+    /** Searches for string s in names stored in database and updates the recycler view with the datalist obtained from database */
     public void search(String s) {
         DatabaseHelper databaseHelper = new DatabaseHelper(getApplicationContext());
         adapter.setDataList(databaseHelper.search(s));
@@ -439,36 +330,7 @@ public class MainActivity extends BaseActivity implements RecyclerViewCallback {
         recyclerView.removeViewAt(position);
     }
 
-    public void onAdd(View v) {
-        Intent intent = new Intent(getApplicationContext(), AddNewTransactionActivity.class);
-        /*intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
-        intent.setFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
-        intent.setFlags(Intent.FLAG_GRANT_PREFIX_URI_PERMISSION);
-        intent.setFlags(Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION);*/
-        intent.putExtra("action", "generic");
-        startActivity(intent);
-        //overridePendingTransition(R.anim.add_activity_enter_animation,R.anim.no_animation);
-    }
-
-    /**public void createPersistentNotification() {
-        NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-        NotificationCompat.Builder builder = new NotificationCompat.Builder(this);
-        Intent addActivity = new Intent(this,AddNewTransactionActivity.class);
-        addActivity.putExtra("action","generic");
-        addActivity.setAction("notification");
-        builder.setSmallIcon(R.drawable.ic_notification)
-                .setContentTitle("QuickWallet")
-                .setContentText("Tap to add a transaction")
-                .setContentIntent(PendingIntent.getActivity(this, 456, addActivity,PendingIntent.FLAG_CANCEL_CURRENT))
-                .setOngoing(true);
-        notificationManager.notify(5672, builder.build());
-    }*/
-
-    /**public void cancelPersistentNotification(){
-        NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-        notificationManager.cancel(5672);
-    }*/
-
+    /** Sets alarm to start the notification service to push notifications to user of pending balances */
     public void setServiceAlarm() {
         // Construct an intent that will execute the AlarmReceiver
         Intent intent = new Intent(getApplicationContext(), AlarmReceiver.class);
@@ -507,6 +369,7 @@ public class MainActivity extends BaseActivity implements RecyclerViewCallback {
         }
     }
 
+    /** Requests read contacts permission from user. Only for android v23 and up */
     public void requestPermissions(){
         if(ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.READ_CONTACTS) != PackageManager.PERMISSION_GRANTED){
             if(ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.READ_CONTACTS)){
@@ -526,7 +389,7 @@ public class MainActivity extends BaseActivity implements RecyclerViewCallback {
         }
     }
 
-    /*private void loadAd(){
+    /**private void loadAd(){
         AdView mAdView = (AdView) findViewById(R.id.adView);
         AdRequest.Builder builder = new AdRequest.Builder();
         builder.addTestDevice("D882CD568608B87702357166E3B3E8BD");
@@ -576,7 +439,6 @@ public class MainActivity extends BaseActivity implements RecyclerViewCallback {
                 break;
             case R.id.nav_help:
                 Intent helpIntent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts("mailto", "rohanx96@gmail.com", null));
-                //intent.setType("text/html");
                 helpIntent.putExtra(Intent.EXTRA_SUBJECT, "QuickWallet App on PlayStore");
                 startActivity(Intent.createChooser(helpIntent,"send Email"));
             default:
@@ -598,47 +460,6 @@ public class MainActivity extends BaseActivity implements RecyclerViewCallback {
                     Intent account = new Intent(MainActivity.this, MyAccountActivity.class);
                     startActivity(account);
                     overridePendingTransition(R.anim.slide_in_from_bottom, R.anim.fade_out); // this method should be called just after startActivity
-                    /*AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
-                    builder.setMessage("Are you sure you want to sign out?")
-                            .setPositiveButton("Sign Out", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(final DialogInterface dialog, int which) {
-                                    final ProgressDialog progressDialog = DialogUtils.getProgressDialog(MainActivity.this);
-                                    if(pushClientManager!= null) {
-                                        progressDialog.show();
-                                        pushClientManager.unsubscribeFromPushNotifications();
-                                        QBUsers.signOut(new QBEntityCallbackImpl() {
-                                            @Override
-                                            public void onSuccess() {
-                                                preferences.edit().putBoolean(Consts.IS_SIGNED_UP, false).apply();
-                                                progressDialog.hide();
-                                                isSignedIn = false;
-                                                navViewHeaderText.setText("Sign In");
-                                                drawerLayout.closeDrawer(Gravity.LEFT);
-                                                dialog.dismiss();
-                                                setupNavigationHeader();
-                                            }
-
-                                            @Override
-                                            public void onError(List errors) {
-                                                Toast.makeText(MainActivity.this, "Error: " + errors, Toast.LENGTH_SHORT).show();
-                                            }
-                                        });
-                                    }
-                                    else {
-                                        Toast.makeText(MainActivity.this, "Unable to sign out. Please check your internet connection", Toast.LENGTH_LONG).show();
-                                        drawerLayout.closeDrawer(Gravity.LEFT);
-                                    }
-                                }
-                            })
-                            .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-                                    dialog.dismiss();
-                                    drawerLayout.closeDrawer(Gravity.LEFT);
-                                }
-                            })
-                            .show();*/
                 }
             });
         }
@@ -653,73 +474,16 @@ public class MainActivity extends BaseActivity implements RecyclerViewCallback {
         }
     }
 
-    /*public void displayTutorial(){
-        new ShowcaseView.Builder(this)
-                .setTarget(new ViewTarget(R.id.fab_add, this))
-                .setContentText("Here's how to highlight items on a toolbar")
-                .build()
-                .show();
-    }*/
-    /*private void displayDemoIfNeeded() {
-
-        boolean neverShowDemoAgain = RoboDemo.isNeverShowAgain(this, DEMO_ACTIVITY_ID);
-
-        if ( !neverShowDemoAgain && showDemo ) {
-            showDemo = false;
-            ArrayList<LabeledPoint> arrayListPoints = new ArrayList< LabeledPoint >();
-
-            // create a list of LabeledPoints
-            LabeledPoint p = new LabeledPoint( findViewById(R.id.fab_add), "Add transactions by clicking on this button");
-            arrayListPoints.add( p );
-
-
-            // start DemoActivity.
-            Intent intent = new Intent( this, MainActivityDemoActivity.class );
-            RoboDemo.prepareDemoActivityIntent( intent, DEMO_ACTIVITY_ID, arrayListPoints );
-            startActivity(intent);
-        }
-    }*/
-
-    /**private class RippleAnimation extends View {
-
-
-        public RippleAnimation(Context context) {
-            super(context);
-        }
-
-
-        @Override
-        protected void onDraw(Canvas canvas) {
-            Paint paint = new Paint();
-            paint.setAntiAlias(true);
-            paint.setColor(getResources().getColor(R.color.colorAccent));
-            paint.setStyle(Paint.Style.FILL);
-            int[] location = new int[2];
-            FloatingActionButton fab = (FloatingActionButton) MainActivity.this.findViewById(R.id.fab_add);
-            fab.getLocationOnScreen(location);
-            canvas.drawCircle(location[0],location[1],64, paint);
-        }
-
-        public void startAnimation(){
-
-        }
-    }*/
-
+    /** Increases the fab button size to fill the screen creating a ripple effect */
     public void startRippleAnimation(final View view){
         AnimatorSet animatorSet;
         ArrayList<Animator> animators;
         animatorSet= new AnimatorSet();
         animators = new ArrayList<>();
         final ObjectAnimator scaleXAnimator = ObjectAnimator.ofFloat(view, "ScaleX", 1.0f,35.0f);
-        //scaleXAnimator.setRepeatCount(ObjectAnimator.INFINITE);
-        //scaleXAnimator.setRepeatMode(ObjectAnimator.RESTART);
-        //scaleXAnimator.setStartDelay(i * rippleDelay);
         scaleXAnimator.setDuration(500);
         animators.add(scaleXAnimator);
         final ObjectAnimator scaleYAnimator = ObjectAnimator.ofFloat(view, "ScaleY", 1.0f, 35.0f);
-        //scaleYAnimator.setRepeatCount(ObjectAnimator.INFINITE);
-        //scaleYAnimator.setRepeatMode(ObjectAnimator.RESTART);
-        //scaleYAnimator.setStartDelay(i * rippleDelay);
         scaleYAnimator.setDuration(500);
         animators.add(scaleYAnimator);
         animatorSet.playTogether(animators);

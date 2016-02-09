@@ -1,6 +1,5 @@
 package com.rose.quickwallet;
 
-//import android.content.Context;
 import android.app.AlarmManager;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
@@ -18,8 +17,7 @@ import android.support.v7.app.NotificationCompat;
 import com.rose.quickwallet.quickblox.Consts;
 import com.rose.quickwallet.quickblox.GoCloudActivity;
 import com.rose.quickwallet.transactions.AddNewTransactionActivity;
-//import android.preference.PreferenceManager;
-//import android.preference.SwitchPreference;
+
 
 /**
  *

@@ -19,7 +19,6 @@ import android.os.Handler;
 import android.provider.Settings;
 import android.telephony.TelephonyManager;
 import android.util.Log;
-//import android.widget.Toast;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesUtil;
@@ -29,7 +28,6 @@ import com.quickblox.core.QBEntityCallbackImpl;
 import com.quickblox.messages.QBMessages;
 import com.quickblox.messages.model.QBEnvironment;
 import com.quickblox.messages.model.QBSubscription;
-import com.rose.quickwallet.quickblox.DialogUtils;
 
 public class GCMClientHelper {
     // Constants
