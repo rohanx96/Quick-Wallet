@@ -67,6 +67,9 @@ public class GCMMessageHandler extends GcmListenerService {
         String message="";
 
         if (messageValue != null) {
+            /* This message format is when the notification is received from an application version equal or above 6.0. The text received has
+             * data separated by special characters which needs to be parsed to extract data and pass to AddTransactionActivity. For message
+             * format look at createChatMessage method in AddTransactionActivity */
             if (messageValue.indexOf('<') != -1) {
                 String name ="";
                 String contact = "";
@@ -77,7 +80,6 @@ public class GCMMessageHandler extends GcmListenerService {
                 if (messageValue.indexOf('[') != -1) //{ // checks if details are present in message
                     //amount = Float.parseFloat(messageValue.substring(messageValue.indexOf('(') + 1, messageValue.indexOf(')')));
                     details = messageValue.substring(messageValue.indexOf('[') + 1, messageValue.indexOf(']'));
-                //} else
                 if(messageValue.contains("lent"))
                     amount = Float.parseFloat(messageValue.substring(messageValue.indexOf('(') + 1, messageValue.indexOf(')')));
                 else
@@ -99,6 +101,8 @@ public class GCMMessageHandler extends GcmListenerService {
                 addActivity.putExtra("details",details);
                 addActivity.putExtra("amount",amount);
             }
+            // For versions below 6.0. The message text did not have contact data and special characters. So it can be directly set as
+            // notification text without parsing
             else{
                 message = messageValue;
                 addActivity.putExtra("action","generic");

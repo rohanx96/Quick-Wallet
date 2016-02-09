@@ -14,6 +14,7 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
+import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -347,6 +348,17 @@ public class MainActivity extends BaseActivity implements RecyclerViewCallback {
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab_add);
         fab.setImageResource(R.color.colorAccent);
         startRippleAnimation(fab);
+        Handler handler = new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                Intent intent = new Intent(MainActivity.this, AddNewTransactionActivity.class);
+                intent.putExtra("action", "generic");
+                intent.setAction("generic");
+                startActivity(intent);
+                overridePendingTransition(0, R.anim.stay);
+            }
+        },250);
         /*intent.setFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
         intent.setFlags(Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
         intent.setFlags(Intent.FLAG_GRANT_PREFIX_URI_PERMISSION);
@@ -698,13 +710,13 @@ public class MainActivity extends BaseActivity implements RecyclerViewCallback {
         ArrayList<Animator> animators;
         animatorSet= new AnimatorSet();
         animators = new ArrayList<>();
-        final ObjectAnimator scaleXAnimator = ObjectAnimator.ofFloat(view, "ScaleX", 1.0f,25.0f);
+        final ObjectAnimator scaleXAnimator = ObjectAnimator.ofFloat(view, "ScaleX", 1.0f,35.0f);
         //scaleXAnimator.setRepeatCount(ObjectAnimator.INFINITE);
         //scaleXAnimator.setRepeatMode(ObjectAnimator.RESTART);
         //scaleXAnimator.setStartDelay(i * rippleDelay);
         scaleXAnimator.setDuration(500);
         animators.add(scaleXAnimator);
-        final ObjectAnimator scaleYAnimator = ObjectAnimator.ofFloat(view, "ScaleY", 1.0f, 25.0f);
+        final ObjectAnimator scaleYAnimator = ObjectAnimator.ofFloat(view, "ScaleY", 1.0f, 35.0f);
         //scaleYAnimator.setRepeatCount(ObjectAnimator.INFINITE);
         //scaleYAnimator.setRepeatMode(ObjectAnimator.RESTART);
         //scaleYAnimator.setStartDelay(i * rippleDelay);
@@ -720,12 +732,7 @@ public class MainActivity extends BaseActivity implements RecyclerViewCallback {
 
             @Override
             public void onAnimationEnd(Animator animation) {
-                Intent intent = new Intent(MainActivity.this, AddNewTransactionActivity.class);
-                intent.putExtra("action", "generic");
-                intent.setAction("generic");
-                startActivity(intent);
                 startReverseRipple(view);
-                //overridePendingTransition(R.anim.slide_in_from_bottom, R.anim.stay);
             }
 
             @Override
@@ -745,10 +752,10 @@ public class MainActivity extends BaseActivity implements RecyclerViewCallback {
         ArrayList<Animator> animators;
         animatorSet= new AnimatorSet();
         animators = new ArrayList<>();
-        final ObjectAnimator scaleXAnimator = ObjectAnimator.ofFloat(view, "ScaleX", 25.0f,1.0f);
+        final ObjectAnimator scaleXAnimator = ObjectAnimator.ofFloat(view, "ScaleX", 35.0f,1.0f);
         scaleXAnimator.setDuration(500);
         animators.add(scaleXAnimator);
-        final ObjectAnimator scaleYAnimator = ObjectAnimator.ofFloat(view, "ScaleY",25.0f, 1.0f);
+        final ObjectAnimator scaleYAnimator = ObjectAnimator.ofFloat(view, "ScaleY",35.0f, 1.0f);
         scaleYAnimator.setDuration(500);
         animators.add(scaleYAnimator);
         animatorSet.setStartDelay(1500);

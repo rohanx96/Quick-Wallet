@@ -1,3 +1,7 @@
+/*
+ * Copyright (c) 2016. Rohan Agarwal (rOhanX96)
+ */
+
 package com.rose.quickwallet.transactions;
 
 import android.app.Activity;
@@ -195,8 +199,8 @@ public class AddNewTransactionActivity extends Activity {
                                 //Following code copied from getContactImageAndNumbers
                                 RelativeLayout relativeLayout =(RelativeLayout) findViewById(R.id.no_name_details);
                                 relativeLayout.setVisibility(View.GONE);
-                                RelativeLayout linearLayout = (RelativeLayout) findViewById(R.id.contact_details);
-                                TextView contactName = (TextView) linearLayout.findViewById(R.id.contact_detail_name);
+                                RelativeLayout contactDetails = (RelativeLayout) findViewById(R.id.contact_details);
+                                TextView contactName = (TextView) contactDetails.findViewById(R.id.contact_detail_name);
                                 contactName.setText(name);
                                 Cursor cursor = databaseHelper.getItem(name);
                                 if (cursor.moveToFirst()) {
@@ -204,14 +208,14 @@ public class AddNewTransactionActivity extends Activity {
                                     contact = cursor.getString(cursor.getColumnIndex("PhoneNo"));
                                 }
                                 getContactImageAndNumbers();
-                                ImageView imageView = (ImageView) linearLayout.findViewById(R.id.contact_detail_image);
+                                ImageView imageView = (ImageView) contactDetails.findViewById(R.id.contact_detail_image);
                                 if (image_uri != null)
                                     imageView.setImageURI(Uri.parse(image_uri));
                                 else
                                     imageView.setImageResource(R.drawable.contact_no_image);
                                 balance = databaseHelper.getBalance(name);
                                 setBalanceText(balance);
-                                linearLayout.setVisibility(View.VISIBLE);
+                                contactDetails.setVisibility(View.VISIBLE);
                             }
                         });
                     }
@@ -230,7 +234,7 @@ public class AddNewTransactionActivity extends Activity {
             //Button amountView = (Button) findViewById(R.id.amount_edit_text_layout);
             //RelativeLayout relativeLayout = (RelativeLayout) findViewById(R.id.money_details);
             TextView textView = (TextView) findViewById(R.id.money_detail_balance);
-            textView.setText(getString(R.string.amount_colon) + amount);
+            textView.setText(String.valueOf(amount));
             textView = (TextView) findViewById(R.id.money_detail_name);
             textView.setText(type);
             //amountView.setText(getString(R.string.amount_colon) + amount);
@@ -1031,8 +1035,10 @@ public class AddNewTransactionActivity extends Activity {
         }
     }
 
+    /** The format created for the chat message. The same text is used as notification body*/
     private QBChatMessage createChatMessage() {
         QBChatMessage chatMessage = new QBChatMessage();
+        // Special characters are added to identify change in data and make the string easy to parse when getting details from it
         String messageText = senderName + ":";
         if (type.equals("Lent") ) {
             messageText += getString(R.string.gcm_noti_lent_message) + "("+amount+")";
@@ -1048,6 +1054,10 @@ public class AddNewTransactionActivity extends Activity {
         return chatMessage;
     }
 
+    /** Sends the transaction as a chat to the quickblox server. This is not essentially required for sending notifications but helps
+     * in maintaining logs of transactions
+     * @param shouldReset Defines if the details should be reset after sending chat
+     */
     private void sendChatMessage(final boolean shouldReset){
         final QBChatMessage msg = createChatMessage();
 
@@ -1087,6 +1097,7 @@ public class AddNewTransactionActivity extends Activity {
         });*/
     }
 
+    /** Sends push notification to the specified opponent ID */
     private void sendPushNotification(final QBChatMessage msg){
         /*QBUser user = new QBUser();
         user.setPassword("zxc..098");
@@ -1150,6 +1161,10 @@ public class AddNewTransactionActivity extends Activity {
         });
     }
 
+    /**
+     * Resets user interface elements so that user can add a new transaction. The name of person in previous transaction is not reset to
+     * facilitate continuous addition of transaction with same person.
+     */
     private void resetDetailsAfterTransactionAdded() {
         //loadingView.setLoading(false);
         if(amount<0)
@@ -1157,12 +1172,13 @@ public class AddNewTransactionActivity extends Activity {
         else
             Snackbar.make(findViewById(R.id.new_transaction), "Added Transaction: " + type + " " + name + " " + amount, Snackbar.LENGTH_SHORT).show();
         //Button amountLayout = (Button) findViewById(R.id.amount_edit_text_layout);
-        // Set amounts and other details to null and resize the dialog
+        //Set amounts and other details to null and resize the dialog
         //amountLayout.setText(getString(R.string.enter_amount));
         //amountLayout.setTextColor(Color.BLACK);
         balance = balance + amount;
         setBalanceText(balance);
         amount = 0;
+        result = 0; // set the calculator result to zero so that it may not be included in further calculations if user adds more transactions
         type = "Lent";
         TextView amountType = (TextView) findViewById(R.id.money_detail_name);
         amountType.setText(getString(R.string.amount_colon));
@@ -1183,6 +1199,7 @@ public class AddNewTransactionActivity extends Activity {
         }*/
     }
 
+    /** OnClick method for checkbox that allows user to choose whether or not send notification */
     public void onCheckboxClick(View view){
         CheckBox checkBox = (CheckBox) view;
         if(isSignedUp)
@@ -1193,6 +1210,7 @@ public class AddNewTransactionActivity extends Activity {
         }
     }
 
+    /** Sets up the calculator button click listners */
     public void setupCalc(){
         // Retrieve a reference to the EditText field for displaying the result.
         txtResult = (TextView) findViewById(R.id.money_detail_balance);
@@ -1220,6 +1238,10 @@ public class AddNewTransactionActivity extends Activity {
         ((Button) findViewById(R.id.btnDelId)).setOnClickListener(listener);
     }
 
+    /**
+     * This class contains the implementation for the calculator. It provides methods for various actions based on button clicked and
+     * calculates the result
+     */
     private class BtnListener implements View.OnClickListener {
         // On-click event handler for all the buttons
         @Override
@@ -1324,11 +1346,9 @@ public class AddNewTransactionActivity extends Activity {
             amount = result;
             TextView amountType = (TextView) findViewById(R.id.money_detail_name);
             if(result<0) {
-                //amountType.setText(getString(R.string.borrowed));
                 amountType.setTextColor(setColorRed());
             }
             else {
-                //amountType.setText(getString(R.string.lent));
                 amountType.setTextColor(setColorGreen());
             }
         }
@@ -1374,6 +1394,7 @@ public class AddNewTransactionActivity extends Activity {
         });
     }
 
+    /** Reveal animation shown at activity startup. Uses external library */
     public void startReveal(){
         // previously invisible view
         final View myView = findViewById(R.id.name_card);
@@ -1398,6 +1419,8 @@ public class AddNewTransactionActivity extends Activity {
                 animator.start();
             }
         });
+
+        /* The calculator and buttons are hidden on startup and shown after reveal to improve effect */
         View calc = findViewById(R.id.tableId);
         //TranslateAnimation animation = new TranslateAnimation(0,0,calc.getHeight(),0);
         //animation.setInterpolator(new AccelerateDecelerateInterpolator());
@@ -1410,6 +1433,7 @@ public class AddNewTransactionActivity extends Activity {
         buttons.setVisibility(View.VISIBLE);
     }
 
+    /** Hides keyboard if it is currently visible. Used to hide keyboard when user presses on amount */
     public void hideKeyboard(View v){
             InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
             imm.hideSoftInputFromWindow(v.getWindowToken(), 0);

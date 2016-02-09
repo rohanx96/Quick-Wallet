@@ -26,6 +26,7 @@ public class ConnectivityReceiver extends BroadcastReceiver {
                     //Log.v("Service", "Refreshing started");
                     Intent retrieveUsers = new Intent(context, RetreiveUsersService.class);
                     retrieveUsers.putExtra("createSession", true);
+                    retrieveUsers.putExtra("sendNotifications",true);
                     context.startService(retrieveUsers);
                     /*Intent sendNotifications = new Intent(context, SendNotificationsService.class);
                     sendNotifications.putExtra("createSession", true);
