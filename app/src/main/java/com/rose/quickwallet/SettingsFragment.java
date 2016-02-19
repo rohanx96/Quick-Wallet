@@ -117,7 +117,7 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
         }
         if(s.equals("notificationSwitch")){
             if(!sharedPreferences.getBoolean("notificationSwitch",true)){
-                cancelPersistentNotification();
+                //cancelPersistentNotification();
                 removeNotificationAlarm();
             }
 

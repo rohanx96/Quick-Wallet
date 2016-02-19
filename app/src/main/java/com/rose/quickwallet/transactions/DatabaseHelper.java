@@ -5,8 +5,11 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.preference.PreferenceManager;
 
 import java.util.ArrayList;
+import java.util.Currency;
+import java.util.Locale;
 
 /**
  *
@@ -28,9 +31,11 @@ public class DatabaseHelper {
     private final String COLUMN_HISTORY_ID = "ID";
     private int VERSION = 2;
     private SQLiteDatabase database;
+    private String mCurrency;
 
     public DatabaseHelper(Context context){
         DatabaseOpenHelper openHelper = new DatabaseOpenHelper(context);
+        mCurrency = PreferenceManager.getDefaultSharedPreferences(context).getString("prefCurrency", "");
     }
 
     public class DatabaseOpenHelper extends SQLiteOpenHelper{
@@ -115,6 +120,7 @@ public class DatabaseHelper {
         String query = "SELECT * FROM "+ TABLE_NAME + " ORDER BY " + COLUMN_LAST_UPDATE + " DESC";
         ArrayList<RecyclerViewItem> dataSet = new ArrayList<>();
         Cursor cursor = database.rawQuery(query, null);
+        // This item is used to compensate for the list header so that the position of adapter and array list remain same
         dataSet.add(new RecyclerViewItem());
         if(cursor.moveToFirst()){
             do{
@@ -233,7 +239,7 @@ public class DatabaseHelper {
             if(balance < 0)
                 balance = -1 *balance;
             if(balance!=0)
-                lastTransaction += balance;
+                lastTransaction += mCurrency + balance;
         }
         cursor.close();
         return lastTransaction;

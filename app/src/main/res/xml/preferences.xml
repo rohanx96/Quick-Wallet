@@ -5,6 +5,12 @@
         android:summary="@string/pref_my_account"
         android:key="accountSettings">
     </Preference>
+    <ListPreference
+        android:title="Currency"
+        android:summary="Select the region to set the currency corresponding to the region"
+        android:key="prefCurrency"
+        android:entries="@array/currency_locales"
+        android:entryValues="@array/locale_value"/>
     <PreferenceCategory
         android:title="@string/notifications">
     <SwitchPreference
@@ -42,7 +48,7 @@
     <PreferenceCategory android:title="@string/about">
         <Preference
             android:title="@string/version"
-            android:summary="7.0.qb.3"/>
+            android:summary="7.3.qb.4"/>
         <Preference
             android:title="@string/pref_help"
             android:summary="@string/pref_help_summary"

@@ -1,9 +1,6 @@
 package com.rose.quickwallet.transactions;
 
 import android.Manifest;
-import android.animation.Animator;
-import android.animation.AnimatorSet;
-import android.animation.ObjectAnimator;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.app.SearchManager;
@@ -14,26 +11,29 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Build;
-import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.os.Bundle;
+import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.design.widget.Snackbar;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SimpleItemAnimator;
 import android.support.v7.widget.Toolbar;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.transition.TransitionInflater;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.AccelerateInterpolator;
+import android.widget.ArrayAdapter;
 import android.widget.RelativeLayout;
 import android.widget.SearchView;
 import android.widget.TextView;
@@ -47,6 +47,7 @@ import com.rose.quickwallet.AlarmReceiver;
 import com.rose.quickwallet.BaseActivity;
 import com.rose.quickwallet.EnterPinActivity;
 import com.rose.quickwallet.MyAccountActivity;
+
 import com.rose.quickwallet.R;
 import com.rose.quickwallet.SettingsActivity;
 import com.rose.quickwallet.callbackhepers.ItemTouchHelperCallback;
@@ -169,7 +170,7 @@ public class MainActivity extends BaseActivity implements RecyclerViewCallback {
                 boolean isFirstStart = preferences.getBoolean("isFirstStart",true);
                 // if it was the first app start
                 if(isFirstStart) {
-                    drawerLayout.openDrawer(Gravity.START);
+                    drawerLayout.openDrawer(GravityCompat.START);
                     SharedPreferences.Editor e = preferences.edit();
                     // we save the value "false", indicating that it is no longer the first appstart
                     e.putBoolean("isFirstStart", false);
@@ -202,32 +203,21 @@ public class MainActivity extends BaseActivity implements RecyclerViewCallback {
     @Override
     protected void onResume() {
         super.onResume();
+        showCurrencyChooserIfRequired();
         navigationView.getMenu().findItem(R.id.nav_transactions).setChecked(true);
         DatabaseHelper databaseHelper = new DatabaseHelper(getApplicationContext());
         //adapter.refreshDataList(databaseHelper.getData(),false);
         adapter.setDataList(databaseHelper.getData());
+        adapter.setmCurrency(preferences.getString("prefCurrency", ""));
         ((SimpleItemAnimator)recyclerView.getItemAnimator()).setSupportsChangeAnimations(false);
         recyclerView.getAdapter().notifyDataSetChanged();
         shouldAnimate = false;
-        ((FloatingActionButton) findViewById(R.id.fab_add)).setImageResource(R.drawable.plus);
-        Thread thread = new Thread(new Runnable() {
-            @Override
-            public void run() {
-                /*DatabaseHelper databaseHelper = new DatabaseHelper(getApplicationContext());
-                runOnUiThread(new Runnable() {
-                    @Override
-                    public void run() {
-                        //recyclerView.getAdapter().notifyDataSetChanged();
-                        adapter.refreshDataList(databaseHelper.getData(),true);
-
-                    }
-                });*/
-                //recyclerView.getAdapter().notifyDataSetChanged();
-                //databaseHelper.close();
-                setServiceAlarm();
-            }
-        });
-        thread.start();
+        resetFabScale();
+        /*FloatingActionButton fab = ((FloatingActionButton) findViewById(R.id.fab_add));
+        fab.setImageResource(R.drawable.plus);
+        fab.setScaleX(1.0f);
+        fab.setScaleY(1.0f);*/
+        setServiceAlarm();
         if(Build.VERSION.SDK_INT < 21)
             setupSearchEditText();
         else
@@ -242,9 +232,9 @@ public class MainActivity extends BaseActivity implements RecyclerViewCallback {
     /* OnClick method for fab button to start AddNewTransaction Activity */
     public void start(View view) {
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab_add);
-        fab.setImageResource(R.color.colorAccent);
+        //fab.setImageResource(R.color.colorAccent);
         startRippleAnimation(fab);
-        Handler handler = new Handler();
+        /*Handler handler = new Handler();
         handler.postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -254,7 +244,7 @@ public class MainActivity extends BaseActivity implements RecyclerViewCallback {
                 startActivity(intent);
                 overridePendingTransition(0, R.anim.stay);
             }
-        },250);
+        },250);*/
     }
 
     public void setupSearchView() {
@@ -348,22 +338,28 @@ public class MainActivity extends BaseActivity implements RecyclerViewCallback {
         if(preferences.getBoolean("notificationSwitch",true)) {
             switch (interval) {
                 case "30":
-                    alarm.setInexactRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + 15 * 60 * 1000, AlarmManager.INTERVAL_HALF_HOUR, pIntent);
+                    alarm.setInexactRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + 15 * 60 * 1000,
+                            AlarmManager.INTERVAL_HALF_HOUR, pIntent);
                     break;
                 case "60":
-                    alarm.setInexactRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + 30 * 60 * 1000, AlarmManager.INTERVAL_HOUR, pIntent);
+                    alarm.setInexactRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + 30 * 60 * 1000,
+                            AlarmManager.INTERVAL_HOUR, pIntent);
                     break;
                 case "3":
-                    alarm.setInexactRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + 2 * 60 * 60 * 1000, 3 * 60 * 60 * 1000, pIntent);
+                    alarm.setInexactRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + 2 * 60 * 60 * 1000,
+                            3 * 60 * 60 * 1000, pIntent);
                     break;
                 case "6":
-                    alarm.setInexactRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + 3 * 60 * 60 * 1000, 6 * 60 * 60 * 1000, pIntent);
+                    alarm.setInexactRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + 3 * 60 * 60 * 1000,
+                            6 * 60 * 60 * 1000, pIntent);
                     break;
                 case "12":
-                    alarm.setInexactRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + 6 * 60 * 60 * 1000, AlarmManager.INTERVAL_HALF_DAY, pIntent);
+                    alarm.setInexactRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + 6 * 60 * 60 * 1000,
+                            AlarmManager.INTERVAL_HALF_DAY, pIntent);
                     break;
                 case "24":
-                    alarm.setInexactRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + 12 * 60 * 60 * 1000, AlarmManager.INTERVAL_DAY, pIntent);
+                    alarm.setInexactRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + 12 * 60 * 60 * 1000,
+                            AlarmManager.INTERVAL_DAY, pIntent);
                     break;
             }
         }
@@ -413,7 +409,7 @@ public class MainActivity extends BaseActivity implements RecyclerViewCallback {
     }*/
 
     public void onOpenDrawer(View v){
-        drawerLayout.openDrawer(Gravity.LEFT);
+        drawerLayout.openDrawer(GravityCompat.START);
     }
 
     public void selectDrawerItem(final MenuItem menuItem) {
@@ -474,56 +470,108 @@ public class MainActivity extends BaseActivity implements RecyclerViewCallback {
         }
     }
 
-    /** Increases the fab button size to fill the screen creating a ripple effect */
-    public void startRippleAnimation(final View view){
-        AnimatorSet animatorSet;
-        ArrayList<Animator> animators;
-        animatorSet= new AnimatorSet();
-        animators = new ArrayList<>();
-        final ObjectAnimator scaleXAnimator = ObjectAnimator.ofFloat(view, "ScaleX", 1.0f,35.0f);
-        scaleXAnimator.setDuration(500);
-        animators.add(scaleXAnimator);
-        final ObjectAnimator scaleYAnimator = ObjectAnimator.ofFloat(view, "ScaleY", 1.0f, 35.0f);
-        scaleYAnimator.setDuration(500);
-        animators.add(scaleYAnimator);
-        animatorSet.playTogether(animators);
-        animatorSet.start();
-        animatorSet.addListener(new Animator.AnimatorListener() {
-            @Override
-            public void onAnimationStart(Animator animation) {
-
-            }
-
-            @Override
-            public void onAnimationEnd(Animator animation) {
-                startReverseRipple(view);
-            }
-
-            @Override
-            public void onAnimationCancel(Animator animation) {
-
-            }
-
-            @Override
-            public void onAnimationRepeat(Animator animation) {
-
-            }
-        });
+    /** Displays the currency chooser dialog if not previously shown */
+    public void showCurrencyChooserIfRequired(){
+        if (preferences.getString("prefShown", "F").equals("F")) {
+            // Set the dialog shown preference to true
+            preferences.edit().putString("prefShown", "T").apply();
+            //Show the dialog
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setCustomTitle(LayoutInflater.from(this).inflate(R.layout.dialog_currency_choser_header,null,false));
+            ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,R.layout.dialog_currency_choser_item);
+            adapter.addAll(getResources().getStringArray(R.array.currency_locales));
+            builder.setAdapter(adapter, new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    switch (which) {
+                        case 1:
+                            preferences.edit().putString("prefLocale", "$").apply();
+                            break;
+                        case 2:
+                            preferences.edit().putString("prefLocale", "€").apply();
+                            break;
+                        case 3:
+                            preferences.edit().putString("prefLocale", "£").apply();
+                            break;
+                        case 4:
+                            preferences.edit().putString("prefLocale", "₹").apply();
+                            break;
+                        case 5:
+                            preferences.edit().putString("prefLocale", "₣").apply();
+                        case 6:
+                            preferences.edit().putString("prefLocale", "¥").apply();
+                            break;
+                        case 7:
+                            preferences.edit().putString("prefLocale", "RM").apply();
+                            break;
+                        case 8:
+                            preferences.edit().putString("prefLocale", "¥").apply();
+                            break;
+                        case 9:
+                            preferences.edit().putString("prefLocale", "₩").apply();
+                            break;
+                        default:
+                            preferences.edit().putString("prefLocale", "").apply();
+                    }
+                    dialog.dismiss();
+                    onResume();
+                }
+            })
+                    .create()
+                    .show();
+        }
     }
 
-    public void startReverseRipple(View view){
-        AnimatorSet animatorSet;
-        ArrayList<Animator> animators;
-        animatorSet= new AnimatorSet();
-        animators = new ArrayList<>();
-        final ObjectAnimator scaleXAnimator = ObjectAnimator.ofFloat(view, "ScaleX", 35.0f,1.0f);
-        scaleXAnimator.setDuration(500);
-        animators.add(scaleXAnimator);
-        final ObjectAnimator scaleYAnimator = ObjectAnimator.ofFloat(view, "ScaleY",35.0f, 1.0f);
-        scaleYAnimator.setDuration(500);
-        animators.add(scaleYAnimator);
-        animatorSet.setStartDelay(1500);
-        animatorSet.playTogether(animators);
-        animatorSet.start();
+    /** Increases the fab button size to fill the screen creating a ripple effect */
+    public void startRippleAnimation(final FloatingActionButton view){
+        /* Due to setting margin in our fab button when we scale it up it can not take up the entire screen.
+        To overcome this we make another fab button at the same position as our original fab button without setting margin to this fab
+        button. We then scale up this new fab button
+         */
+        CoordinatorLayout frame = (CoordinatorLayout)findViewById(R.id.activity_coordinator_layout);
+        // Check if it has been previously added. If not then we create a new fab button
+        FloatingActionButton imageView = (FloatingActionButton) frame.findViewById(R.id.fab_expand_menu_button);
+        if (imageView == null) {
+            imageView = new FloatingActionButton(this);
+            imageView.setId(R.id.fab_expand_menu_button); // Set an id so that it can be found later in order to scale it down
+
+            //imageView.setImageResource(R.drawable.circle_selected);
+            //imageView.setLayoutParams(new CoordinatorLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+
+            /* Set the position of this new fab button same as that of our existing fab button */
+            imageView.setX(view.getX());
+            imageView.setY(view.getY());
+
+            frame.addView(imageView);
+        }
+        imageView.setVisibility(View.VISIBLE);
+        // Start animation
+        imageView.animate().scaleX(35.0f).scaleY(35.0f).setDuration(500).setInterpolator(new AccelerateInterpolator())
+                .withEndAction(new Runnable() {
+                    @Override
+                    public void run() {
+                        Intent intent = new Intent(MainActivity.this, AddNewTransactionActivity.class);
+                        intent.putExtra("action", "generic");
+                        intent.setAction("generic");
+                        overridePendingTransition(0, 0);
+                        startActivity(intent);
+                    }
+                });
+        /*Intent intent = new Intent(MainActivity.this, AddNewTransactionActivity.class);
+        intent.putExtra("action", "generic");
+        intent.setAction("generic");
+        Bundle bundle = ActivityOptionsCompat.makeScaleUpAnimation(view,0,0,view.getWidth(),view.getHeight()).toBundle();
+        startActivity(intent, bundle);*/
+    }
+
+    /** Resets the size of the dynamically added fab. Used in OnResume */
+    public void resetFabScale(){
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab_expand_menu_button);
+        if (fab!= null){
+            // Visibility is set to gone or else it comes up over our actual fab hiding its + image
+            fab.setVisibility(View.GONE);
+            fab.setScaleX(1.0f);
+            fab.setScaleY(1.0f);
+        }
     }
 }

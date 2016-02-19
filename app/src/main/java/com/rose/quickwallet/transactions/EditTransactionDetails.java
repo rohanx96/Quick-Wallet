@@ -5,12 +5,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.design.widget.Snackbar;
+import android.preference.PreferenceManager;
 import android.support.design.widget.TextInputLayout;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.DisplayMetrics;
-import android.util.Log;
 import android.util.TypedValue;
 import android.view.View;
 import android.view.WindowManager;
@@ -21,7 +20,9 @@ import android.widget.TextView;
 
 import com.rose.quickwallet.CalcActivity;
 import com.rose.quickwallet.R;
-import com.rose.quickwallet.myWallet.WalletDatabaseHelper;
+
+import java.util.Currency;
+import java.util.Locale;
 
 /**
  * Created by rose on 26/9/15.
@@ -32,6 +33,7 @@ public class EditTransactionDetails extends Activity {
     private float amount=0;
     private long time;
     private String name;
+    private String mCurrency;
     private Context context;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +50,7 @@ public class EditTransactionDetails extends Activity {
         details = getIntent().getStringExtra("DETAILS");
         type = getIntent().getStringExtra("TYPE");
         //Log.v("Time", Long.toString(time));
+        mCurrency = PreferenceManager.getDefaultSharedPreferences(this).getString("prefCurrency","");
         final EditText amountView = (EditText)findViewById(R.id.edit_item_amount);
         amountView.addTextChangedListener(new TextWatcher() {
             @Override
@@ -78,7 +81,7 @@ public class EditTransactionDetails extends Activity {
                 } else {
                     amount = Float.parseFloat(amountView.getText().toString());
                     TextView textView = (TextView) relativeLayout.findViewById(R.id.edit_item_detail_balance);
-                    textView.setText(getString(R.string.amount_colon) + amountView.getText().toString());
+                    textView.setText(getString(R.string.amount_colon)  + mCurrency + amountView.getText().toString());
                     textView = (TextView) findViewById(R.id.edit_item_detail_name);
                     textView.setText(type);
                     if (type.equals("Lent")) {
@@ -107,9 +110,9 @@ public class EditTransactionDetails extends Activity {
             @Override
             public void run() {
                 if(amount>0)
-                    amountView.setText(Float.toString(amount));
+                    amountView.setText(mCurrency + Float.toString(amount));
                 else
-                    amountView.setText(Float.toString(-1*amount));
+                    amountView.setText(mCurrency + Float.toString(-1*amount));
                 TextView detailsText = (TextView) findViewById(R.id.edit_item_detail);
                 detailsText.setText(details);
                 RadioGroup radioGroup = (RadioGroup)findViewById(R.id.type_radio_options_edit);

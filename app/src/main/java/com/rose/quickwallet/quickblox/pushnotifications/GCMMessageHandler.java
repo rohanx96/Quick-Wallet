@@ -18,6 +18,9 @@ import android.preference.PreferenceManager;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
+import java.util.Currency;
+import java.util.Locale;
+
 public class GCMMessageHandler extends GcmListenerService {
     int MESSAGE_NOTIFICATION_ID;
     //int previousNotificationID;
@@ -91,8 +94,8 @@ public class GCMMessageHandler extends GcmListenerService {
 
                 message = name + " : ";
                 if (amount < 0)
-                    message += getString(R.string.gcm_noti_borrowed_message) +  -1 * amount;
-                else message += getString(R.string.gcm_noti_lent_message) +  amount;
+                    message += getString(R.string.gcm_noti_borrowed_message)  + Currency.getInstance(Locale.getDefault()).getSymbol()+ -1 * amount;
+                else message += getString(R.string.gcm_noti_lent_message) + Currency.getInstance(Locale.getDefault()).getSymbol() +  amount;
                 if (!details.equals(""))
                     message += getString(R.string.gcm_noti_details_message) + details;
                 message += getString(R.string.gcm_noti_end_message);

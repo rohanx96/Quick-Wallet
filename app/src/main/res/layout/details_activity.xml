@@ -36,7 +36,7 @@
         android:orientation="vertical"
         app:layout_behavior="@string/appbar_scrolling_view_behavior">
     <TextView
-        android:background="@drawable/color_primary"
+        android:background="@color/colorPrimary"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textColor="@android:color/white"
@@ -86,14 +86,6 @@
             fab:fab_size="mini"
             fab:fab_icon="@drawable/delete"
             fab:fab_title="@string/clear_history"/>
-        <!--<com.getbase.floatingactionbutton.FloatingActionButton
-            android:id="@+id/notification_floating_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            fab:fab_colorNormal="@color/colorAccent"
-            fab:fab_colorPressed="@color/colorAccent"
-            fab:fab_size="mini"
-            fab:fab_icon="@drawable/bell"/>-->
         <com.getbase.floatingactionbutton.FloatingActionButton
             android:id="@+id/add_floating_button"
             android:layout_width="wrap_content"
@@ -104,11 +96,4 @@
             fab:fab_icon="@drawable/plus"
             fab:fab_title="@string/add_transaction"/>
     </com.getbase.floatingactionbutton.FloatingActionsMenu>
-    <!--<android.support.design.widget.FloatingActionButton
-        android:layout_height="wrap_content"
-        android:layout_width="wrap_content"
-        android:src="@drawable/plus"
-        android:onClick="onAdd"
-        android:layout_gravity="bottom|end"
-        android:layout_margin="16dp"/>-->
 </android.support.design.widget.CoordinatorLayout>

@@ -26,12 +26,14 @@ public class WalletRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
     private ArrayList<WalletItem> dataList;
     private Context context;
     private DetailsRecyclerViewCallback callback;
+    private String mCurrency;
 
-    public WalletRecyclerAdapter(ArrayList<WalletItem> dataList, Context context){
+    public WalletRecyclerAdapter(ArrayList<WalletItem> dataList, Context context,String mCurrency){
         super();
         this.dataList = dataList;
         this.context = context;
         this.callback = (DetailsRecyclerViewCallback) context;
+        this.mCurrency = mCurrency;
 
     }
     @Override
@@ -63,11 +65,11 @@ public class WalletRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             else viewHolder.walletDescription.setText(dataList.get(position).getDetails());
             if (dataList.get(position).getType().equals("Income")) {
                 bindIncome(viewHolder);
-                viewHolder.walletAmount.setText(Float.toString(dataList.get(position).getAmount()));
+                viewHolder.walletAmount.setText(mCurrency + Float.toString(dataList.get(position).getAmount()));
             }
             if (dataList.get(position).getType().equals("Expense")) {
                 bindExpense(viewHolder);
-                viewHolder.walletAmount.setText(Float.toString(-1 * dataList.get(position).getAmount()));
+                viewHolder.walletAmount.setText(mCurrency + Float.toString(-1 * dataList.get(position).getAmount()));
             }
         /*if(dataList.get(position).getType().equals("Clear Balance")) {
             bindClearBalance(viewHolder);
@@ -184,6 +186,10 @@ public class WalletRecyclerAdapter extends RecyclerView.Adapter<RecyclerView.Vie
             }
         });
         dialogBuilder.show();
+    }
+
+    public void setmCurrency(String mCurrency) {
+        this.mCurrency = mCurrency;
     }
 }
 

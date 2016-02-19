@@ -41,11 +41,6 @@ import com.orhanobut.dialogplus.OnItemClickListener;
 import com.quickblox.chat.QBChatService;
 import com.quickblox.chat.model.QBChatMessage;
 import com.quickblox.core.QBEntityCallbackImpl;
-import com.quickblox.core.helper.StringifyArrayList;
-import com.quickblox.messages.QBMessages;
-import com.quickblox.messages.model.QBEnvironment;
-import com.quickblox.messages.model.QBEvent;
-import com.quickblox.messages.model.QBNotificationType;
 import com.rose.quickwallet.CalcActivity;
 import com.rose.quickwallet.EnterPinActivity;
 import com.rose.quickwallet.R;
@@ -56,7 +51,9 @@ import com.rose.quickwallet.quickblox.QuickbloxUsersDatabaseHelper;
 
 
 import java.util.ArrayList;
+import java.util.Currency;
 import java.util.List;
+import java.util.Locale;
 
 import io.codetail.animation.SupportAnimator;
 import io.codetail.animation.ViewAnimationUtils;
@@ -96,6 +93,7 @@ public class AddNewTransactionActivity extends Activity {
     // Previous operator: '+', '-', '*', '/', '=' or ' ' (no operator)
     private char lastOperator = ' ';
 
+    private String mCurrency;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -130,6 +128,7 @@ public class AddNewTransactionActivity extends Activity {
             Previously included code to generate session for user so as to send chat message but not required since it can be done
             without creating session. Refer commit for version 7.0.qb.3
             */
+            mCurrency = preferences.getString("prefCurrency","");
         }
 
         // Initialization when activity started through particular contact add action
@@ -554,12 +553,12 @@ public class AddNewTransactionActivity extends Activity {
     public void setBalanceText(float balance) {
         TextView balanceDetail = (TextView) findViewById(R.id.contact_detail_balance);
         if (balance < 0) {
-            balanceDetail.setText(getString(R.string.pending_balance_line) + getString(R.string.borrowed_colon) + Float.toString(-1 * balance));
+            balanceDetail.setText(getString(R.string.pending_balance_line) + getString(R.string.borrowed_colon) + mCurrency + Float.toString(-1 * balance));
             balanceDetail.setTextColor(setColorRed());
             /* Remove screen resizing code.  Refer commit for version 7.0.qb.3 */
         }
         if (balance > 0) {
-            balanceDetail.setText(getString(R.string.pending_balance_line) + getString(R.string.lent_colon) + Float.toString(balance));
+            balanceDetail.setText(getString(R.string.pending_balance_line) + getString(R.string.lent_colon) + mCurrency + Float.toString(balance));
             balanceDetail.setTextColor(setColorGreen());
             /* Remove screen resizing code.  Refer commit for version 7.0.qb.3 */
         }
@@ -721,9 +720,11 @@ public class AddNewTransactionActivity extends Activity {
     private void resetDetailsAfterTransactionAdded() {
         //loadingView.setLoading(false);
         if(amount<0)
-            Snackbar.make(findViewById(R.id.new_transaction), "Added Transaction: " + type + " " + name + " " + -1*amount, Snackbar.LENGTH_SHORT).show();
+            Snackbar.make(findViewById(R.id.new_transaction), "Added Transaction: " + type + " " + name + " "
+                    + Currency.getInstance(Locale.getDefault()).getSymbol() + -1*amount, Snackbar.LENGTH_SHORT).show();
         else
-            Snackbar.make(findViewById(R.id.new_transaction), "Added Transaction: " + type + " " + name + " " + amount, Snackbar.LENGTH_SHORT).show();
+            Snackbar.make(findViewById(R.id.new_transaction), "Added Transaction: " + type + " " + name + " "
+                    + Currency.getInstance(Locale.getDefault()).getSymbol() + amount, Snackbar.LENGTH_SHORT).show();
         balance = balance + amount;
         setBalanceText(balance);
         amount = 0;
@@ -758,24 +759,24 @@ public class AddNewTransactionActivity extends Activity {
 
         // Register listener (this class) for all the buttons
         BtnListener listener = new BtnListener();
-        ((Button) findViewById(R.id.btnNum0Id)).setOnClickListener(listener);
-        ((Button) findViewById(R.id.btnNum1Id)).setOnClickListener(listener);
-        ((Button) findViewById(R.id.btnNum2Id)).setOnClickListener(listener);
-        ((Button) findViewById(R.id.btnNum3Id)).setOnClickListener(listener);
-        ((Button) findViewById(R.id.btnNum4Id)).setOnClickListener(listener);
-        ((Button) findViewById(R.id.btnNum5Id)).setOnClickListener(listener);
-        ((Button) findViewById(R.id.btnNum6Id)).setOnClickListener(listener);
-        ((Button) findViewById(R.id.btnNum7Id)).setOnClickListener(listener);
-        ((Button) findViewById(R.id.btnNum8Id)).setOnClickListener(listener);
-        ((Button) findViewById(R.id.btnNum9Id)).setOnClickListener(listener);
-        ((Button) findViewById(R.id.btnAddId)).setOnClickListener(listener);
-        ((Button) findViewById(R.id.btnSubId)).setOnClickListener(listener);
-        ((Button) findViewById(R.id.btnMulId)).setOnClickListener(listener);
-        ((Button) findViewById(R.id.btnDivId)).setOnClickListener(listener);
-        ((Button) findViewById(R.id.btnClearId)).setOnClickListener(listener);
-        ((Button) findViewById(R.id.btnEqualId)).setOnClickListener(listener);
-        ((Button) findViewById(R.id.btnDecimal)).setOnClickListener(listener);
-        ((Button) findViewById(R.id.btnDelId)).setOnClickListener(listener);
+        findViewById(R.id.btnNum0Id).setOnClickListener(listener);
+        findViewById(R.id.btnNum1Id).setOnClickListener(listener);
+        findViewById(R.id.btnNum2Id).setOnClickListener(listener);
+        findViewById(R.id.btnNum3Id).setOnClickListener(listener);
+        findViewById(R.id.btnNum4Id).setOnClickListener(listener);
+        findViewById(R.id.btnNum5Id).setOnClickListener(listener);
+        findViewById(R.id.btnNum6Id).setOnClickListener(listener);
+        findViewById(R.id.btnNum7Id).setOnClickListener(listener);
+        findViewById(R.id.btnNum8Id).setOnClickListener(listener);
+        findViewById(R.id.btnNum9Id).setOnClickListener(listener);
+        findViewById(R.id.btnAddId).setOnClickListener(listener);
+        findViewById(R.id.btnSubId).setOnClickListener(listener);
+        findViewById(R.id.btnMulId).setOnClickListener(listener);
+        findViewById(R.id.btnDivId).setOnClickListener(listener);
+        findViewById(R.id.btnClearId).setOnClickListener(listener);
+        findViewById(R.id.btnEqualId).setOnClickListener(listener);
+        findViewById(R.id.btnDecimal).setOnClickListener(listener);
+        findViewById(R.id.btnDelId).setOnClickListener(listener);
     }
 
     /**

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2016. Rohan Agarwal (rOhanX96)
+  -->
+<full-backup-content>
+    <exclude domain="sharedpref" path="isFirstStartAfterGCMUpdate"/>
+    <exclude domain="sharedpref" path="signedUp"/>
+    <exclude domain="sharedpref" path="registration_id"/>
+    <exclude domain="sharedpref" path="appVersion"/>
+    <exclude domain="sharedpref" path="com.rose.quickwallet.quickblox.pushnotifications.xml"/>
+</full-backup-content>

@@ -1,12 +1,12 @@
 package com.rose.quickwallet.transactions;
 
 import android.app.SearchManager;
-//import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
+import android.preference.PreferenceManager;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -35,20 +35,19 @@ import java.util.ArrayList;
 public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolder> implements ItemTouchHelperAdapter,OnClickListener {
     private RecyclerViewCallback recyclerViewCallback;
     private ArrayList<RecyclerViewItem> dataList;
-    //private ContentResolver cr;
     private Context context;
     private MainActivity activity;
     private int expandedPosition;
     private int lastPosition = -1;
+    private String mCurrency;
 
     public RecyclerAdapter(ArrayList<RecyclerViewItem> dataList,RecyclerViewCallback context){
         this.dataList = dataList;
-        //this.cr = cr;
-        //recyclerViewCallback = callback;
         this.context = (Context) context;
         this.recyclerViewCallback = context;
         this.expandedPosition = Integer.MAX_VALUE;
         activity = (MainActivity) context;
+        this.mCurrency = PreferenceManager.getDefaultSharedPreferences(this.context).getString("prefCurrency","");
     }
 
     @Override
@@ -68,12 +67,14 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             setAnimation(itemHolder.container,position);
             itemHolder.nameView.setText(viewItem.getName());
             if (viewItem.getBalance() < 0) {
-                itemHolder.balanceView.setText(context.getString(R.string.borrowed_colon) + Float.toString(-1 * viewItem.getBalance()));
+                itemHolder.balanceView.setText(context.getString(R.string.borrowed_colon)+ mCurrency +
+                        Float.toString(-1 * viewItem.getBalance()));
                 itemHolder.balanceView.setTextColor(Color.parseColor("#ffc94c4c"));
                 itemHolder.paidView.setVisibility(View.GONE);
             }
             else if (viewItem.getBalance() > 0) {
-                itemHolder.balanceView.setText(context.getString(R.string.lent_colon) + Float.toString(viewItem.getBalance()));
+                itemHolder.balanceView.setText(context.getString(R.string.lent_colon)+ mCurrency +
+                        Float.toString(viewItem.getBalance()));
                 itemHolder.balanceView.setTextColor(Color.parseColor("#ff509f4c"));
                 itemHolder.paidView.setVisibility(View.GONE);
             }
@@ -122,8 +123,8 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             ViewHolderHeader header = (ViewHolderHeader) holder;
             header.headerImage.setImageResource(R.drawable.toolbar_background);
             setAnimation(header.container, position);
-            header.totalLent.setText(context.getString(R.string.lent_colon) + getTotalLent());
-            header.totalBorrowed.setText(context.getString(R.string.borrowed_colon) + getTotalBorrowed());
+            header.totalLent.setText(context.getString(R.string.lent_colon)+ mCurrency + getTotalLent());
+            header.totalBorrowed.setText(context.getString(R.string.borrowed_colon) + mCurrency + getTotalBorrowed());
             //Log.v("RecyclerView","Setting header image");
         }
     }
@@ -324,6 +325,10 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             //notifyDataSetChanged();
         }
     }*/
+
+    public void setmCurrency(String mCurrency) {
+        this.mCurrency = mCurrency;
+    }
 
     public float getTotalLent(){
         float lent=0;

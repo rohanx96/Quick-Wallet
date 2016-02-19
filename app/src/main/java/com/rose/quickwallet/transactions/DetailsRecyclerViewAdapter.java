@@ -17,7 +17,9 @@ import com.rose.quickwallet.callbackhepers.DetailsRecyclerViewCallback;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Currency;
 import java.util.Date;
+import java.util.Locale;
 
 /**
  *
@@ -29,13 +31,15 @@ public class DetailsRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
     private DetailsRecyclerViewCallback callback;
     private Context context;
     private String name;
+    private String mCurrency;
 
-    public DetailsRecyclerViewAdapter(ArrayList<DetailsRecyclerViewItem> dataList, Context context, String name){
+    public DetailsRecyclerViewAdapter(ArrayList<DetailsRecyclerViewItem> dataList, Context context, String name, String mCurrency){
         super();
         this.dataList = dataList;
         this.context = context;
         this.name = name;
         callback = (DetailsRecyclerViewCallback) context;
+        this.mCurrency = mCurrency;
     }
 
     @Override
@@ -51,7 +55,7 @@ public class DetailsRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
         else viewHolder.detailsDescription.setText(dataList.get(position).getDetail());
         if(dataList.get(position).getType().equals("Lent")) {
             bindLent(viewHolder);
-            viewHolder.detailsAmount.setText(Float.toString(dataList.get(position).getAmount()));
+            viewHolder.detailsAmount.setText(mCurrency + Float.toString(dataList.get(position).getAmount()));
             viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -61,7 +65,7 @@ public class DetailsRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
         }
         if(dataList.get(position).getType().equals("Borrowed")) {
             bindBorrowed(viewHolder);
-            viewHolder.detailsAmount.setText(Float.toString(-1 * dataList.get(position).getAmount()));
+            viewHolder.detailsAmount.setText(mCurrency + Float.toString(-1 * dataList.get(position).getAmount()));
             viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -182,5 +186,9 @@ public class DetailsRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
 
     public void setDataList(ArrayList<DetailsRecyclerViewItem> dataList) {
         this.dataList = dataList;
+    }
+
+    public void setmCurrency(String currency){
+        mCurrency = currency;
     }
 }

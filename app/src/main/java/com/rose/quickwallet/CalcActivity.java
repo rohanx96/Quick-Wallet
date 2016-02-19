@@ -147,11 +147,6 @@ private class BtnListener implements OnClickListener {
             // Keep the result for the next operation
         }
         txtResult.setText(String.valueOf(result));
-        TextView amountType = (TextView) findViewById(R.id.money_detail_name);
-        if(result<0)
-            amountType.setText(getString(R.string.borrowed));
-        else
-            amountType.setText(getString(R.string.lent));
     }
     }
 

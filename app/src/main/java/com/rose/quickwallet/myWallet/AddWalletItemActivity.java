@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.design.widget.Snackbar;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
@@ -19,6 +20,9 @@ import android.widget.Toast;
 import com.rose.quickwallet.CalcActivity;
 import com.rose.quickwallet.R;
 
+import java.util.Currency;
+import java.util.Locale;
+
 /**
  * Created by rose on 19/8/15.
  *
@@ -30,6 +34,7 @@ public class AddWalletItemActivity extends Activity {
     private String details;
     private float amount=0;
     private Context context;
+    private String mCurrency;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -39,6 +44,7 @@ public class AddWalletItemActivity extends Activity {
         TextView textView = (TextView) findViewById(R.id.add_wallet_item_detail_name);
         textView.setText(getString(R.string.expense));
         textView.setTextColor(Color.RED);
+        mCurrency = PreferenceManager.getDefaultSharedPreferences(this).getString("prefCurrency","");
         final Button amountView = (Button)findViewById(R.id.add_wallet_item_amount_wrapper);
         /*amountView.addTextChangedListener(new TextWatcher() {
             @Override
@@ -104,7 +110,7 @@ public class AddWalletItemActivity extends Activity {
                     type = getIntent().getStringExtra("TYPE");
                     if(amount<0)
                         amount = -1 * amount;
-                    amountView.setText(getString(R.string.amount_colon) + Float.toString(amount));
+                    amountView.setText(getString(R.string.amount_colon) + mCurrency + Float.toString(amount));
                     TextView detailsText = (TextView) findViewById(R.id.add_wallet_item_detail);
                     detailsText.setText(details);
                     RadioGroup radioGroup = (RadioGroup)findViewById(R.id.type_radio_options);
@@ -122,7 +128,7 @@ public class AddWalletItemActivity extends Activity {
                     doneButton.setText(getString(R.string.edit));
                     RelativeLayout relativeLayout = (RelativeLayout) findViewById(R.id.add_wallet_item_details);
                     TextView textView = (TextView) relativeLayout.findViewById(R.id.add_wallet_item_detail_balance);
-                    textView.setText(getString(R.string.amount_colon) + amount);
+                    textView.setText(getString(R.string.amount_colon) + mCurrency + amount);
                     textView = (TextView) findViewById(R.id.add_wallet_item_detail_name);
                     textView.setText(type);
                     amountView.setTextColor(Color.BLACK);
@@ -161,10 +167,10 @@ public class AddWalletItemActivity extends Activity {
                         group.check(R.id.radio_button_expenditure);
                     }
                     TextView textView = (TextView) relativeLayout.findViewById(R.id.add_wallet_item_detail_balance);
-                    textView.setText(getString(R.string.amount_colon) + amount);
+                    textView.setText(getString(R.string.amount_colon) + mCurrency + amount);
                     textView = (TextView) findViewById(R.id.add_wallet_item_detail_name);
                     textView.setText(type);
-                    amountView.setText(getString(R.string.amount_colon) + amount);
+                    amountView.setText(getString(R.string.amount_colon) + mCurrency + amount);
                     amountView.setTextColor(Color.BLACK);
                     if (type.equals("Income")) {
                         textView.setTextColor(setColorGreen());
@@ -212,7 +218,8 @@ public class AddWalletItemActivity extends Activity {
         }
         TextView detailsText = (TextView) findViewById(R.id.add_wallet_item_detail);
         details = detailsText.getText().toString();
-        Snackbar.make(findViewById(R.id.new_wallet_transaction), "Added Transaction: " + type + ": " + amount, Snackbar.LENGTH_SHORT).show();
+        Snackbar.make(findViewById(R.id.new_wallet_transaction), "Added Transaction: " + type + ": " + mCurrency
+                + amount, Snackbar.LENGTH_SHORT).show();
         if(type.equals("Expense"))
             amount = -1 * amount;
         WalletDatabaseHelper databaseHelper = new WalletDatabaseHelper(this);

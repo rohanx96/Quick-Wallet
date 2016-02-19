@@ -3,6 +3,7 @@ package com.rose.quickwallet.myWallet;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.design.widget.NavigationView;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.LinearLayoutManager;
@@ -22,6 +23,9 @@ import com.rose.quickwallet.callbackhepers.DetailsRecyclerViewCallback;
 import com.rose.quickwallet.transactions.MainActivity;
 import com.rose.quickwallet.tutorial.TutorialActivity;
 
+import java.util.Currency;
+import java.util.Locale;
+
 /**
  *
  * Created by rose on 16/8/15.
@@ -30,6 +34,7 @@ public class WalletActivity extends BaseActivity implements DetailsRecyclerViewC
     private RecyclerView recyclerView;
     private WalletDatabaseHelper databaseHelper;
     private WalletRecyclerAdapter recyclerAdapter;
+    private String mCurrency;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -40,6 +45,7 @@ public class WalletActivity extends BaseActivity implements DetailsRecyclerViewC
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         setupDrawerContent(navigationView);
         setTitle(getString(R.string.my_wallet));
+        mCurrency = PreferenceManager.getDefaultSharedPreferences(this).getString("prefCurrency","");
         /*AdView mAdView = (AdView) findViewById(R.id.adView);
         AdRequest.Builder builder = new AdRequest.Builder();
         builder.addTestDevice("D882CD568608B87702357166E3B3E8BD");
@@ -63,7 +69,7 @@ public class WalletActivity extends BaseActivity implements DetailsRecyclerViewC
         recyclerView = (RecyclerView) findViewById(R.id.wallet_recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         databaseHelper = new WalletDatabaseHelper(this);
-        recyclerAdapter = new WalletRecyclerAdapter(databaseHelper.getData(),this);
+        recyclerAdapter = new WalletRecyclerAdapter(databaseHelper.getData(),this,mCurrency);
         recyclerView.setAdapter(recyclerAdapter);
         /*TextView fundsText = (TextView) findViewById(R.id.wallet_funds_text);
         fundsText.setText(getString(R.string.funds) + databaseHelper.getBalance());
@@ -80,15 +86,17 @@ public class WalletActivity extends BaseActivity implements DetailsRecyclerViewC
         navigationView.getMenu().findItem(R.id.nav_wallet).setChecked(true);
         final TextView navViewHeaderText = (TextView) LayoutInflater.from(this).inflate(R.layout.nav_header_layout,navigationView).findViewById(R.id.nav_header_text);
         navViewHeaderText.setText("");
+        mCurrency = PreferenceManager.getDefaultSharedPreferences(this).getString("prefCurrency","");
         databaseHelper = new WalletDatabaseHelper(getApplicationContext());
         recyclerAdapter.setDataList(databaseHelper.getData());
+        recyclerAdapter.setmCurrency(mCurrency);
         recyclerView.getAdapter().notifyDataSetChanged();
         TextView fundsText = (TextView) findViewById(R.id.wallet_funds_text);
-        fundsText.setText(getString(R.string.funds) + databaseHelper.calculateBalance());
+        fundsText.setText(getString(R.string.funds) + mCurrency + databaseHelper.calculateBalance());
         TextView expensesToday = (TextView) findViewById(R.id.wallet_expenses_today);
-        expensesToday.setText(getString(R.string.expense_today) + databaseHelper.getTodaysExpense());
+        expensesToday.setText(getString(R.string.expense_today) + mCurrency + databaseHelper.getTodaysExpense());
         TextView incomeToday = (TextView) findViewById(R.id.wallet_income_today);
-        incomeToday.setText(getString(R.string.income_today) + databaseHelper.getTodaysIncome());
+        incomeToday.setText(getString(R.string.income_today) + mCurrency + databaseHelper.getTodaysIncome());
         databaseHelper.close();
     }
 
@@ -109,11 +117,11 @@ public class WalletActivity extends BaseActivity implements DetailsRecyclerViewC
                 recyclerAdapter.setDataList(databaseHelper.getData());
                 recyclerView.getAdapter().notifyDataSetChanged();
                 TextView fundsText = (TextView) findViewById(R.id.wallet_funds_text);
-                fundsText.setText(getString(R.string.funds) + databaseHelper.getBalance());
+                fundsText.setText(getString(R.string.funds)  + mCurrency + databaseHelper.getBalance());
                 TextView expensesToday = (TextView) findViewById(R.id.wallet_expenses_today);
-                expensesToday.setText(getString(R.string.expense_today) + databaseHelper.getTodaysExpense());
+                expensesToday.setText(getString(R.string.expense_today)  + mCurrency + databaseHelper.getTodaysExpense());
                 TextView incomeToday = (TextView) findViewById(R.id.wallet_income_today);
-                incomeToday.setText(getString(R.string.income_today) + databaseHelper.getTodaysIncome());
+                incomeToday.setText(getString(R.string.income_today) + mCurrency + databaseHelper.getTodaysIncome());
                 databaseHelper.close();
         }
         return super.onOptionsItemSelected(item);
@@ -129,11 +137,11 @@ public class WalletActivity extends BaseActivity implements DetailsRecyclerViewC
     public void onDeleteTransaction() {
         databaseHelper = new WalletDatabaseHelper(this);
         TextView fundsText = (TextView) findViewById(R.id.wallet_funds_text);
-        fundsText.setText(getString(R.string.funds) + databaseHelper.calculateBalance());
+        fundsText.setText(getString(R.string.funds) + mCurrency + databaseHelper.calculateBalance());
         TextView expensesToday = (TextView) findViewById(R.id.wallet_expenses_today);
-        expensesToday.setText(getString(R.string.expense_today) + databaseHelper.getTodaysExpense());
+        expensesToday.setText(getString(R.string.expense_today) + mCurrency + databaseHelper.getTodaysExpense());
         TextView incomeToday = (TextView) findViewById(R.id.wallet_income_today);
-        incomeToday.setText(getString(R.string.income_today) + databaseHelper.getTodaysIncome());
+        incomeToday.setText(getString(R.string.income_today) + mCurrency + databaseHelper.getTodaysIncome());
         databaseHelper.close();
     }
 

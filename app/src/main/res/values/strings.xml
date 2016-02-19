@@ -143,4 +143,5 @@
     <string name="request_permissions_contacts">The read contact permission is required to provide you with results from your contacts when adding transactions and to display the contact\'s name and image. No other detail from the contacts are read or used. Please grant the permission when prompted for proper functionality.</string>
     <string name="request_permission_telephone">The read phone state permission is required to get the device ID which is required in registering for cloud notifications. Please grant the permission when requested or else you will not be able to receive notifications. The app will never make or manage your phone calls</string>
     <string name="share_msg_text">Quick Wallet\nhttps://play.google.com/store/apps/details?id=com.rose.quickwallet\nGet this application and we can easily manage our transactions</string>
+    <string name="currency">\u20B9</string>
 </resources>

@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (c) 2016. Rohan Agarwal (rOhanX96)
+  -->
+
+<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:padding="16dp"
+    android:background="@color/colorPrimary"
+    android:layout_width="match_parent" android:layout_height="wrap_content"
+    android:text="Set currency"
+    android:textAppearance="@android:style/TextAppearance.SearchResult.Title"
+    android:textStyle="bold"
+    android:clickable="false"
+    android:layout_marginBottom="10dp"
+    android:paddingBottom="10dp"
+    android:textColor="@color/white">
+
+</TextView>

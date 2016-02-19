@@ -23,4 +23,27 @@
     <string-array name="transaction_clear_balance_click_dialog_options">
         <item>Delete</item>
     </string-array>
+    <string-array name="currency_locales">
+        <item>$       \b Dollar</item>
+        <item>€       \b Euro</item>
+        <item>£       \b Pound</item>
+        <item>\u20B9       \b Rupee</item>
+        <item>₣       \b Franc</item>
+        <item>¥       \b Yen</item>
+        <item>RM      \b Ringgit</item>
+        <item>¥       \b Yuan</item>
+        <item>₩       \b Won</item>
+    </string-array>
+    <string-array name="locale_value">
+        <item>$</item>
+        <item>€</item>
+        <item>£</item>
+        <item>\u20B9</item>
+        <item>₣</item>
+        <item>¥</item>
+        <item>RM</item>
+        <item>¥</item>
+        <item>₩</item>
+
+    </string-array>
 </resources>

@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -21,6 +22,9 @@ import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.rose.quickwallet.R;
 import com.rose.quickwallet.callbackhepers.DetailsRecyclerViewCallback;
 
+import java.util.Currency;
+import java.util.Locale;
+
 /**
  *
  *Created by rose on 28/7/15
@@ -32,6 +36,7 @@ public class DetailsActivity extends AppCompatActivity implements DetailsRecycle
     private String name;
     private String imageUri;
     private DetailsRecyclerViewAdapter recyclerViewAdapter;
+    private String mCurrency;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -47,10 +52,11 @@ public class DetailsActivity extends AppCompatActivity implements DetailsRecycle
             contactImage.setImageURI(Uri.parse(imageUri));
         else
             contactImage.setImageResource(R.drawable.contact_no_image);
+        mCurrency = PreferenceManager.getDefaultSharedPreferences(this).getString("prefCurrency","");
         recyclerView = (RecyclerView)findViewById(R.id.details_recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext()));
         databaseHelper = new DatabaseHelper(getApplicationContext());
-        recyclerViewAdapter = new DetailsRecyclerViewAdapter(databaseHelper.getHistoryData(name),this,name);
+        recyclerViewAdapter = new DetailsRecyclerViewAdapter(databaseHelper.getHistoryData(name),this,name,mCurrency);
         recyclerView.setAdapter(recyclerViewAdapter);
         /*ImageButton delete = (ImageButton) findViewById(R.id.delete_icon);
         delete.setOnClickListener(new View.OnClickListener() {
@@ -104,6 +110,7 @@ public class DetailsActivity extends AppCompatActivity implements DetailsRecycle
         //ArrayList<DetailsRecyclerViewItem> detailsRecyclerViewItems = databaseHelper.getHistoryData(name);
         //int newItems = detailsRecyclerViewItems.size() - recyclerViewAdapter.getDataList().size();
         recyclerViewAdapter.setDataList(databaseHelper.getHistoryData(name));
+        recyclerViewAdapter.setmCurrency(PreferenceManager.getDefaultSharedPreferences(this).getString("prefCurrency",""));
         //recyclerView.getAdapter().notifyDataSetChanged();
         //for(int i =0;i<=newItems;i++){
         //    recyclerView.getAdapter().notifyItemInserted(i);
@@ -113,7 +120,7 @@ public class DetailsActivity extends AppCompatActivity implements DetailsRecycle
         float balance = databaseHelper.getBalance(name);
         if(balance<0)
             balance = -1 * balance;
-        balanceText.setText(getString(R.string.current_balance_colon) + balance);
+        balanceText.setText(getString(R.string.current_balance_colon) + mCurrency + balance);
         if (balance == 0)
             balanceText.setText(getString(R.string.no_balance));
         databaseHelper.close();
@@ -149,7 +156,7 @@ public class DetailsActivity extends AppCompatActivity implements DetailsRecycle
         float balance = databaseHelper.getBalance(name);
         if(balance<0)
             balance = -1 * balance;
-        balanceText.setText(getString(R.string.current_balance_colon) + balance);
+        balanceText.setText(getString(R.string.current_balance_colon) + mCurrency + balance);
         if (balance == 0)
             balanceText.setText(getString(R.string.no_balance));
         databaseHelper.close();
