@@ -34,7 +34,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.animation.AccelerateInterpolator;
 import android.widget.ArrayAdapter;
-import android.widget.RelativeLayout;
 import android.widget.SearchView;
 import android.widget.TextView;
 
@@ -66,7 +65,7 @@ import java.util.List;
 public class MainActivity extends BaseActivity implements RecyclerViewCallback {
     private RecyclerView recyclerView;
     private RecyclerAdapter adapter;
-    private boolean isSignedIn =false;
+    private boolean isSignedIn = false;
     private GCMClientHelper pushClientManager;
     private SharedPreferences preferences;
     boolean shouldAnimate = false;
@@ -83,15 +82,14 @@ public class MainActivity extends BaseActivity implements RecyclerViewCallback {
             @Override
             public void run() {
                 boolean isFirstStartAfterGCMUpdate = preferences.getBoolean("isFirstStartAfterGCMUpdate", true);
-                if(isFirstStartAfterGCMUpdate){
+                if (isFirstStartAfterGCMUpdate) {
                     Intent goCloud = new Intent(getApplicationContext(), GoCloudActivity.class);
                     startActivity(goCloud);
-                    Intent tutorial = new Intent(MainActivity.this,TutorialActivity.class);
+                    Intent tutorial = new Intent(MainActivity.this, TutorialActivity.class);
                     startActivity(tutorial);
                     finish();
-                    preferences.edit().putBoolean("isFirstStartAfterGCMUpdate",false).apply();
-                }
-                else if(preferences.getBoolean("securitySwitch",false) && !getIntent().getAction().equals("enter")){
+                    preferences.edit().putBoolean("isFirstStartAfterGCMUpdate", false).apply();
+                } else if (preferences.getBoolean("securitySwitch", false) && !getIntent().getAction().equals("enter")) {
                     Intent password = new Intent(MainActivity.this, EnterPinActivity.class);
                     password.setAction("ENTER_PASSWORD");
                     startActivity(password);
@@ -115,7 +113,7 @@ public class MainActivity extends BaseActivity implements RecyclerViewCallback {
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(itemTouchHelperCallback);
         itemTouchHelper.attachToRecyclerView(recyclerView);
 
-        if(isSignedIn){
+        if (isSignedIn) {
             QBSettings.getInstance().fastConfigInit(Consts.APP_ID, Consts.AUTH_KEY, Consts.AUTH_SECRET);
             final QBUser user = new QBUser();
             user.setEmail(preferences.getString(Consts.USER_LOGIN, null));
@@ -129,8 +127,8 @@ public class MainActivity extends BaseActivity implements RecyclerViewCallback {
                         @Override
                         public void run() {
                             Intent retrieveUsers = new Intent(getApplicationContext(), RetreiveUsersService.class);
-                            retrieveUsers.putExtra("createSession",false);
-                            retrieveUsers.putExtra("sendNotifications",false);
+                            retrieveUsers.putExtra("createSession", false);
+                            retrieveUsers.putExtra("sendNotifications", false);
                             startService(retrieveUsers);
                         }
                     });
@@ -167,9 +165,9 @@ public class MainActivity extends BaseActivity implements RecyclerViewCallback {
             @Override
             public void run() {
                 // we will not get a value  at first start, so true will be returned
-                boolean isFirstStart = preferences.getBoolean("isFirstStart",true);
+                boolean isFirstStart = preferences.getBoolean("isFirstStart", true);
                 // if it was the first app start
-                if(isFirstStart) {
+                if (isFirstStart) {
                     drawerLayout.openDrawer(GravityCompat.START);
                     SharedPreferences.Editor e = preferences.edit();
                     // we save the value "false", indicating that it is no longer the first appstart
@@ -193,7 +191,7 @@ public class MainActivity extends BaseActivity implements RecyclerViewCallback {
     @Override
     protected void onNewIntent(Intent intent) {
         super.onNewIntent(intent);
-        if(getIntent().getAction() != null) {
+        if (getIntent().getAction() != null) {
             if (getIntent().getAction().equals(Intent.ACTION_SEARCH)) {
                 search(getIntent().getStringExtra(SearchManager.QUERY));
             }
@@ -209,7 +207,7 @@ public class MainActivity extends BaseActivity implements RecyclerViewCallback {
         //adapter.refreshDataList(databaseHelper.getData(),false);
         adapter.setDataList(databaseHelper.getData());
         adapter.setmCurrency(preferences.getString("prefCurrency", ""));
-        ((SimpleItemAnimator)recyclerView.getItemAnimator()).setSupportsChangeAnimations(false);
+        ((SimpleItemAnimator) recyclerView.getItemAnimator()).setSupportsChangeAnimations(false);
         recyclerView.getAdapter().notifyDataSetChanged();
         shouldAnimate = false;
         resetFabScale();
@@ -218,7 +216,7 @@ public class MainActivity extends BaseActivity implements RecyclerViewCallback {
         fab.setScaleX(1.0f);
         fab.setScaleY(1.0f);*/
         setServiceAlarm();
-        if(Build.VERSION.SDK_INT < 21)
+        if (Build.VERSION.SDK_INT < 21)
             setupSearchEditText();
         else
             setupSearchView();
@@ -267,11 +265,11 @@ public class MainActivity extends BaseActivity implements RecyclerViewCallback {
         });
     }
 
-    public void setupSearchEditText(){
+    public void setupSearchEditText() {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_main_activity);
         setSupportActionBar(toolbar);
         ActionBar actionBar = getSupportActionBar();
-        if(actionBar!=null) {
+        if (actionBar != null) {
             actionBar.setDisplayShowCustomEnabled(true);
             actionBar.setCustomView(R.layout.search_edit_text);
             actionBar.setDisplayShowTitleEnabled(false);
@@ -279,7 +277,9 @@ public class MainActivity extends BaseActivity implements RecyclerViewCallback {
         }
     }
 
-    /** Searches for string s in names stored in database and updates the recycler view with the datalist obtained from database */
+    /**
+     * Searches for string s in names stored in database and updates the recycler view with the datalist obtained from database
+     */
     public void search(String s) {
         DatabaseHelper databaseHelper = new DatabaseHelper(getApplicationContext());
         adapter.setDataList(databaseHelper.search(s));
@@ -290,13 +290,20 @@ public class MainActivity extends BaseActivity implements RecyclerViewCallback {
     public void onItemSwiped(final RecyclerViewItem item) {
         final DatabaseHelper databaseHelper = new DatabaseHelper(getApplicationContext());
         databaseHelper.updateItemOnSwipe(item.getName());
-        RelativeLayout header = (RelativeLayout) LayoutInflater.from(this).inflate(R.layout.recycler_view_header_layout, recyclerView,false);
+        String currency = preferences.getString("prefCurrency", "");
+        View header = recyclerView.getChildAt(0);
+        //RelativeLayout header = (RelativeLayout) LayoutInflater.from(this).inflate(R.layout.recycler_view_header_layout, recyclerView,false);
         TextView totalLent = (TextView) header.findViewById(R.id.lent_header);
         //TextView totalLent = (TextView) recyclerView.findViewById(R.id.lent_header);
         TextView totalBorrowed = (TextView) header.findViewById(R.id.borrowed_header);
         //TextView totalBorrowed = (TextView) recyclerView.findViewById(R.id.borrowed_header);
-        totalLent.setText(getResources().getString(R.string.lent_colon) + databaseHelper.totalLent());
-        totalBorrowed.setText(getResources().getString(R.string.borrowed_colon) + databaseHelper.totalBorrowed());
+        //TODO: Find a solution to update the balance for null views
+        // These views are returned null when the header image is not visible on screen
+        // (When user has scrolled down and the view at position 0 has been recycled
+        if (totalLent != null) // prevent force close due to null
+            totalLent.setText(getResources().getString(R.string.lent_colon) + currency + databaseHelper.totalLent());
+        if (totalBorrowed != null) // prevent force close due to null
+            totalBorrowed.setText(getResources().getString(R.string.borrowed_colon) + currency + databaseHelper.totalBorrowed());
         //recyclerView.getAdapter().notifyDataSetChanged();
         databaseHelper.close();
         Snackbar.make(findViewById(R.id.activity_coordinator_layout), getString(R.string.snackbar_balance_cleared_beg) + item.getName() + getString(R.string.snackbar_balance_cleared_end), Snackbar.LENGTH_LONG).setAction(getString(R.string.undo), new View.OnClickListener() {
@@ -320,7 +327,9 @@ public class MainActivity extends BaseActivity implements RecyclerViewCallback {
         recyclerView.removeViewAt(position);
     }
 
-    /** Sets alarm to start the notification service to push notifications to user of pending balances */
+    /**
+     * Sets alarm to start the notification service to push notifications to user of pending balances
+     */
     public void setServiceAlarm() {
         // Construct an intent that will execute the AlarmReceiver
         Intent intent = new Intent(getApplicationContext(), AlarmReceiver.class);
@@ -333,9 +342,9 @@ public class MainActivity extends BaseActivity implements RecyclerViewCallback {
         //long firstMillis = System.currentTimeMillis(); // first run of alarm is immediate
         //int intervalMillis = 5000; // 5 seconds
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(this);
-        String interval = preferences.getString("notificationInterval","12");
+        String interval = preferences.getString("notificationInterval", "12");
         AlarmManager alarm = (AlarmManager) this.getSystemService(ALARM_SERVICE);
-        if(preferences.getBoolean("notificationSwitch",true)) {
+        if (preferences.getBoolean("notificationSwitch", true)) {
             switch (interval) {
                 case "30":
                     alarm.setInexactRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + 15 * 60 * 1000,
@@ -365,10 +374,12 @@ public class MainActivity extends BaseActivity implements RecyclerViewCallback {
         }
     }
 
-    /** Requests read contacts permission from user. Only for android v23 and up */
-    public void requestPermissions(){
-        if(ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.READ_CONTACTS) != PackageManager.PERMISSION_GRANTED){
-            if(ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.READ_CONTACTS)){
+    /**
+     * Requests read contacts permission from user. Only for android v23 and up
+     */
+    public void requestPermissions() {
+        if (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.READ_CONTACTS) != PackageManager.PERMISSION_GRANTED) {
+            if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.READ_CONTACTS)) {
                 android.support.v7.app.AlertDialog.Builder dialogBuilder = new android.support.v7.app.AlertDialog.Builder(this);
                 dialogBuilder.setMessage(getString(R.string.request_permissions_contacts))
                         .setPositiveButton(getString(R.string.dlg_ok), new DialogInterface.OnClickListener() {
@@ -379,46 +390,45 @@ public class MainActivity extends BaseActivity implements RecyclerViewCallback {
                             }
                         });
                 dialogBuilder.show();
-            }
-            else
-                ActivityCompat.requestPermissions(this,new String[]{Manifest.permission.READ_CONTACTS},2);
+            } else
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_CONTACTS}, 2);
         }
     }
 
-    /**private void loadAd(){
-        AdView mAdView = (AdView) findViewById(R.id.adView);
-        AdRequest.Builder builder = new AdRequest.Builder();
-        builder.addTestDevice("D882CD568608B87702357166E3B3E8BD");
-        AdRequest adRequest = builder.build();
-        mAdView.loadAd(adRequest);
-        mAdView.setAdListener(new AdListener() {
-            @Override
-            public void onAdFailedToLoad(int errorCode) {
-                super.onAdFailedToLoad(errorCode);
-                LinearLayout adLayout = (LinearLayout) findViewById(R.id.ad_layout);
-                adLayout.setVisibility(View.GONE);
-            }
+    /**
+     * private void loadAd(){
+     * AdView mAdView = (AdView) findViewById(R.id.adView);
+     * AdRequest.Builder builder = new AdRequest.Builder();
+     * builder.addTestDevice("D882CD568608B87702357166E3B3E8BD");
+     * AdRequest adRequest = builder.build();
+     * mAdView.loadAd(adRequest);
+     * mAdView.setAdListener(new AdListener() {
+     *
+     * @Override public void onAdFailedToLoad(int errorCode) {
+     * super.onAdFailedToLoad(errorCode);
+     * LinearLayout adLayout = (LinearLayout) findViewById(R.id.ad_layout);
+     * adLayout.setVisibility(View.GONE);
+     * }
+     * @Override public void onAdLoaded() {
+     * super.onAdLoaded();
+     * LinearLayout adLayout = (LinearLayout) findViewById(R.id.ad_layout);
+     * adLayout.setVisibility(View.VISIBLE);
+     * }
+     * });
+     * }
+     */
 
-            @Override
-            public void onAdLoaded() {
-                super.onAdLoaded();
-                LinearLayout adLayout = (LinearLayout) findViewById(R.id.ad_layout);
-                adLayout.setVisibility(View.VISIBLE);
-            }
-        });
-    }*/
-
-    public void onOpenDrawer(View v){
+    public void onOpenDrawer(View v) {
         drawerLayout.openDrawer(GravityCompat.START);
     }
 
     public void selectDrawerItem(final MenuItem menuItem) {
 
-        switch(menuItem.getItemId()) {
+        switch (menuItem.getItemId()) {
 
             case R.id.nav_wallet:
                 //Toast.makeText(getApplicationContext(), "Stared Selected", Toast.LENGTH_SHORT).show();
-                Intent walletActivity = new Intent(this,WalletActivity.class);
+                Intent walletActivity = new Intent(this, WalletActivity.class);
                 walletActivity.setAction("generic");
                 //walletActivity.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
                 startActivity(walletActivity);
@@ -426,7 +436,7 @@ public class MainActivity extends BaseActivity implements RecyclerViewCallback {
                 menuItem.setChecked(true);
                 break;
             case R.id.nav_settings:
-                Intent intent = new Intent(this,SettingsActivity.class);
+                Intent intent = new Intent(this, SettingsActivity.class);
                 startActivity(intent);
                 break;
             case R.id.nav_tutorial:
@@ -436,7 +446,7 @@ public class MainActivity extends BaseActivity implements RecyclerViewCallback {
             case R.id.nav_help:
                 Intent helpIntent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts("mailto", "rohanx96@gmail.com", null));
                 helpIntent.putExtra(Intent.EXTRA_SUBJECT, "QuickWallet App on PlayStore");
-                startActivity(Intent.createChooser(helpIntent,"send Email"));
+                startActivity(Intent.createChooser(helpIntent, "send Email"));
             default:
                 //Toast.makeText(getApplicationContext(), "Somethings Wrong", Toast.LENGTH_SHORT).show();
                 break;
@@ -446,9 +456,9 @@ public class MainActivity extends BaseActivity implements RecyclerViewCallback {
         drawerLayout.closeDrawers();
     }
 
-    private void setupNavigationHeader(){
-        final TextView navViewHeaderText = (TextView)LayoutInflater.from(this).inflate(R.layout.nav_header_layout, navigationView).findViewById(R.id.nav_header_text);
-        if(isSignedIn){
+    private void setupNavigationHeader() {
+        final TextView navViewHeaderText = (TextView) LayoutInflater.from(this).inflate(R.layout.nav_header_layout, navigationView).findViewById(R.id.nav_header_text);
+        if (isSignedIn) {
             navViewHeaderText.setText(getResources().getString(R.string.my_account));
             navViewHeaderText.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -458,8 +468,7 @@ public class MainActivity extends BaseActivity implements RecyclerViewCallback {
                     overridePendingTransition(R.anim.slide_in_from_bottom, R.anim.fade_out); // this method should be called just after startActivity
                 }
             });
-        }
-        else {
+        } else {
             navViewHeaderText.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
@@ -470,48 +479,52 @@ public class MainActivity extends BaseActivity implements RecyclerViewCallback {
         }
     }
 
-    /** Displays the currency chooser dialog if not previously shown */
-    public void showCurrencyChooserIfRequired(){
-        if (preferences.getString("prefShown", "F").equals("F")) {
+    /**
+     * Displays the currency chooser dialog if not previously shown
+     */
+    public void showCurrencyChooserIfRequired() {
+        if (preferences.getString("prefCurrencyIsShown", "F").equals("F")) {
             // Set the dialog shown preference to true
-            preferences.edit().putString("prefShown", "T").apply();
+            preferences.edit().putString("prefCurrencyIsShown", "T").apply();
             //Show the dialog
             AlertDialog.Builder builder = new AlertDialog.Builder(this);
-            builder.setCustomTitle(LayoutInflater.from(this).inflate(R.layout.dialog_currency_choser_header,null,false));
-            ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,R.layout.dialog_currency_choser_item);
+            builder.setCustomTitle(LayoutInflater.from(this).inflate(R.layout.dialog_currency_choser_header, null, false));
+            ArrayAdapter<String> adapter = new ArrayAdapter<String>(this, R.layout.dialog_currency_choser_item);
             adapter.addAll(getResources().getStringArray(R.array.currency_locales));
             builder.setAdapter(adapter, new DialogInterface.OnClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which) {
                     switch (which) {
+                        case 0:
+                            preferences.edit().putString("prefCurrency", "$").apply();
+                            break;
                         case 1:
-                            preferences.edit().putString("prefLocale", "$").apply();
+                            preferences.edit().putString("prefCurrency", "€").apply();
                             break;
                         case 2:
-                            preferences.edit().putString("prefLocale", "€").apply();
+                            preferences.edit().putString("prefCurrency", "£").apply();
                             break;
                         case 3:
-                            preferences.edit().putString("prefLocale", "£").apply();
+                            preferences.edit().putString("prefCurrency", "₹").apply();
                             break;
                         case 4:
-                            preferences.edit().putString("prefLocale", "₹").apply();
+                            preferences.edit().putString("prefCurrency", "₣").apply();
                             break;
                         case 5:
-                            preferences.edit().putString("prefLocale", "₣").apply();
+                            preferences.edit().putString("prefCurrency", "¥").apply();
+                            break;
                         case 6:
-                            preferences.edit().putString("prefLocale", "¥").apply();
+                            preferences.edit().putString("prefCurrency", "RM").apply();
                             break;
                         case 7:
-                            preferences.edit().putString("prefLocale", "RM").apply();
+                            preferences.edit().putString("prefCurrency", "¥").apply();
                             break;
                         case 8:
-                            preferences.edit().putString("prefLocale", "¥").apply();
-                            break;
-                        case 9:
-                            preferences.edit().putString("prefLocale", "₩").apply();
+                            preferences.edit().putString("prefCurrency", "₩").apply();
                             break;
                         default:
-                            preferences.edit().putString("prefLocale", "").apply();
+                            preferences.edit().putString("prefCurrency", "").apply();
+                            break;
                     }
                     dialog.dismiss();
                     onResume();
@@ -522,13 +535,15 @@ public class MainActivity extends BaseActivity implements RecyclerViewCallback {
         }
     }
 
-    /** Increases the fab button size to fill the screen creating a ripple effect */
-    public void startRippleAnimation(final FloatingActionButton view){
+    /**
+     * Increases the fab button size to fill the screen creating a ripple effect
+     */
+    public void startRippleAnimation(final FloatingActionButton view) {
         /* Due to setting margin in our fab button when we scale it up it can not take up the entire screen.
         To overcome this we make another fab button at the same position as our original fab button without setting margin to this fab
         button. We then scale up this new fab button
          */
-        CoordinatorLayout frame = (CoordinatorLayout)findViewById(R.id.activity_coordinator_layout);
+        CoordinatorLayout frame = (CoordinatorLayout) findViewById(R.id.activity_coordinator_layout);
         // Check if it has been previously added. If not then we create a new fab button
         FloatingActionButton imageView = (FloatingActionButton) frame.findViewById(R.id.fab_expand_menu_button);
         if (imageView == null) {
@@ -564,10 +579,12 @@ public class MainActivity extends BaseActivity implements RecyclerViewCallback {
         startActivity(intent, bundle);*/
     }
 
-    /** Resets the size of the dynamically added fab. Used in OnResume */
-    public void resetFabScale(){
+    /**
+     * Resets the size of the dynamically added fab. Used in OnResume
+     */
+    public void resetFabScale() {
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab_expand_menu_button);
-        if (fab!= null){
+        if (fab != null) {
             // Visibility is set to gone or else it comes up over our actual fab hiding its + image
             fab.setVisibility(View.GONE);
             fab.setScaleX(1.0f);

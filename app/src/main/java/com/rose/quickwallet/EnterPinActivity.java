@@ -288,14 +288,12 @@ public class EnterPinActivity extends Activity {
         // Note that calling digest resets the MessageDigest
             mdSha1.update(password.getBytes("ASCII"));
         } catch (UnsupportedEncodingException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
         byte[] data = mdSha1.digest();
         try {
             return convertToHex(data);
         } catch (IOException e) {
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
         return null;

@@ -97,7 +97,7 @@ public class RetreiveUsersService extends IntentService {
         }
     }
 
-
+    //TODO: Find a better solution to retreiving users. Also update users entry instead of ignoring for existing IDs
     private void retrieveAllUsersFromPage(int page){
         QBPagedRequestBuilder pagedRequestBuilder = new QBPagedRequestBuilder();
         pagedRequestBuilder.setPage(page);

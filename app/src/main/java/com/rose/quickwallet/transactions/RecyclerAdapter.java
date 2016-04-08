@@ -177,6 +177,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             //item.setBalance(balance);
             //viewItem.setBalance(balance);
             recyclerViewCallback.onItemSwiped(viewItem);
+
         }
     }
 
