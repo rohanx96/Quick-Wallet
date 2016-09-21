@@ -71,17 +71,17 @@ public class AddNewTransactionActivity extends Activity {
     private String detail;
     private float amount = 0;
     private String contact;
-    private String senderName;
-    private String senderPhone;
+//    private String senderName;
+//    private String senderPhone;
     private float balance = 0; // The total balance with the selected opponent
 
     private DatabaseHelper databaseHelper;
-    private QBChatService chatService;
+//    private QBChatService chatService;
     private Context context;
-    private boolean sendNotification = true;
-    private boolean isSignedUp = false;
+//    private boolean sendNotification = true;
+//    private boolean isSignedUp = false;
     private int opponentUserID = -1;
-    private String[] phoneNos;
+//    private String[] phoneNos;
     //private LoadingView loadingView;
     private SimpleCursorAdapter simpleCursorAdapter;
     AutoCompleteTextView searchText;
@@ -112,24 +112,25 @@ public class AddNewTransactionActivity extends Activity {
         setupCalc();
          /* Remove code for resizing screen. Refer commit for version 7.0.qb.3 */
         setupSearchView();
-        isSignedUp = preferences.getBoolean(Consts.IS_SIGNED_UP, false);
-        if (isSignedUp) {
-            ((CheckBox) findViewById(R.id.checkbox_send_notification)).setChecked(true);
-            senderName = preferences.getString(Consts.USER_NAME, "");
-            senderPhone = preferences.getString(Consts.USER_PHONE,"");
-            if (!QBChatService.isInitialized()) {
-                QBChatService.init(this);
-            }
-            chatService = QBChatService.getInstance();
-            /*final QBUser user = new QBUser();
-            user.setEmail(preferences.getString(Consts.USER_LOGIN, null));
-            user.setPassword(preferences.getString(Consts.USER_PASSWORD, null));
-            QBAuth.createSession(user, new QBEntityCallbackImpl<QBSession>() {
-            Previously included code to generate session for user so as to send chat message but not required since it can be done
-            without creating session. Refer commit for version 7.0.qb.3
-            */
-            mCurrency = preferences.getString("prefCurrency","");
-        }
+//        isSignedUp = preferences.getBoolean(Consts.IS_SIGNED_UP, false);
+//        if (isSignedUp) {
+//            ((CheckBox) findViewById(R.id.checkbox_send_notification)).setChecked(true);
+//            senderName = preferences.getString(Consts.USER_NAME, "");
+//            senderPhone = preferences.getString(Consts.USER_PHONE,"");
+//            if (!QBChatService.isInitialized()) {
+//                QBChatService.init(this);
+//            }
+//            chatService = QBChatService.getInstance();
+//            /*final QBUser user = new QBUser();
+//            user.setEmail(preferences.getString(Consts.USER_LOGIN, null));
+//            user.setPassword(preferences.getString(Consts.USER_PASSWORD, null));
+//            QBAuth.createSession(user, new QBEntityCallbackImpl<QBSession>() {
+//            Previously included code to generate session for user so as to send chat message but not required since it can be done
+//            without creating session. Refer commit for version 7.0.qb.3
+//            */
+//
+//        }
+        mCurrency = preferences.getString("prefCurrency","");
 
         // Initialization when activity started through particular contact add action
         if (getIntent().getStringExtra("action").equals("add")) {
@@ -217,9 +218,9 @@ public class AddNewTransactionActivity extends Activity {
             detail = getIntent().getStringExtra("details");
             EditText detailsText = (EditText) findViewById(R.id.details_edit_text);
             detailsText.setText(detail);
-            // No need to send notification for this transaction because opponent already knows of the transaction
-            ((CheckBox) findViewById(R.id.checkbox_send_notification)).setChecked(false);
-            sendNotification = false;
+//            // No need to send notification for this transaction because opponent already knows of the transaction
+//            ((CheckBox) findViewById(R.id.checkbox_send_notification)).setChecked(false);
+//            sendNotification = false;
         }
     }
 
@@ -227,11 +228,12 @@ public class AddNewTransactionActivity extends Activity {
     protected void onResume() {
         super.onResume();
         startReveal();
-        if (!QBChatService.isInitialized()) {
-            QBChatService.init(this);
-            chatService = QBChatService.getInstance();
-            databaseHelper = new DatabaseHelper(this);
-        }
+        databaseHelper = new DatabaseHelper(this);
+//        if (!QBChatService.isInitialized()) {
+//            QBChatService.init(this);
+//            chatService = QBChatService.getInstance();
+//            databaseHelper = new DatabaseHelper(this);
+//        }
     }
 
     /**
@@ -319,70 +321,72 @@ public class AddNewTransactionActivity extends Activity {
     }
 
     private void getContactImageAndNumbers(){
-        String contactId = null;
+//        String contactId = null;
         Cursor phoneCursor = getContentResolver().query(ContactsContract.Contacts.CONTENT_URI, null,
                 "DISPLAY_NAME = '" + name + "'", null, null);
         if (phoneCursor.moveToFirst()) {
             int idDisplayName = phoneCursor.getColumnIndex(ContactsContract.Contacts.DISPLAY_NAME);
             name = phoneCursor.getString(idDisplayName);
             image_uri = phoneCursor.getString(phoneCursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.PHOTO_URI));
-            contactId = phoneCursor.getString(phoneCursor.getColumnIndex(ContactsContract.Contacts._ID));
+//            contactId = phoneCursor.getString(phoneCursor.getColumnIndex(ContactsContract.Contacts._ID));
         }
         phoneCursor.close();
-        if (contact == null) {
-            Cursor phones = getContentResolver().query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI, null, ContactsContract.CommonDataKinds.Phone.CONTACT_ID + " = " + contactId, null, null);
-            phoneNos = new String[phones.getCount()];
-            int count = 0;
-            if (phones.moveToFirst()) {
-                if (phones.getCount() > 1) {
-                    do {
-                        String number = phones.getString(phones.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
-                        int type = phones.getInt(phones.getColumnIndex(ContactsContract.CommonDataKinds.Phone.TYPE));
-                        switch (type){
-                            case ContactsContract.CommonDataKinds.Phone.TYPE_MOBILE:
-                                phoneNos[count] = "   Mobile:          ";
-                                phoneNos[count] += number;
-                                Log.i("Number", number);
-                                count++;
-                                break;
-                            case ContactsContract.CommonDataKinds.Phone.TYPE_HOME:
-                                phoneNos[count] = "   Home:          ";
-                                phoneNos[count] += number;
-                                Log.i("Number", number);
-                                count++;
-                                break;
-                            case ContactsContract.CommonDataKinds.Phone.TYPE_WORK_MOBILE:
-                                phoneNos[count] = "   Work Mobile:          ";
-                                phoneNos[count] += number;
-                                Log.i("Number", number);
-                                count++;
-                                break;
-                            case ContactsContract.CommonDataKinds.Phone.TYPE_WORK:
-                                phoneNos[count] = "   Work:          ";
-                                phoneNos[count] += number;
-                                Log.i("Number", number);
-                                count++;
-                                break;
-                            case ContactsContract.CommonDataKinds.Phone.TYPE_CUSTOM:
-                                phoneNos[count] = "   " + phones.getString(phones.getColumnIndex(ContactsContract.CommonDataKinds.Phone.LABEL)) + ":          ";
-                                phoneNos[count] += number;
-                                Log.i("Number", number);
-                                count++;
-                                break;
-                            case ContactsContract.CommonDataKinds.Phone.TYPE_OTHER:
-                                phoneNos[count] = "   Other:          ";
-                                phoneNos[count] += number;
-                                Log.i("Number", number);
-                                count++;
-                                break;
-                        }
-                    } while (phones.moveToNext());
-                } else {
-                    contact = phones.getString(phones.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
-                }
-            }
-            phones.close();
-        }
+//        Do not require the contact phone numbers
+//        if (contact == null) {
+//            Cursor phones = getContentResolver().query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI, null, ContactsContract.CommonDataKinds.Phone.CONTACT_ID + " = " + contactId, null, null);
+//            phoneNos = new String[phones.getCount()];
+//            int count = 0;
+//            if (phones.moveToFirst()) {
+//                if (phones.getCount() > 1) {
+//                    do {
+//                        String number = phones.getString(phones.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
+//                        int type = phones.getInt(phones.getColumnIndex(ContactsContract.CommonDataKinds.Phone.TYPE));
+//                        switch (type){
+//                            case ContactsContract.CommonDataKinds.Phone.TYPE_MOBILE:
+//                                phoneNos[count] = "   Mobile:          ";
+//                                phoneNos[count] += number;
+//                                Log.i("Number", number);
+//                                count++;
+//                                break;
+//                            case ContactsContract.CommonDataKinds.Phone.TYPE_HOME:
+//                                phoneNos[count] = "   Home:          ";
+//                                phoneNos[count] += number;
+//                                Log.i("Number", number);
+//                                count++;
+//                                break;
+//                            case ContactsContract.CommonDataKinds.Phone.TYPE_WORK_MOBILE:
+//                                phoneNos[count] = "   Work Mobile:          ";
+//                                phoneNos[count] += number;
+//                                Log.i("Number", number);
+//                                count++;
+//                                break;
+//                            case ContactsContract.CommonDataKinds.Phone.TYPE_WORK:
+//                                phoneNos[count] = "   Work:          ";
+//                                phoneNos[count] += number;
+//                                Log.i("Number", number);
+//                                count++;
+//                                break;
+//                            case ContactsContract.CommonDataKinds.Phone.TYPE_CUSTOM:
+//                                phoneNos[count] = "   " + phones.getString(phones.getColumnIndex(ContactsContract.CommonDataKinds.Phone.LABEL)) + ":          ";
+//                                phoneNos[count] += number;
+//                                Log.i("Number", number);
+//                                count++;
+//                                break;
+//                            case ContactsContract.CommonDataKinds.Phone.TYPE_OTHER:
+//                                phoneNos[count] = "   Other:          ";
+//                                phoneNos[count] += number;
+//                                Log.i("Number", number);
+//                                count++;
+//                                break;
+//                        }
+//                    } while (phones.moveToNext());
+//                } else {
+//                    contact = phones.getString(phones.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
+//                }
+//            }
+//            phones.close();
+//        }
+
     }
 
     public void onClickSearch(View view){
@@ -467,83 +471,86 @@ public class AddNewTransactionActivity extends Activity {
             amount = -1 * amount;
         EditText detailText = (EditText) findViewById(R.id.details_edit_text);
         detail = detailText.getText().toString();
+        //Add transaction to database and reset UI
+        databaseHelper.saveData(name, image_uri, amount, type, detail, contact, opponentUserID);
+        resetDetailsAfterTransactionAdded();
 
         // if user signed up and contact not saved make the user choose the associated contact and send chat message
-        if (contact == null && isSignedUp) {
-            if(sendNotification) {
-                if(phoneNos.length > 0) { // no contact chooser dialog shown if no number found in the contact
-                    ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(context, R.layout.dialog_contact_choser_item);
-                    arrayAdapter.addAll(phoneNos);
-                    DialogPlus dialog = DialogPlus.newDialog(this)
-                            .setAdapter(arrayAdapter)
-                            .setOnItemClickListener(new OnItemClickListener() {
-                                @Override
-                                public void onItemClick(DialogPlus dialog, Object item, View view, int position) {
-                                    Log.i("Position : ", Integer.toString(position));
-                                    if (position == 0 || position == phoneNos.length + 1)
-                                        return;
-                                    else {
-                                        phoneNos[position - 1] = phoneNos[position - 1].replaceAll("[^0-9+]", "");
-                                        contact = phoneNos[position - 1];
-                                        if (isSignedUp && opponentUserID == -1) {
-                                            //userNumber = 1;
-                                            //retrieveAllUsersFromPage(1);
-                                            getUserIDandSendMessage();
-                                        } else if (isSignedUp && opponentUserID != -1) {
-                                            databaseHelper.saveData(name, image_uri, amount, type, detail, contact, opponentUserID);
-                                            sendChatMessage(true);
-                                        }
-                                        dialog.dismiss();
-                                    }
-                                }
-                            })
-                            .setFooter(R.layout.dialog_contact_choser_footer)
-                            .setHeader(R.layout.dialog_contact_choser_header)
-                            .setPadding(10, 10, 10, 10)
-                            .create();
-                    dialog.show();
-                }
-                else { // no number so just add transaction without sending notification
-                    databaseHelper.saveData(name, image_uri, amount, type, detail, contact, opponentUserID);
-                    resetDetailsAfterTransactionAdded();
-                }
-            }
-            else{
-                databaseHelper.saveData(name, image_uri, amount, type, detail, contact, opponentUserID);
-                resetDetailsAfterTransactionAdded();
-            }
-        }
-
-        // If contact is already saved or user not signed in
-        else {
-            // if user not signed up we can save data without contact and UserID
-            if (!isSignedUp) {
-                //DialogUtils.showLong(context, "Saving data without opponentID because not signed in");
-                databaseHelper.saveData(name, image_uri, amount, type, detail, contact, opponentUserID);
-                resetDetailsAfterTransactionAdded();
-            }
-
-            // if user is signed in userID not saved find the userID and then send chat message and then save data
-            if (isSignedUp && opponentUserID == -1) {
-                /*userNumber = 1;
-                retrieveAllUsersFromPage(1);*/
-                if(sendNotification)
-                    getUserIDandSendMessage();
-                else{
-                    databaseHelper.saveData(name, image_uri, amount, type, detail, contact, opponentUserID);
-                    resetDetailsAfterTransactionAdded();
-                }
-            }
-            // opponentUserId saved so directly send message and save data
-            else if (isSignedUp && opponentUserID != -1) {
-                databaseHelper.saveData(name, image_uri, amount, type, detail, contact, opponentUserID);
-                if(sendNotification)
-                    sendChatMessage(true);
-                else
-                    resetDetailsAfterTransactionAdded();
-                //DialogUtils.showLong(context, "Sending chat message to " + opponentUserID);
-            }
-        }
+//        if (contact == null && isSignedUp) {
+//            if(sendNotification) {
+//                if(phoneNos.length > 0) { // no contact chooser dialog shown if no number found in the contact
+//                    ArrayAdapter<String> arrayAdapter = new ArrayAdapter<>(context, R.layout.dialog_contact_choser_item);
+//                    arrayAdapter.addAll(phoneNos);
+//                    DialogPlus dialog = DialogPlus.newDialog(this)
+//                            .setAdapter(arrayAdapter)
+//                            .setOnItemClickListener(new OnItemClickListener() {
+//                                @Override
+//                                public void onItemClick(DialogPlus dialog, Object item, View view, int position) {
+//                                    Log.i("Position : ", Integer.toString(position));
+//                                    if (position == 0 || position == phoneNos.length + 1)
+//                                        return;
+//                                    else {
+//                                        phoneNos[position - 1] = phoneNos[position - 1].replaceAll("[^0-9+]", "");
+//                                        contact = phoneNos[position - 1];
+//                                        if (isSignedUp && opponentUserID == -1) {
+//                                            //userNumber = 1;
+//                                            //retrieveAllUsersFromPage(1);
+//                                            getUserIDandSendMessage();
+//                                        } else if (isSignedUp && opponentUserID != -1) {
+//                                            databaseHelper.saveData(name, image_uri, amount, type, detail, contact, opponentUserID);
+//                                            sendChatMessage(true);
+//                                        }
+//                                        dialog.dismiss();
+//                                    }
+//                                }
+//                            })
+//                            .setFooter(R.layout.dialog_contact_choser_footer)
+//                            .setHeader(R.layout.dialog_contact_choser_header)
+//                            .setPadding(10, 10, 10, 10)
+//                            .create();
+//                    dialog.show();
+//                }
+//                else { // no number so just add transaction without sending notification
+//                    databaseHelper.saveData(name, image_uri, amount, type, detail, contact, opponentUserID);
+//                    resetDetailsAfterTransactionAdded();
+//                }
+//            }
+//            else{
+//                databaseHelper.saveData(name, image_uri, amount, type, detail, contact, opponentUserID);
+//                resetDetailsAfterTransactionAdded();
+//            }
+//        }
+//
+//        // If contact is already saved or user not signed in
+//        else {
+//            // if user not signed up we can save data without contact and UserID
+//            if (!isSignedUp) {
+//                //DialogUtils.showLong(context, "Saving data without opponentID because not signed in");
+//                databaseHelper.saveData(name, image_uri, amount, type, detail, contact, opponentUserID);
+//                resetDetailsAfterTransactionAdded();
+//            }
+//
+//            // if user is signed in userID not saved find the userID and then send chat message and then save data
+//            if (isSignedUp && opponentUserID == -1) {
+//                /*userNumber = 1;
+//                retrieveAllUsersFromPage(1);*/
+//                if(sendNotification)
+//                    getUserIDandSendMessage();
+//                else{
+//                    databaseHelper.saveData(name, image_uri, amount, type, detail, contact, opponentUserID);
+//                    resetDetailsAfterTransactionAdded();
+//                }
+//            }
+//            // opponentUserId saved so directly send message and save data
+//            else if (isSignedUp && opponentUserID != -1) {
+//                databaseHelper.saveData(name, image_uri, amount, type, detail, contact, opponentUserID);
+//                if(sendNotification)
+//                    sendChatMessage(true);
+//                else
+//                    resetDetailsAfterTransactionAdded();
+//                //DialogUtils.showLong(context, "Sending chat message to " + opponentUserID);
+//            }
+//        }
     }
 
     /*public void onClearBalance(View v) {
@@ -571,6 +578,8 @@ public class AddNewTransactionActivity extends Activity {
 
     public void onTypeRadioButtonSelected(View v) {
         if (v.getId() == R.id.radio_button_lent) {
+            changeButton(v, true, true);
+            changeButton(findViewById(R.id.radio_button_borrowed),false, false);
             type = "Lent";
             TextView textView = (TextView) findViewById(R.id.money_detail_name);
             textView.setText(type);
@@ -582,6 +591,8 @@ public class AddNewTransactionActivity extends Activity {
 
             //amount = -1 * amount;
         } else if (v.getId() == R.id.radio_button_borrowed) {
+            changeButton(v, true, false);
+            changeButton(findViewById(R.id.radio_button_lent),false, true);
             type = "Borrowed";
             TextView textView = (TextView) findViewById(R.id.money_detail_name);
             textView.setText(type);
@@ -593,9 +604,31 @@ public class AddNewTransactionActivity extends Activity {
         }
     }
 
+    /** Changes the button colors and text to the specified type*/
+    public void changeButton(View view, boolean selected, boolean lent){
+        Button button = (Button) view;
+        if(selected){
+            if(lent)
+                button.setBackground(getResources().getDrawable(R.drawable.oval_button_pressed));
+            else
+                button.setBackground(getResources().getDrawable(R.drawable.oval_button_pressed_red));
+            button.setTextColor(getResources().getColor(R.color.white));
+        }
+        else {
+            if(lent) {
+                button.setBackground(getResources().getDrawable(R.drawable.oval_button));
+                button.setTextColor(getResources().getColor(R.color.teal));
+            }
+            else {
+                button.setBackground(getResources().getDrawable(R.drawable.oval_button_red));
+                button.setTextColor(getResources().getColor(R.color.borrowed_red));
+            }
+        }
+    }
+
     public void onCancel(View v) {
-        if(isSignedUp)
-            logoutFormChat();
+//        if(isSignedUp)
+//            logoutFormChat();
         finish();
     }
 
@@ -612,98 +645,98 @@ public class AddNewTransactionActivity extends Activity {
         return Color.parseColor("#ff509f4c");
     }
 
-    public void startCalCActivity(View v) {
-        Intent calcActivity = new Intent(this, CalcActivity.class);
-        startActivityForResult(calcActivity, 234);
-    }
+//    public void startCalCActivity(View v) {
+//        Intent calcActivity = new Intent(this, CalcActivity.class);
+//        startActivityForResult(calcActivity, 234);
+//    }
 
-    public void getUserIDandSendMessage() {
-        //Toast.makeText(AddNewTransactionActivity.this, "Finding userID", Toast.LENGTH_SHORT).show();
-        final QuickbloxUsersDatabaseHelper usersDatabaseHelper = new QuickbloxUsersDatabaseHelper(context);
-        ArrayList<Integer> ids = usersDatabaseHelper.getUserID(contact);
-        /*AsyncTask task = new AsyncTask() {
-            Initially users were searched in real time. Now a database is maintained for users. Refer commit for version 7.0.qb.3
-        task.execute();
-    }*/
-        int noOfIds = ids.size();
-        if (noOfIds == 1) {
-            Toast.makeText(AddNewTransactionActivity.this, getString(R.string.toast_found_user), Toast.LENGTH_SHORT).show();
-            opponentUserID = ids.get(0);
-            Log.i("userId", Integer.toString(opponentUserID));
-            databaseHelper.saveData(name, image_uri, amount, type, detail, contact, opponentUserID);
-            if (isSignedUp && opponentUserID != -1) {
-                //DialogUtils.showLong(context, "Sending chat message to " + opponentUserID);
-                sendChatMessage(true);
-            } else
-                resetDetailsAfterTransactionAdded();
-        }
-        else {
-            opponentUserID = -1; // either contact has several IDs or no id
-            databaseHelper.saveData(name,image_uri,amount,type,detail,contact,opponentUserID);
-            if(noOfIds != 0) {
-                for (int i = 0; i < noOfIds; i++) {
-                    opponentUserID = ids.get(i);
-                    if (isSignedUp && opponentUserID != -1) {
-                        //DialogUtils.showLong(context, "Sending chat message to " + opponentUserID);
-                        if (i == noOfIds - 1)
-                            sendChatMessage(true);  // reset data oly after message to last userID has been sent
-                        else
-                            sendChatMessage(false);
-                    }
-                }
-            }
-            else {
-                Toast.makeText(AddNewTransactionActivity.this, getString(R.string.toast_no_user), Toast.LENGTH_SHORT).show();
-                resetDetailsAfterTransactionAdded(); // reset data if no user found
-            }
-        }
-    }
+//    public void getUserIDandSendMessage() {
+//        //Toast.makeText(AddNewTransactionActivity.this, "Finding userID", Toast.LENGTH_SHORT).show();
+//        final QuickbloxUsersDatabaseHelper usersDatabaseHelper = new QuickbloxUsersDatabaseHelper(context);
+//        ArrayList<Integer> ids = usersDatabaseHelper.getUserID(contact);
+//        /*AsyncTask task = new AsyncTask() {
+//            Initially users were searched in real time. Now a database is maintained for users. Refer commit for version 7.0.qb.3
+//        task.execute();
+//    }*/
+//        int noOfIds = ids.size();
+//        if (noOfIds == 1) {
+//            Toast.makeText(AddNewTransactionActivity.this, getString(R.string.toast_found_user), Toast.LENGTH_SHORT).show();
+//            opponentUserID = ids.get(0);
+//            Log.i("userId", Integer.toString(opponentUserID));
+//            databaseHelper.saveData(name, image_uri, amount, type, detail, contact, opponentUserID);
+//            if (isSignedUp && opponentUserID != -1) {
+//                //DialogUtils.showLong(context, "Sending chat message to " + opponentUserID);
+//                sendChatMessage(true);
+//            } else
+//                resetDetailsAfterTransactionAdded();
+//        }
+//        else {
+//            opponentUserID = -1; // either contact has several IDs or no id
+//            databaseHelper.saveData(name,image_uri,amount,type,detail,contact,opponentUserID);
+//            if(noOfIds != 0) {
+//                for (int i = 0; i < noOfIds; i++) {
+//                    opponentUserID = ids.get(i);
+//                    if (isSignedUp && opponentUserID != -1) {
+//                        //DialogUtils.showLong(context, "Sending chat message to " + opponentUserID);
+//                        if (i == noOfIds - 1)
+//                            sendChatMessage(true);  // reset data oly after message to last userID has been sent
+//                        else
+//                            sendChatMessage(false);
+//                    }
+//                }
+//            }
+//            else {
+//                Toast.makeText(AddNewTransactionActivity.this, getString(R.string.toast_no_user), Toast.LENGTH_SHORT).show();
+//                resetDetailsAfterTransactionAdded(); // reset data if no user found
+//            }
+//        }
+//    }
 
-    /** The format created for the chat message. The same text is used as notification body*/
-    private QBChatMessage createChatMessage() {
-        QBChatMessage chatMessage = new QBChatMessage();
-        // Special characters are added to identify change in data and make the string easy to parse when getting details from it
-        String messageText = senderName + ":";
-        if (type.equals("Lent") ) {
-            messageText += getString(R.string.gcm_noti_lent_message) + "("+amount+")";
-        } else
-            messageText += getString(R.string.gcm_noti_borrowed_message) + "("+ -1*amount +")" ;
-        if (detail != null && !detail.equals(""))
-            messageText += "[" + detail + "]";
-        messageText+= getString(R.string.gcm_noti_end_message);
-        messageText += "\n<" + senderPhone +">";
-        chatMessage.setBody(messageText);
-        chatMessage.setProperty("save_to_history", "1");
-        chatMessage.setDateSent(System.currentTimeMillis() / 1000);
-        return chatMessage;
-    }
+//    /** The format created for the chat message. The same text is used as notification body*/
+//    private QBChatMessage createChatMessage() {
+//        QBChatMessage chatMessage = new QBChatMessage();
+//        // Special characters are added to identify change in data and make the string easy to parse when getting details from it
+//        String messageText = senderName + ":";
+//        if (type.equals("Lent") ) {
+//            messageText += getString(R.string.gcm_noti_lent_message) + "("+amount+")";
+//        } else
+//            messageText += getString(R.string.gcm_noti_borrowed_message) + "("+ -1*amount +")" ;
+//        if (detail != null && !detail.equals(""))
+//            messageText += "[" + detail + "]";
+//        messageText+= getString(R.string.gcm_noti_end_message);
+//        messageText += "\n<" + senderPhone +">";
+//        chatMessage.setBody(messageText);
+//        chatMessage.setProperty("save_to_history", "1");
+//        chatMessage.setDateSent(System.currentTimeMillis() / 1000);
+//        return chatMessage;
+//    }
 
     /** Sends the transaction as a chat to the quickblox server. This is not essentially required for sending notifications but helps
      * in maintaining logs of transactions
      * @param shouldReset Defines if the details should be reset after sending chat
      */
-    private void sendChatMessage(final boolean shouldReset){
-        final QBChatMessage msg = createChatMessage();
-        msg.setRecipientId(opponentUserID);
-        // msg.setDialogId("546cc8040eda8f2dd7ee449c"); Set the dialog Id or recipient Id
-        msg.setProperty("send_to_chat", "1");
-        //msg.setProperty("param2", "value2");
-        PendingNotificationsDatabaseHelper databaseHelper = new PendingNotificationsDatabaseHelper(getApplicationContext());
-        databaseHelper.insertNotification(msg.getBody(), msg.getRecipientId());
-        databaseHelper.closeDatabase();
-        if(shouldReset){
-            Intent sendNotifications = new Intent(this, RetreiveUsersService.class);
-            sendNotifications.putExtra("createSession",false);
-            sendNotifications.putExtra("sendNotifications",true);
-            startService(sendNotifications);
-            resetDetailsAfterTransactionAdded();
-        }
-        /*QBChatService.createMessage(msg, new QBEntityCallbackImpl<QBChatMessage>() {
-            @Override
-            public void onSuccess(QBChatMessage result, Bundle params) {
-            Not creating chats for faster addition of transactions. Refer commit for version 7.0.qb.3
-        });*/
-    }
+//    private void sendChatMessage(final boolean shouldReset){
+//        final QBChatMessage msg = createChatMessage();
+//        msg.setRecipientId(opponentUserID);
+//        // msg.setDialogId("546cc8040eda8f2dd7ee449c"); Set the dialog Id or recipient Id
+//        msg.setProperty("send_to_chat", "1");
+//        //msg.setProperty("param2", "value2");
+//        PendingNotificationsDatabaseHelper databaseHelper = new PendingNotificationsDatabaseHelper(getApplicationContext());
+//        databaseHelper.insertNotification(msg.getBody(), msg.getRecipientId());
+//        databaseHelper.closeDatabase();
+//        if(shouldReset){
+//            Intent sendNotifications = new Intent(this, RetreiveUsersService.class);
+//            sendNotifications.putExtra("createSession",false);
+//            sendNotifications.putExtra("sendNotifications",true);
+//            startService(sendNotifications);
+//            resetDetailsAfterTransactionAdded();
+//        }
+//        /*QBChatService.createMessage(msg, new QBEntityCallbackImpl<QBChatMessage>() {
+//            @Override
+//            public void onSuccess(QBChatMessage result, Bundle params) {
+//            Not creating chats for faster addition of transactions. Refer commit for version 7.0.qb.3
+//        });*/
+//    }
 
     /** Sends push notification to the specified opponent ID */
     /* Not required since notifications are now sent in background  in a service. Refer commit for version 7.0.qb.3
@@ -734,22 +767,24 @@ public class AddNewTransactionActivity extends Activity {
         amountType.setText(getString(R.string.amount_colon));
         amountType.setTextColor(getResources().getColor(R.color.cardview_shadow_start_color));
         txtResult.setText("0");
+        // Set the inStr to 0 so that if user add another transaction the previous result does not show up
+        inStr = "0";
         contact = null;
         EditText detailText = (EditText) findViewById(R.id.details_edit_text);
         detailText.setText(null);
          /* Remove code for resizing screen. Refer commit for version 7.0.qb.3 */
     }
 
-    /** OnClick method for checkbox that allows user to choose whether or not send notification */
-    public void onCheckboxClick(View view){
-        CheckBox checkBox = (CheckBox) view;
-        if(isSignedUp)
-            sendNotification = checkBox.isChecked();
-        else {
-            checkBox.setChecked(false);
-            Toast.makeText(this, getString(R.string.toast_create_account), Toast.LENGTH_SHORT).show();
-        }
-    }
+//    /** OnClick method for checkbox that allows user to choose whether or not send notification */
+//    public void onCheckboxClick(View view){
+//        CheckBox checkBox = (CheckBox) view;
+//        if(isSignedUp)
+//            sendNotification = checkBox.isChecked();
+//        else {
+//            checkBox.setChecked(false);
+//            Toast.makeText(this, getString(R.string.toast_create_account), Toast.LENGTH_SHORT).show();
+//        }
+//    }
 
     /** Sets up the calculator button click listners */
     public void setupCalc(){
@@ -903,8 +938,8 @@ public class AddNewTransactionActivity extends Activity {
 
     @Override
     public void onBackPressed() {
-        if(isSignedUp)
-            logoutFormChat();
+//        if(isSignedUp)
+//            logoutFormChat();
         super.onBackPressed();
     }
 
@@ -914,26 +949,26 @@ public class AddNewTransactionActivity extends Activity {
         overridePendingTransition(0, R.anim.slide_out_from_top);
     }
 
-    private void logoutFormChat(){
-        boolean isLoggedIn = chatService.isLoggedIn();
-        if(!isLoggedIn){
-            return;
-        }
-
-        chatService.logout(new QBEntityCallbackImpl() {
-
-            @Override
-            public void onSuccess() {
-                // success
-                chatService.destroy();
-            }
-
-            @Override
-            public void onError(final List list) {
-
-            }
-        });
-    }
+//    private void logoutFormChat(){
+//        boolean isLoggedIn = chatService.isLoggedIn();
+//        if(!isLoggedIn){
+//            return;
+//        }
+//
+//        chatService.logout(new QBEntityCallbackImpl() {
+//
+//            @Override
+//            public void onSuccess() {
+//                // success
+//                chatService.destroy();
+//            }
+//
+//            @Override
+//            public void onError(final List list) {
+//
+//            }
+//        });
+//    }
 
     /** Reveal animation shown at activity startup. Uses external library */
     public void startReveal(){

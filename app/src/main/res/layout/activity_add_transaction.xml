@@ -11,7 +11,7 @@
         android:layout_height="wrap_content"
         app:layout_marginPercent="4%"
         app:layout_widthPercent="100%"
-        app:layout_heightPercent="45%">
+        app:layout_heightPercent="40%">
     <android.support.v7.widget.CardView
         android:id="@+id/name_card"
         android:visibility="invisible"
@@ -110,7 +110,7 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
                 android:maxLines="1" />
-            <CheckBox
+            <!--<CheckBox
                 android:id="@+id/checkbox_send_notification"
                 android:layout_below="@id/details_edit_text"
                 android:layout_width="wrap_content"
@@ -119,10 +119,10 @@
                 android:checked="false"
                 android:onClick="onCheckboxClick"
                 android:text="@string/send_notification">
-            </CheckBox>
+            </CheckBox>-->
             <RelativeLayout
                 android:id="@+id/money_details"
-                android:layout_below="@id/checkbox_send_notification"
+                android:layout_below="@id/details_edit_text"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center"
@@ -242,7 +242,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             app:layout_widthPercent="64%"
-            app:layout_heightPercent="39%"
+            app:layout_heightPercent="44%"
             android:background="@color/white"
             android:layout_weight="3">
             <TableRow
@@ -480,7 +480,7 @@
             android:layout_toRightOf="@id/tableId"
             android:layout_above="@+id/calc_action_buttons"
             android:layout_width="match_parent"
-            app:layout_heightPercent="39%"
+            app:layout_heightPercent="44%"
             android:layout_height="match_parent"
             app:layout_widthPercent="22%"
             android:layout_weight="1"
@@ -584,48 +584,49 @@
         android:layout_toEndOf="@id/calc_action_buttons"
         android:layout_above="@+id/calc_action_buttons"
         android:layout_width="match_parent"
-        android:background="@color/teal"
-        app:layout_heightPercent="39%"
+        app:layout_heightPercent="44%"
+        android:background="@color/white"
         android:layout_height="match_parent"
         app:layout_widthPercent="14%"
         android:orientation="vertical">
-    <android.support.v7.widget.CardView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:cardCornerRadius="0dp"
-        app:cardElevation="0dp"
-        android:clickable="true"
-        app:cardBackgroundColor="@color/teal">
+    <!--<android.support.v7.widget.CardView-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--app:cardCornerRadius="0dp"-->
+        <!--app:cardElevation="0dp"-->
+        <!--android:clickable="true">-->
         <Button
             android:id="@+id/radio_button_lent"
             android:text="L\ne\nn\nt"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:background="?attr/selectableItemBackground"
+            android:layout_margin="2dp"
+            android:padding="4dp"
+            android:layout_weight="1"
+            android:background="@drawable/oval_button_pressed"
             android:textColor="@color/white"
             android:onClick="onTypeRadioButtonSelected"/>
-    </android.support.v7.widget.CardView>
-    <android.support.v7.widget.CardView
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        app:cardCornerRadius="0dp"
-        app:cardElevation="0dp"
-        android:layout_weight="1"
-        android:layout_gravity="bottom"
-        app:cardBackgroundColor="@color/teal">
+    <!--</android.support.v7.widget.CardView>-->
+    <!--<android.support.v7.widget.CardView-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="0dp"-->
+        <!--app:cardCornerRadius="0dp"-->
+        <!--app:cardElevation="0dp"-->
+        <!--android:layout_weight="1"-->
+        <!--android:layout_gravity="bottom"-->
+        <!--&gt;-->
         <Button
             android:layout_gravity="bottom"
             android:id="@+id/radio_button_borrowed"
             android:text="B\no\nr\nr\no\nw"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+            android:layout_margin="2dp"
             android:layout_weight="1"
-            android:layout_marginBottom="8dp"
-            android:background="?attr/selectableItemBackground"
-            android:textColor="@color/white"
+            android:background="@drawable/oval_button_red"
+            android:textColor="@color/borrowed_red"
             android:onClick="onTypeRadioButtonSelected"/>
-    </android.support.v7.widget.CardView>
+    <!--</android.support.v7.widget.CardView>-->
     </LinearLayout>
 
 
