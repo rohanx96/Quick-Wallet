@@ -90,19 +90,6 @@
 
         <activity android:name=".MyAccountActivity"
             android:theme="@style/WalletTheme"/>
-        <activity
-            android:name=".quickblox.SignUpUserActivity"
-            android:theme="@style/WalletTheme"
-            android:screenOrientation="portrait">
-        </activity>
-
-        <activity android:name=".quickblox.GoCloudActivity"
-            android:theme="@style/WalletTheme"
-            android:screenOrientation="portrait"/>
-
-        <activity android:name=".quickblox.SignInActivity"
-            android:theme="@style/WalletTheme"
-            android:screenOrientation="portrait"/>
 
         <activity android:name=".tutorial.TutorialActivity"
             android:theme="@style/SettingsTheme"/>
