@@ -88,9 +88,6 @@
             android:theme="@style/Theme.AppCompat.Light.Dialog"
             android:screenOrientation="portrait"/>
 
-        <activity android:name=".MyAccountActivity"
-            android:theme="@style/WalletTheme"/>
-
         <activity android:name=".tutorial.TutorialActivity"
             android:theme="@style/SettingsTheme"/>
         <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ End of activities ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
@@ -108,13 +105,6 @@
             </intent-filter>
         </receiver>
         <!-- Service to send notifications arrived through GCM -->
-        <service
-            android:name=".quickblox.pushnotifications.GCMMessageHandler"
-            android:exported="false" >
-            <intent-filter>
-                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
-            </intent-filter>
-        </service>
 
         <receiver
             android:name=".ConnectivityReceiver"
