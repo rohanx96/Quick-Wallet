@@ -4,14 +4,14 @@
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_CONTACTS"/>
-    <uses-permission android:name="android.permission.WAKE_LOCK" />
-    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
-    <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
+    <!--<uses-permission android:name="android.permission.WAKE_LOCK" />-->
+    <!--<uses-permission android:name="android.permission.READ_PHONE_STATE" />-->
+    <!--<uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />-->
 
 
-    <permission android:name="com.rose.quickwallet.permission.C2D_MESSAGE"
-        android:protectionLevel="signature" />
-    <uses-permission android:name="com.rose.quickwallet.permission.C2D_MESSAGE" />
+    <!--<permission android:name="com.rose.quickwallet.permission.C2D_MESSAGE"-->
+        <!--android:protectionLevel="signature" />-->
+    <!--<uses-permission android:name="com.rose.quickwallet.permission.C2D_MESSAGE" />-->
 
     <application
         android:allowBackup="true"
@@ -72,8 +72,8 @@
             android:theme="@style/SettingsTheme"/>
 
         <!--This meta-data tag is required to use Google Play Services.-->
-        <meta-data android:name="com.google.android.gms.version"
-            android:value="@integer/google_play_services_version" />
+        <!--<meta-data android:name="com.google.android.gms.version"-->
+            <!--android:value="@integer/google_play_services_version" />-->
 
         <!--Include the AdActivity configChanges and theme. -->
         <!--<activity android:name="com.google.android.gms.ads.AdActivity"
@@ -95,16 +95,15 @@
 
 
         <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~ All services with their receivers listed here ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
-        <receiver
-            android:name="com.google.android.gms.gcm.GcmReceiver"
-            android:exported="true"
-            android:permission="com.google.android.c2dm.permission.SEND" >
-            <intent-filter>
-                <action android:name="com.google.android.c2dm.intent.RECEIVE" />
-                <category android:name="com.rose.quickwallet" />
-            </intent-filter>
-        </receiver>
-        <!-- Service to send notifications arrived through GCM -->
+        <!--<receiver-->
+            <!--android:name="com.google.android.gms.gcm.GcmReceiver"-->
+            <!--android:exported="true"-->
+            <!--android:permission="com.google.android.c2dm.permission.SEND" >-->
+            <!--<intent-filter>-->
+                <!--<action android:name="com.google.android.c2dm.intent.RECEIVE" />-->
+                <!--<category android:name="com.rose.quickwallet" />-->
+            <!--</intent-filter>-->
+        <!--</receiver>-->
 
         <service
             android:name=".NotificationService"
