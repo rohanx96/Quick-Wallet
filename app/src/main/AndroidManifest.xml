@@ -106,17 +106,6 @@
         </receiver>
         <!-- Service to send notifications arrived through GCM -->
 
-        <receiver
-            android:name=".ConnectivityReceiver"
-            android:process=":remote">
-            <intent-filter>
-                <action android:name="android.net.conn.CONNECTIVITY_CHANGE"/>
-            </intent-filter>
-        </receiver>
-        <service
-            android:name=".quickblox.RetreiveUsersService"
-            android:exported="false"/>
-
         <service
             android:name=".NotificationService"
             android:exported="false"/>

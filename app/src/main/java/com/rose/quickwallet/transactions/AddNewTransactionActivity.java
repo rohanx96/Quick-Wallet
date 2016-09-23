@@ -18,16 +18,13 @@ import android.provider.ContactsContract;
 import android.support.design.widget.Snackbar;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.view.animation.AccelerateDecelerateInterpolator;
 import android.view.animation.AlphaAnimation;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.FilterQueryProvider;
 import android.widget.ImageView;
@@ -36,23 +33,11 @@ import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.orhanobut.dialogplus.DialogPlus;
-import com.orhanobut.dialogplus.OnItemClickListener;
-import com.quickblox.chat.QBChatService;
-import com.quickblox.chat.model.QBChatMessage;
-import com.quickblox.core.QBEntityCallbackImpl;
-import com.rose.quickwallet.CalcActivity;
 import com.rose.quickwallet.EnterPinActivity;
 import com.rose.quickwallet.R;
-import com.rose.quickwallet.quickblox.Consts;
-import com.rose.quickwallet.quickblox.RetreiveUsersService;
-import com.rose.quickwallet.quickblox.pushnotifications.PendingNotificationsDatabaseHelper;
-import com.rose.quickwallet.quickblox.QuickbloxUsersDatabaseHelper;
 
 
-import java.util.ArrayList;
 import java.util.Currency;
-import java.util.List;
 import java.util.Locale;
 
 import io.codetail.animation.SupportAnimator;
