@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android">
-    <Preference
-        android:title="@string/my_account"
-        android:summary="@string/pref_my_account"
-        android:key="accountSettings">
-    </Preference>
+    <!--<Preference-->
+        <!--android:title="@string/my_account"-->
+        <!--android:summary="@string/pref_my_account"-->
+        <!--android:key="accountSettings">-->
+    <!--</Preference>-->
     <ListPreference
         android:title="Currency"
         android:summary="Select the region to set the currency corresponding to the region"
