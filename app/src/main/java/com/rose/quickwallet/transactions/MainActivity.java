@@ -37,36 +37,36 @@ import android.widget.ArrayAdapter;
 import android.widget.SearchView;
 import android.widget.TextView;
 
-import com.quickblox.auth.QBAuth;
-import com.quickblox.auth.model.QBSession;
-import com.quickblox.core.QBEntityCallbackImpl;
-import com.quickblox.core.QBSettings;
-import com.quickblox.users.model.QBUser;
+//import com.quickblox.auth.QBAuth;
+//import com.quickblox.auth.model.QBSession;
+//import com.quickblox.core.QBEntityCallbackImpl;
+//import com.quickblox.core.QBSettings;
+//import com.quickblox.users.model.QBUser;
 import com.rose.quickwallet.AlarmReceiver;
 import com.rose.quickwallet.BaseActivity;
 import com.rose.quickwallet.EnterPinActivity;
-import com.rose.quickwallet.MyAccountActivity;
+//import com.rose.quickwallet.MyAccountActivity;
 
 import com.rose.quickwallet.R;
 import com.rose.quickwallet.SettingsActivity;
 import com.rose.quickwallet.callbackhepers.ItemTouchHelperCallback;
 import com.rose.quickwallet.callbackhepers.RecyclerViewCallback;
 import com.rose.quickwallet.myWallet.WalletActivity;
-import com.rose.quickwallet.quickblox.Consts;
-import com.rose.quickwallet.quickblox.GoCloudActivity;
-import com.rose.quickwallet.quickblox.RetreiveUsersService;
-import com.rose.quickwallet.quickblox.pushnotifications.GCMClientHelper;
+//import com.rose.quickwallet.quickblox.Consts;
+//import com.rose.quickwallet.quickblox.GoCloudActivity;
+//import com.rose.quickwallet.quickblox.RetreiveUsersService;
+//import com.rose.quickwallet.quickblox.pushnotifications.GCMClientHelper;
 import com.rose.quickwallet.tutorial.TutorialActivity;
 
 import java.util.ArrayList;
-import java.util.List;
+//import java.util.List;
 
 
 public class MainActivity extends BaseActivity implements RecyclerViewCallback {
     private RecyclerView recyclerView;
     private RecyclerAdapter adapter;
-    private boolean isSignedIn = false;
-    private GCMClientHelper pushClientManager;
+//    private boolean isSignedIn = false;
+//    private GCMClientHelper pushClientManager;
     private SharedPreferences preferences;
     boolean shouldAnimate = false;
 
@@ -76,20 +76,20 @@ public class MainActivity extends BaseActivity implements RecyclerViewCallback {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         preferences = PreferenceManager.getDefaultSharedPreferences(this);
-        isSignedIn = preferences.getBoolean(Consts.IS_SIGNED_UP, false);
+//        isSignedIn = preferences.getBoolean(Consts.IS_SIGNED_UP, false);
         //DialogUtils.showLong(getApplicationContext(),"isSignedIn: " + isSignedIn);
         Thread thread = new Thread(new Runnable() {
             @Override
             public void run() {
-                boolean isFirstStartAfterGCMUpdate = preferences.getBoolean("isFirstStartAfterGCMUpdate", true);
-                if (isFirstStartAfterGCMUpdate) {
-                    Intent goCloud = new Intent(getApplicationContext(), GoCloudActivity.class);
-                    startActivity(goCloud);
-                    Intent tutorial = new Intent(MainActivity.this, TutorialActivity.class);
-                    startActivity(tutorial);
-                    finish();
-                    preferences.edit().putBoolean("isFirstStartAfterGCMUpdate", false).apply();
-                } else if (preferences.getBoolean("securitySwitch", false) && !getIntent().getAction().equals("enter")) {
+//                boolean isFirstStartAfterGCMUpdate = preferences.getBoolean("isFirstStartAfterGCMUpdate", true);
+//                if (isFirstStartAfterGCMUpdate) {
+//                    Intent goCloud = new Intent(getApplicationContext(), GoCloudActivity.class);
+//                    startActivity(goCloud);
+//                    Intent tutorial = new Intent(MainActivity.this, TutorialActivity.class);
+//                    startActivity(tutorial);
+//                    finish();
+//                    preferences.edit().putBoolean("isFirstStartAfterGCMUpdate", false).apply();
+                if (preferences.getBoolean("securitySwitch", false) && !getIntent().getAction().equals("enter")) {
                     Intent password = new Intent(MainActivity.this, EnterPinActivity.class);
                     password.setAction("ENTER_PASSWORD");
                     startActivity(password);
@@ -112,54 +112,54 @@ public class MainActivity extends BaseActivity implements RecyclerViewCallback {
         ItemTouchHelperCallback itemTouchHelperCallback = new ItemTouchHelperCallback((RecyclerAdapter) recyclerView.getAdapter());
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(itemTouchHelperCallback);
         itemTouchHelper.attachToRecyclerView(recyclerView);
-
-        if (isSignedIn) {
-            QBSettings.getInstance().fastConfigInit(Consts.APP_ID, Consts.AUTH_KEY, Consts.AUTH_SECRET);
-            final QBUser user = new QBUser();
-            user.setEmail(preferences.getString(Consts.USER_LOGIN, null));
-            user.setPassword(preferences.getString(Consts.USER_PASSWORD, null));
-            //DialogUtils.showLong(getApplicationContext(), "creating session for user: " + user);
-            QBAuth.createSession(user, new QBEntityCallbackImpl<QBSession>() {
-                @Override
-                public void onSuccess(QBSession session, Bundle params) {
-                    //DialogUtils.showLong(getApplicationContext(),"Registering GCM");
-                    Thread th = new Thread(new Runnable() {
-                        @Override
-                        public void run() {
-                            Intent retrieveUsers = new Intent(getApplicationContext(), RetreiveUsersService.class);
-                            retrieveUsers.putExtra("createSession", false);
-                            retrieveUsers.putExtra("sendNotifications", false);
-                            startService(retrieveUsers);
-                        }
-                    });
-                    th.start();
-
-                    pushClientManager = new GCMClientHelper(MainActivity.this, Consts.PROJECT_NUMBER);
-                    pushClientManager.registerIfNeeded(new GCMClientHelper.RegistrationCompletedHandler() {
-                        @Override
-                        public void onSuccess(String registrationId, boolean isNewRegistration) {
-                            //Toast.makeText(MainActivity.this, registrationId,Toast.LENGTH_SHORT).show();
-                            // SEND async device registration to your back-end server
-                            // linking user with device registration id
-                            // POST https://my-back-end.com/devices/register?user_id=123&device_id=abc
-                        }
-
-                        @Override
-                        public void onFailure(String ex) {
-                            super.onFailure(ex);
-                            //Toast.makeText(MainActivity.this,"unable to create session",Toast.LENGTH_LONG).show();
-                            // If there is an error registering, don't just keep trying to register. Require the user to click a button again,
-                            // or perform exponential back-off when retrying.
-                        }
-                    });
-                }
-
-                @Override
-                public void onError(List<String> errors) {
-                    // errors
-                }
-            });
-        }
+//        // Code to create quickblox session and register to GCM client if required
+//        if (isSignedIn) {
+//            QBSettings.getInstance().fastConfigInit(Consts.APP_ID, Consts.AUTH_KEY, Consts.AUTH_SECRET);
+//            final QBUser user = new QBUser();
+//            user.setEmail(preferences.getString(Consts.USER_LOGIN, null));
+//            user.setPassword(preferences.getString(Consts.USER_PASSWORD, null));
+//            //DialogUtils.showLong(getApplicationContext(), "creating session for user: " + user);
+//            QBAuth.createSession(user, new QBEntityCallbackImpl<QBSession>() {
+//                @Override
+//                public void onSuccess(QBSession session, Bundle params) {
+//                    //DialogUtils.showLong(getApplicationContext(),"Registering GCM");
+//                    Thread th = new Thread(new Runnable() {
+//                        @Override
+//                        public void run() {
+//                            Intent retrieveUsers = new Intent(getApplicationContext(), RetreiveUsersService.class);
+//                            retrieveUsers.putExtra("createSession", false);
+//                            retrieveUsers.putExtra("sendNotifications", false);
+//                            startService(retrieveUsers);
+//                        }
+//                    });
+//                    th.start();
+//
+//                    pushClientManager = new GCMClientHelper(MainActivity.this, Consts.PROJECT_NUMBER);
+//                    pushClientManager.registerIfNeeded(new GCMClientHelper.RegistrationCompletedHandler() {
+//                        @Override
+//                        public void onSuccess(String registrationId, boolean isNewRegistration) {
+//                            //Toast.makeText(MainActivity.this, registrationId,Toast.LENGTH_SHORT).show();
+//                            // SEND async device registration to your back-end server
+//                            // linking user with device registration id
+//                            // POST https://my-back-end.com/devices/register?user_id=123&device_id=abc
+//                        }
+//
+//                        @Override
+//                        public void onFailure(String ex) {
+//                            super.onFailure(ex);
+//                            //Toast.makeText(MainActivity.this,"unable to create session",Toast.LENGTH_LONG).show();
+//                            // If there is an error registering, don't just keep trying to register. Require the user to click a button again,
+//                            // or perform exponential back-off when retrying.
+//                        }
+//                    });
+//                }
+//
+//                @Override
+//                public void onError(List<String> errors) {
+//                    // errors
+//                }
+//            });
+//        }
         Thread t = new Thread(new Runnable() {
 
             @Override
@@ -174,7 +174,7 @@ public class MainActivity extends BaseActivity implements RecyclerViewCallback {
                     e.putBoolean("isFirstStart", false);
                     e.apply();
                 }
-                setupNavigationHeader();
+//                setupNavigationHeader();
             }
         });
         t.start();
@@ -456,28 +456,28 @@ public class MainActivity extends BaseActivity implements RecyclerViewCallback {
         drawerLayout.closeDrawers();
     }
 
-    private void setupNavigationHeader() {
-        final TextView navViewHeaderText = (TextView) LayoutInflater.from(this).inflate(R.layout.nav_header_layout, navigationView).findViewById(R.id.nav_header_text);
-        if (isSignedIn) {
-            navViewHeaderText.setText(getResources().getString(R.string.my_account));
-            navViewHeaderText.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent account = new Intent(MainActivity.this, MyAccountActivity.class);
-                    startActivity(account);
-                    overridePendingTransition(R.anim.slide_in_from_bottom, R.anim.fade_out); // this method should be called just after startActivity
-                }
-            });
-        } else {
-            navViewHeaderText.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    Intent goCloud = new Intent(getApplicationContext(), GoCloudActivity.class);
-                    startActivity(goCloud);
-                }
-            });
-        }
-    }
+//    private void setupNavigationHeader() {
+//        final TextView navViewHeaderText = (TextView) LayoutInflater.from(this).inflate(R.layout.nav_header_layout, navigationView).findViewById(R.id.nav_header_text);
+//        if (isSignedIn) {
+//            navViewHeaderText.setText(getResources().getString(R.string.my_account));
+//            navViewHeaderText.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    Intent account = new Intent(MainActivity.this, MyAccountActivity.class);
+//                    startActivity(account);
+//                    overridePendingTransition(R.anim.slide_in_from_bottom, R.anim.fade_out); // this method should be called just after startActivity
+//                }
+//            });
+//        } else {
+//            navViewHeaderText.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View v) {
+//                    Intent goCloud = new Intent(getApplicationContext(), GoCloudActivity.class);
+//                    startActivity(goCloud);
+//                }
+//            });
+//        }
+//    }
 
     /**
      * Displays the currency chooser dialog if not previously shown

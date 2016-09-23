@@ -84,8 +84,8 @@ public class WalletActivity extends BaseActivity implements DetailsRecyclerViewC
         super.onResume();
         setTitle(getString(R.string.my_wallet));
         navigationView.getMenu().findItem(R.id.nav_wallet).setChecked(true);
-        final TextView navViewHeaderText = (TextView) LayoutInflater.from(this).inflate(R.layout.nav_header_layout,navigationView).findViewById(R.id.nav_header_text);
-        navViewHeaderText.setText("");
+//        final TextView navViewHeaderText = (TextView) LayoutInflater.from(this).inflate(R.layout.nav_header_layout,navigationView).findViewById(R.id.nav_header_text);
+//        navViewHeaderText.setText("");
         mCurrency = PreferenceManager.getDefaultSharedPreferences(this).getString("prefCurrency","");
         databaseHelper = new WalletDatabaseHelper(getApplicationContext());
         recyclerAdapter.setDataList(databaseHelper.getData());
