@@ -35,15 +35,12 @@ public class TutorialPane extends Fragment {
                 layoutResId = R.layout.fragment_tutorial_two;
                 break;
             case 2:
-                layoutResId = R.layout.fragment_tutorial_three;
-                break;
-            case 3:
                 layoutResId = R.layout.fragment_tutorial_four;
                 break;
-            case 4:
+            case 3:
                 layoutResId = R.layout.fragment_tutorial_five;
                 break;
-            case 5:
+            case 4:
                 layoutResId = R.layout.fragment_tutorial_transparent;
                 break;
             default:

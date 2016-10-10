@@ -23,7 +23,7 @@ import com.rose.quickwallet.R;
  * Created by rose on 11/11/15.
  */
 public class TutorialActivity extends ActionBarActivity {
-    static final int NUM_PAGES = 6;
+    static final int NUM_PAGES = 5;
 
     ViewPager pager;
     PagerAdapter pagerAdapter;
@@ -256,14 +256,14 @@ public class TutorialActivity extends ActionBarActivity {
                     }
                 }
 
-                View image_three = page.findViewById(R.id.tutorial_image_three);
-                if(image_three!=null){
-                    if(position<0)
-                        image_three.setTranslationX(-pageWidthTimesPosition * 1.5f);
-                    else {
-                        image_three.setTranslationX(pageWidthTimesPosition * 2.0f);
-                    }
-                }
+//                View image_three = page.findViewById(R.id.tutorial_image_three);
+//                if(image_three!=null){
+//                    if(position<0)
+//                        image_three.setTranslationX(-pageWidthTimesPosition * 1.5f);
+//                    else {
+//                        image_three.setTranslationX(pageWidthTimesPosition * 2.0f);
+//                    }
+//                }
                 View image_four = page.findViewById(R.id.tutorial_image_four);
                 if(image_four!=null){
                     if(position<0)
