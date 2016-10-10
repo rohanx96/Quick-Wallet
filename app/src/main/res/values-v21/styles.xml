@@ -13,4 +13,12 @@
         <item name="android:textCheckMark">@color/colorPrimary</item>
         <item name="android:windowBackground">@android:color/white</item>
     </style>
+
+    <style name="DetailsActivityTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="android:windowTranslucentStatus">true</item>
+        <item name="android:windowContentTransitions">true</item>
+        <item name="colorPrimaryDark">@color/transparent</item>
+        <item name="colorAccent">#ff4e727e</item>
+    </style>
 </resources>

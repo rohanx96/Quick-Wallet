@@ -13,8 +13,10 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.transition.Slide;
 import android.transition.TransitionInflater;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
+import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -87,11 +89,14 @@ public class DetailsActivity extends AppCompatActivity implements DetailsRecycle
             }
         });
         if(Build.VERSION.SDK_INT>=21){
-            contactImage.setTransitionName("contactImage");
-            getWindow().setSharedElementEnterTransition(TransitionInflater.from(this).inflateTransition(R.transition.shared_contact_image_transition));
-            getWindow().setSharedElementExitTransition(TransitionInflater.from(this).inflateTransition(R.transition.details_activity_return_transition));
+            //postponeEnterTransition();
+            Log.i("imageTag","contactImage" + getIntent().getIntExtra("position",1) );
+            contactImage.setTransitionName("contactImage" + getIntent().getIntExtra("position",1));
+            //getWindow().setSharedElementEnterTransition(TransitionInflater.from(this).inflateTransition(R.transition.shared_contact_image_transition));
+            //getWindow().setSharedElementExitTransition(TransitionInflater.from(this).inflateTransition(R.transition.details_activity_return_transition));
             getWindow().setEnterTransition(new Slide().setDuration(500));
             getWindow().setReturnTransition(TransitionInflater.from(this).inflateTransition(R.transition.details_activity_return_transition));
+            //scheduleStartPostponedTransition(contactImage);
         }
     }
 
@@ -118,12 +123,17 @@ public class DetailsActivity extends AppCompatActivity implements DetailsRecycle
         recyclerView.getAdapter().notifyDataSetChanged();
         TextView balanceText = (TextView) findViewById(R.id.details_balance_text);
         float balance = databaseHelper.getBalance(name);
-        if(balance<0)
+        if(balance<0) {
             balance = -1 * balance;
-        balanceText.setText(getString(R.string.current_balance_colon) + mCurrency + balance);
+            balanceText.setText(getString(R.string.current_balance_colon) + " - " +  mCurrency + balance);
+        }
+        else balanceText.setText(getString(R.string.current_balance_colon) + mCurrency + balance);
         if (balance == 0)
             balanceText.setText(getString(R.string.no_balance));
         databaseHelper.close();
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+//            startPostponedEnterTransition();
+//        }
     }
 
     @Override
@@ -161,4 +171,18 @@ public class DetailsActivity extends AppCompatActivity implements DetailsRecycle
             balanceText.setText(getString(R.string.no_balance));
         databaseHelper.close();
     }
+
+//    private void scheduleStartPostponedTransition(final View sharedElement) {
+//        sharedElement.getViewTreeObserver().addOnPreDrawListener(
+//                new ViewTreeObserver.OnPreDrawListener() {
+//                    @Override
+//                    public boolean onPreDraw() {
+//                        sharedElement.getViewTreeObserver().removeOnPreDrawListener(this);
+//                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+//                            startPostponedEnterTransition();
+//                        }
+//                        return true;
+//                    }
+//                });
+//    }
 }

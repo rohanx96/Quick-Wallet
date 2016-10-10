@@ -21,9 +21,6 @@ import android.widget.TextView;
 import com.rose.quickwallet.CalcActivity;
 import com.rose.quickwallet.R;
 
-import java.util.Currency;
-import java.util.Locale;
-
 /**
  * Created by rose on 26/9/15.
  */
@@ -79,9 +76,16 @@ public class EditTransactionDetails extends Activity {
                             getWindow().setLayout(WindowManager.LayoutParams.WRAP_CONTENT, 640);
                     }*/
                 } else {
-                    amount = Float.parseFloat(amountView.getText().toString());
+                    String amountText = amountView.getText().toString();
+                    try{
+                        amount = Float.parseFloat(amountText);
+                    }
+                    catch (NumberFormatException e){
+                        amount = Float.parseFloat("0" + amountText.substring(1,amountText.length()));
+                    }
+
                     TextView textView = (TextView) relativeLayout.findViewById(R.id.edit_item_detail_balance);
-                    textView.setText(getString(R.string.amount_colon)  + mCurrency + amountView.getText().toString());
+                    textView.setText(getString(R.string.amount_colon)  + amountView.getText().toString());
                     textView = (TextView) findViewById(R.id.edit_item_detail_name);
                     textView.setText(type);
                     if (type.equals("Lent")) {

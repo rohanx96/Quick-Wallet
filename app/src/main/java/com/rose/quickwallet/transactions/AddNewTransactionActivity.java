@@ -820,7 +820,6 @@ public class AddNewTransactionActivity extends Activity {
                 case R.id.btnNum7Id:
                 case R.id.btnNum8Id:
                 case R.id.btnNum9Id:
-                case R.id.btnDecimal:
                     String inDigit = ((Button) view).getText().toString();
                     if(!inStr.contains(".")){
                         if (inStr.equals("0")) {
@@ -832,6 +831,18 @@ public class AddNewTransactionActivity extends Activity {
                     }
                     else {
                         inStr += inDigit; // accumulate input digit
+                    }
+                    txtResult.setText(inStr);
+                    amount= Float.parseFloat(inStr);
+                    // Clear buffer if last operator is '='
+                    if (lastOperator == '=') {
+                        result = 0;
+                        lastOperator = ' ';
+                    }
+                    break;
+                case R.id.btnDecimal:
+                    if(!inStr.contains(".")){
+                        inStr += ".";
                     }
                     txtResult.setText(inStr);
                     amount= Float.parseFloat(inStr);

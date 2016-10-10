@@ -222,23 +222,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                     activity.overridePendingTransition(R.anim.slide_in_from_bottom,R.anim.stay);
                 }
             });
-            viewHistoryButton = (Button) itemView.findViewById(R.id.view_history_button_recycler);
-            viewHistoryButton.setOnClickListener(new OnClickListener() {
-                @Override
-                public void onClick(View view) {
 
-                    Intent intent = new Intent(context,DetailsActivity.class);
-                    String name = getDataList().get((getAdapterPosition())).getName();///////////////////////////
-                    intent.putExtra("Name", name);
-                    intent.putExtra("imageUri", getDataList().get((getAdapterPosition())).getImageUri());/////////////////////////
-                    if(Build.VERSION.SDK_INT>=21)
-                        context.startActivity(intent, ActivityOptionsCompat.makeSceneTransitionAnimation(activity,imageView,"contactImage").toBundle());
-                    else
-                        context.startActivity(intent);
-                    buttonBar.setVisibility(View.GONE);
-
-                }
-            });
             lastTransactionView = (TextView) itemView.findViewById(R.id.recycler_last_transaction);
             buttonBar = (LinearLayout) itemView.findViewById(R.id.button_bar);
         }
@@ -254,6 +238,29 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             expandedPosition = getAdapterPosition();
             //notifyDataSetChanged();
             notifyItemChanged(getAdapterPosition());
+            final ImageView sharedImageView = (ImageView) view.findViewById(R.id.recycler_image);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                sharedImageView.setTransitionName("contactImage" + getAdapterPosition());
+            }
+            viewHistoryButton = (Button) view.findViewById(R.id.view_history_button_recycler);
+            viewHistoryButton.setOnClickListener(new OnClickListener() {
+                @Override
+                public void onClick(View view) {
+
+                    Intent intent = new Intent(context,DetailsActivity.class);
+                    String name = getDataList().get((getAdapterPosition())).getName();///////////////////////////
+                    intent.putExtra("Name", name);
+                    intent.putExtra("imageUri", getDataList().get((getAdapterPosition())).getImageUri());/////////////////////////
+                    intent.putExtra("position",getAdapterPosition());
+                    Log.i("imageTAG"," position" +getAdapterPosition());
+                    if(Build.VERSION.SDK_INT>=21)
+                        context.startActivity(intent, ActivityOptionsCompat.makeSceneTransitionAnimation(activity,sharedImageView,"contactImage" + getAdapterPosition()).toBundle());
+                    else
+                        context.startActivity(intent);
+                    buttonBar.setVisibility(View.GONE);
+
+                }
+            });
             /*Intent intent = new Intent(context,DetailsActivity.class);
             String name = getDataList().get((getAdapterPosition()-1)).getName();
             intent.putExtra("Name",name);
