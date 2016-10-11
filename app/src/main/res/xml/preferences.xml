@@ -11,6 +11,14 @@
         android:key="prefCurrency"
         android:entries="@array/currency_locales"
         android:entryValues="@array/locale_value"/>
+    <Preference
+        android:title="Backup"
+        android:key="prefBackup"
+        android:summary="Backup application data so that you can restore later"/>
+    <Preference
+        android:title="Restore"
+        android:key="prefRestore"
+        android:summary="Restore previously backed up data"/>
     <PreferenceCategory
         android:title="@string/notifications">
     <SwitchPreference
@@ -48,7 +56,7 @@
     <PreferenceCategory android:title="@string/about">
         <Preference
             android:title="@string/version"
-            android:summary="7.3.qb.4"/>
+            android:summary="7.9"/>
         <Preference
             android:title="@string/pref_help"
             android:summary="@string/pref_help_summary"
