@@ -6,6 +6,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.preference.PreferenceManager;
+import android.util.Log;
 
 import java.util.ArrayList;
 
@@ -20,7 +21,6 @@ import static com.rose.quickwallet.transactions.QuickWalletContract.QuickWalletE
 import static com.rose.quickwallet.transactions.QuickWalletContract.QuickWalletEntries.COLUMN_NAME;
 import static com.rose.quickwallet.transactions.QuickWalletContract.QuickWalletEntries.COLUMN_PHONE;
 import static com.rose.quickwallet.transactions.QuickWalletContract.QuickWalletEntries.COLUMN_QUICKBLOX_ID;
-import static com.rose.quickwallet.transactions.QuickWalletContract.QuickWalletEntries.TABLE_NAME;
 
 /**
  *
@@ -140,16 +140,17 @@ public class DatabaseHelper {
         //String query = "SELECT * FROM  " + TABLE_NAME +" WHERE " + COLUMN_NAME + " LIKE ? ORDER BY " + COLUMN_LAST_UPDATE + " DESC";
 
         ArrayList<RecyclerViewItem> dataSet = new ArrayList<>();
-//        Cursor cursor = mContentResolver.query(QuickWalletContract.QuickWalletEntries.CONTENT_URI,null,COLUMN_NAME + " LIKE ?"
-//                ,new String[] {searchQuery+"%"}, COLUMN_LAST_UPDATE + " DESC");
-        Cursor cursor = database.query(TABLE_NAME,null,COLUMN_NAME + " LIKE ?",new String[] {searchQuery+"%"},
-                null,null,COLUMN_LAST_UPDATE + " DESC");
+        Cursor cursor = mContentResolver.query(QuickWalletContract.QuickWalletEntries.CONTENT_URI,null,COLUMN_NAME + " LIKE ?"
+                ,new String[] {searchQuery+"%"}, COLUMN_LAST_UPDATE + " DESC");
+        dataSet.add(new RecyclerViewItem());
         if(cursor.moveToFirst()){
             do{
                 RecyclerViewItem viewItem = new RecyclerViewItem();
                 viewItem.setName(cursor.getString(cursor.getColumnIndex(COLUMN_NAME)));
+                Log.i("Search: ", cursor.getString(cursor.getColumnIndex(COLUMN_NAME)));
                 viewItem.setImageUri(cursor.getString(cursor.getColumnIndex(COLUMN_IMAGE_URI)));
                 viewItem.setBalance(cursor.getFloat(cursor.getColumnIndex(COLUMN_BALANCE)));
+                viewItem.setLastTransaction(getLastTransaction(viewItem.getName()));
                 dataSet.add(viewItem);
             }while (cursor.moveToNext());
         }
