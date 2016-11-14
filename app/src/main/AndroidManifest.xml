@@ -21,6 +21,10 @@
         android:label="@string/appName"
         android:theme="@style/AppTheme" >
 
+        <provider
+            android:authorities="com.rose.quickwallet"
+            android:name=".transactions.QuickWalletProvider"/>
+
         <activity
             android:name=".EnterPinActivity"
             android:theme="@style/WalletTheme"
