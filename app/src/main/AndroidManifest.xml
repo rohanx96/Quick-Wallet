@@ -23,7 +23,7 @@
 
         <provider
             android:authorities="com.rose.quickwallet"
-            android:name=".transactions.QuickWalletProvider"/>
+            android:name=".transactions.data.QuickWalletProvider"/>
 
         <activity
             android:name=".EnterPinActivity"

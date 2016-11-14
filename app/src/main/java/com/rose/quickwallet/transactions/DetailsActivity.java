@@ -16,16 +16,13 @@ import android.transition.TransitionInflater;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
-import android.view.ViewTreeObserver;
 import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.rose.quickwallet.R;
 import com.rose.quickwallet.callbackhepers.DetailsRecyclerViewCallback;
-
-import java.util.Currency;
-import java.util.Locale;
+import com.rose.quickwallet.transactions.data.DatabaseHelper;
 
 /**
  *

@@ -13,7 +13,7 @@ import android.preference.PreferenceManager;
 import android.support.v7.app.NotificationCompat;
 
 
-import com.rose.quickwallet.transactions.DatabaseHelper;
+import com.rose.quickwallet.transactions.data.DatabaseHelper;
 import com.rose.quickwallet.transactions.MainActivity;
 import com.rose.quickwallet.transactions.RecyclerViewItem;
 

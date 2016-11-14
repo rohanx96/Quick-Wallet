@@ -1,16 +1,17 @@
-package com.rose.quickwallet.transactions;
+package com.rose.quickwallet.transactions.data;
 
 import android.content.ContentProvider;
-import android.content.ContentResolver;
 import android.content.ContentValues;
 import android.content.UriMatcher;
 import android.database.Cursor;
 import android.net.Uri;
 import android.support.annotation.Nullable;
 
-import static com.rose.quickwallet.transactions.QuickWalletContract.QuickWalletEntries.COLUMN_HISTORY_TIME;
+import com.rose.quickwallet.transactions.data.DatabaseOpenHelper;
+import com.rose.quickwallet.transactions.data.QuickWalletContract;
 
 /**
+ * This class specifies the supported URIs and their implementation for query, insert, update and delete methods
  * Created by rohanx96 on 11/5/16.
  */
 

@@ -20,6 +20,7 @@ import android.widget.TextView;
 
 import com.rose.quickwallet.CalcActivity;
 import com.rose.quickwallet.R;
+import com.rose.quickwallet.transactions.data.DatabaseHelper;
 
 /**
  * Created by rose on 26/9/15.

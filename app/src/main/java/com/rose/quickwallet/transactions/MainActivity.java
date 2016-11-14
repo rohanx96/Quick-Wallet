@@ -56,6 +56,7 @@ import com.rose.quickwallet.myWallet.WalletActivity;
 //import com.rose.quickwallet.quickblox.GoCloudActivity;
 //import com.rose.quickwallet.quickblox.RetreiveUsersService;
 //import com.rose.quickwallet.quickblox.pushnotifications.GCMClientHelper;
+import com.rose.quickwallet.transactions.data.DatabaseHelper;
 import com.rose.quickwallet.tutorial.TutorialActivity;
 
 import java.util.ArrayList;

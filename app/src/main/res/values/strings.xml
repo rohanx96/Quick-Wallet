@@ -144,4 +144,11 @@
     <string name="request_permission_telephone">The read phone state permission is required to get the device ID which is required in registering for cloud notifications. Please grant the permission when requested or else you will not be able to receive notifications. The app will never make or manage your phone calls</string>
     <string name="share_msg_text">Quick Wallet\nhttps://play.google.com/store/apps/details?id=com.rose.quickwallet\nGet this application and we can easily manage our transactions</string>
     <string name="currency">\u20B9</string>
+    <string name="snackbar_failed_backup">Backup Failed</string>
+    <string name="snackbar_request_storage_permission">Please grant write external storage permission</string>
+    <string name="snackbar_backup_complete">Backup Completed</string>
+    <string name="snackbar_restore_complete">Data restored successfully</string>
+    <string name="snackbar_create_backup">Please create a backup first</string>
+    <string name="permission_storage_request_message">The write external storage permission is required to create a copy of the database on sd card</string>
+    <string name="dialog_confirm_restore_data">This will replace your current application data. Are you sure you want to continue?</string>
 </resources>

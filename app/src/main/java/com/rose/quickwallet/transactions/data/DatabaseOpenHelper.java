@@ -1,18 +1,19 @@
-package com.rose.quickwallet.transactions;
+package com.rose.quickwallet.transactions.data;
 
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
-import static com.rose.quickwallet.transactions.QuickWalletContract.QuickWalletEntries.COLUMN_BALANCE;
-import static com.rose.quickwallet.transactions.QuickWalletContract.QuickWalletEntries.COLUMN_IMAGE_URI;
-import static com.rose.quickwallet.transactions.QuickWalletContract.QuickWalletEntries.COLUMN_LAST_UPDATE;
-import static com.rose.quickwallet.transactions.QuickWalletContract.QuickWalletEntries.COLUMN_NAME;
-import static com.rose.quickwallet.transactions.QuickWalletContract.QuickWalletEntries.COLUMN_PHONE;
-import static com.rose.quickwallet.transactions.QuickWalletContract.QuickWalletEntries.COLUMN_QUICKBLOX_ID;
-import static com.rose.quickwallet.transactions.QuickWalletContract.QuickWalletEntries.TABLE_NAME;
+import static com.rose.quickwallet.transactions.data.QuickWalletContract.QuickWalletEntries.COLUMN_BALANCE;
+import static com.rose.quickwallet.transactions.data.QuickWalletContract.QuickWalletEntries.COLUMN_IMAGE_URI;
+import static com.rose.quickwallet.transactions.data.QuickWalletContract.QuickWalletEntries.COLUMN_LAST_UPDATE;
+import static com.rose.quickwallet.transactions.data.QuickWalletContract.QuickWalletEntries.COLUMN_NAME;
+import static com.rose.quickwallet.transactions.data.QuickWalletContract.QuickWalletEntries.COLUMN_PHONE;
+import static com.rose.quickwallet.transactions.data.QuickWalletContract.QuickWalletEntries.COLUMN_QUICKBLOX_ID;
+import static com.rose.quickwallet.transactions.data.QuickWalletContract.QuickWalletEntries.TABLE_NAME;
 
 /**
+ * Helper class to get a readable or writable database
  * Created by rohanx96 on 11/5/16.
  */
 

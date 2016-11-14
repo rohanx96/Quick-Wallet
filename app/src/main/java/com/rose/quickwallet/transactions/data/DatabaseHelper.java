@@ -1,4 +1,4 @@
-package com.rose.quickwallet.transactions;
+package com.rose.quickwallet.transactions.data;
 
 import android.content.ContentResolver;
 import android.content.ContentValues;
@@ -6,21 +6,23 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.preference.PreferenceManager;
-import android.util.Log;
+
+import com.rose.quickwallet.transactions.DetailsRecyclerViewItem;
+import com.rose.quickwallet.transactions.RecyclerViewItem;
 
 import java.util.ArrayList;
 
-import static com.rose.quickwallet.transactions.QuickWalletContract.QuickWalletEntries.COLUMN_BALANCE;
-import static com.rose.quickwallet.transactions.QuickWalletContract.QuickWalletEntries.COLUMN_HISTORY_DETAIL;
-import static com.rose.quickwallet.transactions.QuickWalletContract.QuickWalletEntries.COLUMN_HISTORY_ID;
-import static com.rose.quickwallet.transactions.QuickWalletContract.QuickWalletEntries.COLUMN_HISTORY_TIME;
-import static com.rose.quickwallet.transactions.QuickWalletContract.QuickWalletEntries.COLUMN_HISTORY_TYPE;
-import static com.rose.quickwallet.transactions.QuickWalletContract.QuickWalletEntries.COLUMN_HISTORY_VALUE;
-import static com.rose.quickwallet.transactions.QuickWalletContract.QuickWalletEntries.COLUMN_IMAGE_URI;
-import static com.rose.quickwallet.transactions.QuickWalletContract.QuickWalletEntries.COLUMN_LAST_UPDATE;
-import static com.rose.quickwallet.transactions.QuickWalletContract.QuickWalletEntries.COLUMN_NAME;
-import static com.rose.quickwallet.transactions.QuickWalletContract.QuickWalletEntries.COLUMN_PHONE;
-import static com.rose.quickwallet.transactions.QuickWalletContract.QuickWalletEntries.COLUMN_QUICKBLOX_ID;
+import static com.rose.quickwallet.transactions.data.QuickWalletContract.QuickWalletEntries.COLUMN_BALANCE;
+import static com.rose.quickwallet.transactions.data.QuickWalletContract.QuickWalletEntries.COLUMN_HISTORY_DETAIL;
+import static com.rose.quickwallet.transactions.data.QuickWalletContract.QuickWalletEntries.COLUMN_HISTORY_ID;
+import static com.rose.quickwallet.transactions.data.QuickWalletContract.QuickWalletEntries.COLUMN_HISTORY_TIME;
+import static com.rose.quickwallet.transactions.data.QuickWalletContract.QuickWalletEntries.COLUMN_HISTORY_TYPE;
+import static com.rose.quickwallet.transactions.data.QuickWalletContract.QuickWalletEntries.COLUMN_HISTORY_VALUE;
+import static com.rose.quickwallet.transactions.data.QuickWalletContract.QuickWalletEntries.COLUMN_IMAGE_URI;
+import static com.rose.quickwallet.transactions.data.QuickWalletContract.QuickWalletEntries.COLUMN_LAST_UPDATE;
+import static com.rose.quickwallet.transactions.data.QuickWalletContract.QuickWalletEntries.COLUMN_NAME;
+import static com.rose.quickwallet.transactions.data.QuickWalletContract.QuickWalletEntries.COLUMN_PHONE;
+import static com.rose.quickwallet.transactions.data.QuickWalletContract.QuickWalletEntries.COLUMN_QUICKBLOX_ID;
 
 /**
  *
@@ -147,7 +149,6 @@ public class DatabaseHelper {
             do{
                 RecyclerViewItem viewItem = new RecyclerViewItem();
                 viewItem.setName(cursor.getString(cursor.getColumnIndex(COLUMN_NAME)));
-                Log.i("Search: ", cursor.getString(cursor.getColumnIndex(COLUMN_NAME)));
                 viewItem.setImageUri(cursor.getString(cursor.getColumnIndex(COLUMN_IMAGE_URI)));
                 viewItem.setBalance(cursor.getFloat(cursor.getColumnIndex(COLUMN_BALANCE)));
                 viewItem.setLastTransaction(getLastTransaction(viewItem.getName()));

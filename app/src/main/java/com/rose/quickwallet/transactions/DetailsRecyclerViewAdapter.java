@@ -14,12 +14,11 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import com.rose.quickwallet.R;
 import com.rose.quickwallet.callbackhepers.DetailsRecyclerViewCallback;
+import com.rose.quickwallet.transactions.data.DatabaseHelper;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Currency;
 import java.util.Date;
-import java.util.Locale;
 
 /**
  *

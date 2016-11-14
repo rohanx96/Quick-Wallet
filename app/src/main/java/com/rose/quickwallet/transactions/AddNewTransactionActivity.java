@@ -35,6 +35,7 @@ import android.widget.Toast;
 
 import com.rose.quickwallet.EnterPinActivity;
 import com.rose.quickwallet.R;
+import com.rose.quickwallet.transactions.data.DatabaseHelper;
 
 
 import java.util.Currency;

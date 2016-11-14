@@ -107,7 +107,7 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
             public boolean onPreferenceClick(Preference preference) {
                 requestPermissions();
                 final AlertDialog dialog = new AlertDialog.Builder(getActivity()).create();
-                dialog.setMessage("This will replace your current application data. Are you sure you want to continue?");
+                dialog.setMessage(getString(R.string.dialog_confirm_restore_data));
                 dialog.setButton(AlertDialog.BUTTON_POSITIVE, "OK", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialogInterface, int i) {
@@ -213,7 +213,7 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
             File sd = Environment.getExternalStorageDirectory();
             File data = Environment.getDataDirectory();
             if (sd.canWrite()) {
-                String newDBPath = "//data//" + "com.rose.quickwallet"
+                String newDBPath = "//data//" + getActivity().getPackageName()
                         + "//databases//" + "QuickWallet.db";
                 String oldDBPath = "QuickWalletData"; // From SD directory.
 
@@ -225,15 +225,15 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
                     src.transferTo(0, src.size(), dst);
                     src.close();
                     dst.close();
-                    Snackbar.make(getView(),"Data restored successfully",Snackbar.LENGTH_LONG).show();
+                    Snackbar.make(getView(), R.string.snackbar_restore_complete,Snackbar.LENGTH_LONG).show();
                 }
                 else{
-                    Snackbar.make(getView(),"Please create a backup first",Snackbar.LENGTH_LONG).show();
+                    Snackbar.make(getView(), R.string.snackbar_create_backup,Snackbar.LENGTH_LONG).show();
                 }
 
             }
             else {
-                Snackbar.make(getView(),"Please grant write external storage permission",Snackbar.LENGTH_LONG).show();
+                Snackbar.make(getView(),R.string.snackbar_request_storage_permission,Snackbar.LENGTH_LONG).show();
             }
         } catch (Exception e) {
 
@@ -261,15 +261,15 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
                 dst.transferFrom(src, 0, src.size());
                 src.close();
                 dst.close();
-                Snackbar.make(getView(),"Backup Completed",Snackbar.LENGTH_LONG).show();
+                Snackbar.make(getView(), R.string.snackbar_backup_complete,Snackbar.LENGTH_LONG).show();
 
             }
             else {
-                Snackbar.make(getView(),"Please grant write external storage permission",Snackbar.LENGTH_LONG).show();
+                Snackbar.make(getView(), R.string.snackbar_request_storage_permission,Snackbar.LENGTH_LONG).show();
             }
         } catch (Exception e) {
 
-            Snackbar.make(getView(),"Backup Failed",Snackbar.LENGTH_LONG).show();
+            Snackbar.make(getView(), R.string.snackbar_failed_backup,Snackbar.LENGTH_LONG).show();
 
         }
     }
@@ -278,7 +278,7 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
         if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
             if (ActivityCompat.shouldShowRequestPermissionRationale(getActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
                 android.support.v7.app.AlertDialog.Builder dialogBuilder = new android.support.v7.app.AlertDialog.Builder(getActivity());
-                dialogBuilder.setMessage("The write external storage permission is required to create a copy of the database on sd card")
+                dialogBuilder.setMessage(R.string.permission_storage_request_message)
                         .setPositiveButton(getString(R.string.dlg_ok), new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
