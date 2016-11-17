@@ -32,12 +32,12 @@ public class DetailsRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
     private String name;
     private String mCurrency;
 
-    public DetailsRecyclerViewAdapter(ArrayList<DetailsRecyclerViewItem> dataList, Context context, String name, String mCurrency){
+    public DetailsRecyclerViewAdapter(ArrayList<DetailsRecyclerViewItem> dataList, DetailsRecyclerViewCallback callback, Context context, String name, String mCurrency){
         super();
         this.dataList = dataList;
         this.context = context;
         this.name = name;
-        callback = (DetailsRecyclerViewCallback) context;
+        this.callback = callback;
         this.mCurrency = mCurrency;
     }
 
