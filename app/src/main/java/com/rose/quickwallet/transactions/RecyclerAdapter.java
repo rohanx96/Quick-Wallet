@@ -41,10 +41,10 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     private int lastPosition = -1;
     private String mCurrency;
 
-    public RecyclerAdapter(ArrayList<RecyclerViewItem> dataList,RecyclerViewCallback context){
+    public RecyclerAdapter(ArrayList<RecyclerViewItem> dataList,RecyclerViewCallback callback, Context context){
         this.dataList = dataList;
-        this.context = (Context) context;
-        this.recyclerViewCallback = context;
+        this.context = context;
+        this.recyclerViewCallback = callback;
         this.expandedPosition = Integer.MAX_VALUE;
         activity = (MainActivity) context;
         this.mCurrency = PreferenceManager.getDefaultSharedPreferences(this.context).getString("prefCurrency","");
