@@ -6,15 +6,19 @@ import android.app.SearchableInfo;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v7.app.ActionBar;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SimpleItemAnimator;
+import android.support.v7.widget.Toolbar;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -52,7 +56,7 @@ public class TransactionsFragment extends Fragment implements RecyclerViewCallba
     private SharedPreferences preferences;
     boolean shouldAnimate = false;
     Context mContext;
-
+    private boolean isTablet;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -64,12 +68,13 @@ public class TransactionsFragment extends Fragment implements RecyclerViewCallba
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
+        isTablet = getActivity().findViewById(R.id.details_fragment_disabled_text)!=null;
         mContext = getActivity();
         shouldAnimate = true;
         //loadAd();
         preferences = PreferenceManager.getDefaultSharedPreferences(mContext);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
-        adapter = new RecyclerAdapter(new ArrayList<RecyclerViewItem>(), TransactionsFragment.this, mContext);
+        adapter = new RecyclerAdapter(new ArrayList<RecyclerViewItem>(), TransactionsFragment.this, mContext, isTablet);
         recyclerView.setAdapter(adapter);
         ItemTouchHelperCallback itemTouchHelperCallback = new ItemTouchHelperCallback((RecyclerAdapter) recyclerView.getAdapter());
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(itemTouchHelperCallback);
@@ -103,9 +108,9 @@ public class TransactionsFragment extends Fragment implements RecyclerViewCallba
                 start(view);
             }
         });
-//        if (Build.VERSION.SDK_INT < 21)
-//            ((MainActivity)getActivity()).setupSearchEditText();
-//        else
+        if (Build.VERSION.SDK_INT < 21)
+           setupSearchEditText();
+        else
             setupSearchView();
     }
 
@@ -147,6 +152,18 @@ public class TransactionsFragment extends Fragment implements RecyclerViewCallba
         });
     }
 
+    public void setupSearchEditText() {
+        Toolbar toolbar = (Toolbar) rootView.findViewById(R.id.toolbar_main_activity);
+        ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
+        ActionBar actionBar = ((AppCompatActivity)getActivity()).getSupportActionBar();
+        if (actionBar != null) {
+            actionBar.setDisplayShowCustomEnabled(true);
+            actionBar.setCustomView(R.layout.search_edit_text);
+            actionBar.setDisplayShowTitleEnabled(false);
+            setupSearchView();
+        }
+    }
+
     /**
      * Searches for string s in names stored in database and updates the recycler view with the datalist obtained from database
      */
@@ -155,6 +172,7 @@ public class TransactionsFragment extends Fragment implements RecyclerViewCallba
         adapter.setDataList(databaseHelper.search(s));
         recyclerView.getAdapter().notifyDataSetChanged();
     }
+
 
     @Override
     public void onItemSwiped(final RecyclerViewItem item) {
@@ -176,7 +194,7 @@ public class TransactionsFragment extends Fragment implements RecyclerViewCallba
             totalBorrowed.setText(getResources().getString(R.string.borrowed_colon) + currency + databaseHelper.totalBorrowed());
         //recyclerView.getAdapter().notifyDataSetChanged();
         databaseHelper.close();
-        Snackbar.make(rootView.findViewById(R.id.activity_coordinator_layout), getString(R.string.snackbar_balance_cleared_beg) + item.getName() + getString(R.string.snackbar_balance_cleared_end), Snackbar.LENGTH_LONG).setAction(getString(R.string.undo), new View.OnClickListener() {
+        Snackbar.make(rootView, getString(R.string.snackbar_balance_cleared_beg) + item.getName() + getString(R.string.snackbar_balance_cleared_end), Snackbar.LENGTH_LONG).setAction(getString(R.string.undo), new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 DatabaseHelper databaseHelper = new DatabaseHelper(mContext);

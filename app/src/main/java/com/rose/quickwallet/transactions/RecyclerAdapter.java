@@ -6,6 +6,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.Build;
+import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v4.app.ActivityOptionsCompat;
 import android.support.v7.widget.RecyclerView;
@@ -40,14 +41,16 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
     private int expandedPosition;
     private int lastPosition = -1;
     private String mCurrency;
+    private boolean isTabletUI;
 
-    public RecyclerAdapter(ArrayList<RecyclerViewItem> dataList,RecyclerViewCallback callback, Context context){
+    public RecyclerAdapter(ArrayList<RecyclerViewItem> dataList,RecyclerViewCallback callback, Context context, boolean isTabletUI){
         this.dataList = dataList;
         this.context = context;
         this.recyclerViewCallback = callback;
         this.expandedPosition = Integer.MAX_VALUE;
         activity = (MainActivity) context;
         this.mCurrency = PreferenceManager.getDefaultSharedPreferences(this.context).getString("prefCurrency","");
+        this.isTabletUI = isTabletUI;
     }
 
     @Override
@@ -230,37 +233,50 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         @Override
         public void onClick(View view) {
             Log.i("Recycler View", "Clicked on position " + getAdapterPosition());
-            if(expandedPosition != getAdapterPosition() && expandedPosition!= Integer.MAX_VALUE) {
-                getDataList().get(expandedPosition).setIsExpanded(false);/////////////////////
-                notifyItemChanged(expandedPosition);
-            }
-            getDataList().get(getAdapterPosition()).toggleIsExpanded();/////////////////////////////////
-            expandedPosition = getAdapterPosition();
-            //notifyDataSetChanged();
-            notifyItemChanged(getAdapterPosition());
-            final ImageView sharedImageView = (ImageView) view.findViewById(R.id.recycler_image);
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                sharedImageView.setTransitionName("contactImage" + getAdapterPosition());
-            }
-            viewHistoryButton = (Button) view.findViewById(R.id.view_history_button_recycler);
-            viewHistoryButton.setOnClickListener(new OnClickListener() {
-                @Override
-                public void onClick(View view) {
-
-                    Intent intent = new Intent(context,DetailsActivity.class);
-                    String name = getDataList().get((getAdapterPosition())).getName();///////////////////////////
-                    intent.putExtra("Name", name);
-                    intent.putExtra("imageUri", getDataList().get((getAdapterPosition())).getImageUri());/////////////////////////
-                    intent.putExtra("position",getAdapterPosition());
-                    Log.i("imageTAG"," position" +getAdapterPosition());
-                    if(Build.VERSION.SDK_INT>=21)
-                        context.startActivity(intent, ActivityOptionsCompat.makeSceneTransitionAnimation(activity,sharedImageView,"contactImage" + getAdapterPosition()).toBundle());
-                    else
-                        context.startActivity(intent);
-                    buttonBar.setVisibility(View.GONE);
-
+            if(!isTabletUI) {
+                if (expandedPosition != getAdapterPosition() && expandedPosition != Integer.MAX_VALUE) {
+                    getDataList().get(expandedPosition).setIsExpanded(false);/////////////////////
+                    notifyItemChanged(expandedPosition);
                 }
-            });
+                getDataList().get(getAdapterPosition()).toggleIsExpanded();/////////////////////////////////
+                expandedPosition = getAdapterPosition();
+                //notifyDataSetChanged();
+                notifyItemChanged(getAdapterPosition());
+                final ImageView sharedImageView = (ImageView) view.findViewById(R.id.recycler_image);
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                    sharedImageView.setTransitionName("contactImage" + getAdapterPosition());
+                }
+                viewHistoryButton = (Button) view.findViewById(R.id.view_history_button_recycler);
+                viewHistoryButton.setOnClickListener(new OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+
+                        Intent intent = new Intent(context, DetailsActivity.class);
+                        String name = getDataList().get((getAdapterPosition())).getName();///////////////////////////
+                        intent.putExtra("Name", name);
+                        intent.putExtra("imageUri", getDataList().get((getAdapterPosition())).getImageUri());/////////////////////////
+                        intent.putExtra("position", getAdapterPosition());
+                        Log.i("imageTAG", " position" + getAdapterPosition());
+                        if (Build.VERSION.SDK_INT >= 21)
+                            context.startActivity(intent, ActivityOptionsCompat.makeSceneTransitionAnimation(activity, sharedImageView, "contactImage" + getAdapterPosition()).toBundle());
+                        else
+                            context.startActivity(intent);
+                        buttonBar.setVisibility(View.GONE);
+
+                    }
+                });
+            }
+            else {
+                DetailsFragment fragment = new DetailsFragment();
+                Bundle args = new Bundle();
+                args.putString("Name",getDataList().get((getAdapterPosition())).getName());
+                args.putString("imageUri", getDataList().get((getAdapterPosition())).getImageUri());
+                args.putInt("position", getAdapterPosition());
+                fragment.setArguments(args);
+                activity.findViewById(R.id.details_fragment_disabled_text).setVisibility(View.GONE);
+                activity.findViewById(R.id.container_details_fragment_main).setVisibility(View.VISIBLE);
+                activity.getFragmentManager().beginTransaction().replace(R.id.container_details_fragment_main,fragment).commit();
+            }
             /*Intent intent = new Intent(context,DetailsActivity.class);
             String name = getDataList().get((getAdapterPosition()-1)).getName();
             intent.putExtra("Name",name);

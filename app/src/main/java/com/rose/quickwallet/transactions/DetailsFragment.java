@@ -43,7 +43,7 @@ public class DetailsFragment extends Fragment implements DetailsRecyclerViewCall
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        rootView = inflater.inflate(R.layout.fragment_details,container,false);
+        rootView = inflater.inflate(R.layout.fragment_details, container, false);
         return rootView;
     }
 
@@ -51,29 +51,28 @@ public class DetailsFragment extends Fragment implements DetailsRecyclerViewCall
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         mContext = getActivity();
-        if(getActivity() instanceof MainActivity){
+        if (getActivity() instanceof MainActivity) {
             isTabletUI = true;
         }
         name = getArguments().getString("Name");
-
-        if(!isTabletUI){
-            CollapsingToolbarLayout toolbarLayout = (CollapsingToolbarLayout) rootView.findViewById(R.id.toolbar_layout);
-            toolbarLayout.setTitle(name);
+        CollapsingToolbarLayout toolbarLayout = (CollapsingToolbarLayout) rootView.findViewById(R.id.toolbar_layout);
+        toolbarLayout.setTitle(name);
+        if (!isTabletUI) {
             Toolbar toolbar = (Toolbar) rootView.findViewById(R.id.details_toolbar);
-            ((AppCompatActivity)getActivity()).setSupportActionBar(toolbar);
+            ((AppCompatActivity) getActivity()).setSupportActionBar(toolbar);
         }
 
         imageUri = getArguments().getString("imageUri");
         ImageView contactImage = (ImageView) rootView.findViewById(R.id.contact_image_toolbar);
-        if(imageUri!=null)
+        if (imageUri != null)
             contactImage.setImageURI(Uri.parse(imageUri));
         else
             contactImage.setImageResource(R.drawable.contact_no_image);
-        mCurrency = PreferenceManager.getDefaultSharedPreferences(mContext).getString("prefCurrency","");
+        mCurrency = PreferenceManager.getDefaultSharedPreferences(mContext).getString("prefCurrency", "");
         recyclerView = (RecyclerView) rootView.findViewById(R.id.details_recycler_view);
         recyclerView.setLayoutManager(new LinearLayoutManager(mContext));
         databaseHelper = new DatabaseHelper(mContext);
-        recyclerViewAdapter = new DetailsRecyclerViewAdapter(databaseHelper.getHistoryData(name),this, mContext,name,mCurrency);
+        recyclerViewAdapter = new DetailsRecyclerViewAdapter(databaseHelper.getHistoryData(name), this, mContext, name, mCurrency);
         recyclerView.setAdapter(recyclerViewAdapter);
         /*ImageButton delete = (ImageButton) findViewById(R.id.delete_icon);
         delete.setOnClickListener(new View.OnClickListener() {
@@ -82,7 +81,7 @@ public class DetailsFragment extends Fragment implements DetailsRecyclerViewCall
                 onDelete(view);
             }
         });*/
-        if (Build.VERSION.SDK_INT >=21)
+        if (Build.VERSION.SDK_INT >= 21)
             contactImage.setTransitionName("contactImage" + getArguments().getInt("position"));
         FloatingActionButton addButton = (FloatingActionButton) rootView.findViewById(R.id.add_floating_button);
         addButton.setOnClickListener(new View.OnClickListener() {
@@ -109,10 +108,10 @@ public class DetailsFragment extends Fragment implements DetailsRecyclerViewCall
     }
 
     public void onAdd(View view) {
-        Intent intent = new Intent(mContext,AddNewTransactionActivity.class);
+        Intent intent = new Intent(mContext, AddNewTransactionActivity.class);
         intent.setAction(Intent.ACTION_SEARCH);
-        intent.putExtra(SearchManager.QUERY,name);
-        intent.putExtra("action","add");
+        intent.putExtra(SearchManager.QUERY, name);
+        intent.putExtra("action", "add");
         startActivity(intent);
     }
 
@@ -123,7 +122,7 @@ public class DetailsFragment extends Fragment implements DetailsRecyclerViewCall
         //ArrayList<DetailsRecyclerViewItem> detailsRecyclerViewItems = databaseHelper.getHistoryData(name);
         //int newItems = detailsRecyclerViewItems.size() - recyclerViewAdapter.getDataList().size();
         recyclerViewAdapter.setDataList(databaseHelper.getHistoryData(name));
-        recyclerViewAdapter.setmCurrency(PreferenceManager.getDefaultSharedPreferences(mContext).getString("prefCurrency",""));
+        recyclerViewAdapter.setmCurrency(PreferenceManager.getDefaultSharedPreferences(mContext).getString("prefCurrency", ""));
         //recyclerView.getAdapter().notifyDataSetChanged();
         //for(int i =0;i<=newItems;i++){
         //    recyclerView.getAdapter().notifyItemInserted(i);
@@ -131,11 +130,10 @@ public class DetailsFragment extends Fragment implements DetailsRecyclerViewCall
         recyclerView.getAdapter().notifyDataSetChanged();
         TextView balanceText = (TextView) rootView.findViewById(R.id.details_balance_text);
         float balance = databaseHelper.getBalance(name);
-        if(balance<0) {
+        if (balance < 0) {
             balance = -1 * balance;
-            balanceText.setText(getString(R.string.current_balance_colon) + " - " +  mCurrency + balance);
-        }
-        else balanceText.setText(getString(R.string.current_balance_colon) + mCurrency + balance);
+            balanceText.setText(getString(R.string.current_balance_colon) + " - " + mCurrency + balance);
+        } else balanceText.setText(getString(R.string.current_balance_colon) + mCurrency + balance);
         if (balance == 0)
             balanceText.setText(getString(R.string.no_balance));
         databaseHelper.close();
@@ -144,7 +142,7 @@ public class DetailsFragment extends Fragment implements DetailsRecyclerViewCall
 //        }
     }
 
-    public void onClearHistory(View view){
+    public void onClearHistory(View view) {
         databaseHelper = new DatabaseHelper(mContext);
         databaseHelper.clearHistory(name);
         DetailsRecyclerViewAdapter adapter = (DetailsRecyclerViewAdapter) recyclerView.getAdapter();
@@ -154,10 +152,10 @@ public class DetailsFragment extends Fragment implements DetailsRecyclerViewCall
         recyclerView.getAdapter().notifyDataSetChanged();
     }
 
-    public void onDelete(View view){
+    public void onDelete(View view) {
         databaseHelper = new DatabaseHelper(mContext);
         databaseHelper.deleteContact(name);
-        if(isTabletUI)
+        if (isTabletUI)
             getFragmentManager().beginTransaction().remove(this).commit();
         else getActivity().finish();
     }
@@ -169,7 +167,7 @@ public class DetailsFragment extends Fragment implements DetailsRecyclerViewCall
         recyclerViewAdapter.setDataList(databaseHelper.getHistoryData(name));
         recyclerView.getAdapter().notifyDataSetChanged();
         float balance = databaseHelper.getBalance(name);
-        if(balance<0)
+        if (balance < 0)
             balance = -1 * balance;
         balanceText.setText(getString(R.string.current_balance_colon) + mCurrency + balance);
         if (balance == 0)
