@@ -137,6 +137,7 @@ public class DetailsFragment extends Fragment implements DetailsRecyclerViewCall
         if (balance == 0)
             balanceText.setText(getString(R.string.no_balance));
         databaseHelper.close();
+        refreshTransactionList();
 //        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
 //            startPostponedEnterTransition();
 //        }
@@ -150,13 +151,18 @@ public class DetailsFragment extends Fragment implements DetailsRecyclerViewCall
         TextView balanceText = (TextView) rootView.findViewById(R.id.details_balance_text);
         balanceText.setText(R.string.no_balance);
         recyclerView.getAdapter().notifyDataSetChanged();
+        refreshTransactionList();
     }
 
     public void onDelete(View view) {
         databaseHelper = new DatabaseHelper(mContext);
         databaseHelper.deleteContact(name);
-        if (isTabletUI)
+        if (isTabletUI) {
+            refreshTransactionList();
             getFragmentManager().beginTransaction().remove(this).commit();
+            getActivity().findViewById(R.id.container_details_fragment_main).setVisibility(View.GONE);
+            getActivity().findViewById(R.id.details_fragment_disabled_text).setVisibility(View.VISIBLE);
+        }
         else getActivity().finish();
     }
 
@@ -173,6 +179,11 @@ public class DetailsFragment extends Fragment implements DetailsRecyclerViewCall
         if (balance == 0)
             balanceText.setText(getString(R.string.no_balance));
         databaseHelper.close();
+        refreshTransactionList();
     }
 
+    public void refreshTransactionList(){
+        if(isTabletUI)
+            ((TransactionsFragment)getFragmentManager().findFragmentById(R.id.fragment_transaction_main)).refreshDataList(databaseHelper);
+    }
 }

@@ -9,6 +9,7 @@ import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.provider.ContactsContract;
 import android.support.annotation.Nullable;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
@@ -203,6 +204,8 @@ public class TransactionsFragment extends Fragment implements RecyclerViewCallba
                 recyclerView.getAdapter().notifyDataSetChanged();
             }
         }).show();
+        if(isTablet)
+            getFragmentManager().findFragmentById(R.id.container_details_fragment_main).onResume();
     }
 
     @Override
@@ -216,6 +219,10 @@ public class TransactionsFragment extends Fragment implements RecyclerViewCallba
     }
 
 
+    public void refreshDataList(DatabaseHelper databaseHelper){
+        adapter.setDataList(databaseHelper.getData());
+        recyclerView.getAdapter().notifyDataSetChanged();
+    }
     /**
      * Increases the fab button size to fill the screen creating a ripple effect
      */
