@@ -6,18 +6,12 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <LinearLayout
+    <FrameLayout
+        android:id="@+id/container_left_fragment_main"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
-
-        <fragment
-            android:id="@+id/fragment_transaction_main"
-            class="com.rose.quickwallet.transactions.TransactionsFragment"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            tools:layout="@layout/fragment_transactions" />
-    </LinearLayout>
+        android:background="@color/white">
+    </FrameLayout>
 
     <android.support.design.widget.NavigationView
         android:id="@+id/nav_view"

@@ -1,6 +1,5 @@
 package com.rose.quickwallet.transactions;
 
-import android.app.Fragment;
 import android.app.SearchManager;
 import android.app.SearchableInfo;
 import android.content.Context;
@@ -9,11 +8,11 @@ import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.provider.ContactsContract;
 import android.support.annotation.Nullable;
 import android.support.design.widget.CoordinatorLayout;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
@@ -62,7 +61,6 @@ public class TransactionsFragment extends Fragment implements RecyclerViewCallba
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.fragment_transactions,container, false);
-        recyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view);
         return rootView;
     }
 
@@ -73,6 +71,7 @@ public class TransactionsFragment extends Fragment implements RecyclerViewCallba
         mContext = getActivity();
         shouldAnimate = true;
         //loadAd();
+        recyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view);
         preferences = PreferenceManager.getDefaultSharedPreferences(mContext);
         recyclerView.setLayoutManager(new LinearLayoutManager(getActivity()));
         adapter = new RecyclerAdapter(new ArrayList<RecyclerViewItem>(), TransactionsFragment.this, mContext, isTablet);
@@ -80,14 +79,6 @@ public class TransactionsFragment extends Fragment implements RecyclerViewCallba
         ItemTouchHelperCallback itemTouchHelperCallback = new ItemTouchHelperCallback((RecyclerAdapter) recyclerView.getAdapter());
         ItemTouchHelper itemTouchHelper = new ItemTouchHelper(itemTouchHelperCallback);
         itemTouchHelper.attachToRecyclerView(recyclerView);
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        //TraceCompat.beginSection("start");
-        super.onCreate(savedInstanceState);
-
-
     }
 
     @Override
@@ -253,11 +244,21 @@ public class TransactionsFragment extends Fragment implements RecyclerViewCallba
                 .withEndAction(new Runnable() {
                     @Override
                     public void run() {
-                        Intent intent = new Intent(mContext, AddNewTransactionActivity.class);
-                        intent.putExtra("action", "generic");
-                        intent.setAction("generic");
-                        ((MainActivity)mContext).overridePendingTransition(0, 0);
-                        startActivity(intent);
+                        if(isTablet){
+                            AddNewTransactionFragment fragment = new AddNewTransactionFragment();
+                            Bundle args = new Bundle();
+                            args.putString("action","generic");
+                            fragment.setArguments(args);
+                            getFragmentManager().beginTransaction().add(R.id.container_left_fragment_main, fragment).
+                                    addToBackStack(null).commit();
+                        }
+                        else {
+                            Intent intent = new Intent(mContext, AddNewTransactionActivity.class);
+                            intent.putExtra("action", "generic");
+                            intent.setAction("generic");
+                            ((MainActivity) mContext).overridePendingTransition(0, 0);
+                            startActivity(intent);
+                        }
                     }
                 });
         /*Intent intent = new Intent(MainActivity.this, AddNewTransactionActivity.class);

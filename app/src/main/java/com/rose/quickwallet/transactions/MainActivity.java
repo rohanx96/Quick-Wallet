@@ -47,12 +47,17 @@ public class MainActivity extends BaseActivity {
 //    private GCMClientHelper pushClientManager;
     private SharedPreferences preferences;
     boolean shouldAnimate = false;
+    boolean isTablet;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         //TraceCompat.beginSection("start");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        isTablet = findViewById(R.id.details_fragment_disabled_text)!=null;
+        if(getSupportFragmentManager().findFragmentById(R.id.container_left_fragment_main) == null)
+            getSupportFragmentManager().beginTransaction().add(R.id.container_left_fragment_main,
+                    new TransactionsFragment(),"Transactions").commit();
         preferences = PreferenceManager.getDefaultSharedPreferences(this);
 //        isSignedIn = preferences.getBoolean(Consts.IS_SIGNED_UP, false);
         //DialogUtils.showLong(getApplicationContext(),"isSignedIn: " + isSignedIn);
@@ -173,6 +178,9 @@ public class MainActivity extends BaseActivity {
 
     @Override
     public void onBackPressed() {
+        if(isTablet){
+            ((TransactionsFragment) getSupportFragmentManager().findFragmentByTag("Transactions")).resetFabScale();
+        }
         super.onBackPressed();
     }
 

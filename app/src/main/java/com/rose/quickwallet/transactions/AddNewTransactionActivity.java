@@ -4,12 +4,12 @@
 
 package com.rose.quickwallet.transactions;
 
-import android.app.Activity;
 import android.app.SearchManager;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.v7.app.AppCompatActivity;
 
 import com.rose.quickwallet.EnterPinActivity;
 import com.rose.quickwallet.R;
@@ -19,7 +19,7 @@ import com.rose.quickwallet.R;
  * Created by rose on 23/7/15.
  */
 
-public class AddNewTransactionActivity extends Activity {
+public class AddNewTransactionActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,7 +40,7 @@ public class AddNewTransactionActivity extends Activity {
         args.putFloat("amount", getIntent().getFloatExtra("amount",0));
         args.putString("details",getIntent().getStringExtra("details"));
         fragment.setArguments(args);
-        getFragmentManager().beginTransaction().add(R.id.add_transaction_fragment_container,fragment).commit();
+        getSupportFragmentManager().beginTransaction().add(R.id.add_transaction_fragment_container,fragment).commit();
     }
 
     @Override

@@ -1,6 +1,6 @@
 package com.rose.quickwallet.transactions;
 
-import android.app.Fragment;
+
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.SharedPreferences;
@@ -12,6 +12,7 @@ import android.preference.PreferenceManager;
 import android.provider.ContactsContract;
 import android.support.annotation.Nullable;
 import android.support.design.widget.Snackbar;
+import android.support.v4.app.Fragment;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -76,6 +77,7 @@ public class AddNewTransactionFragment extends Fragment {
 
     private String mCurrency;
     private View rootView;
+    boolean isTablet = false;
 
     @Nullable
     @Override
@@ -88,6 +90,7 @@ public class AddNewTransactionFragment extends Fragment {
     public void onActivityCreated(Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         context = getActivity();
+        isTablet = getActivity().findViewById(R.id.details_fragment_disabled_text)!=null;
         SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
         //loadingView = (LoadingView) findViewById(R.id.add_transaction_loading_view);
         databaseHelper = new DatabaseHelper(context);
@@ -611,8 +614,14 @@ public class AddNewTransactionFragment extends Fragment {
     public void onCancel(View v) {
 //        if(isSignedUp)
 //            logoutFormChat();
+        if(isTablet){
+            ((TransactionsFragment) getFragmentManager().findFragmentByTag("Transactions")).resetFabScale();
+            getActivity().onBackPressed();
+        }
         getActivity().finish();
     }
+
+
 
     /*public int convertDPToPx(Context context, float dp) {
         DisplayMetrics metrics = context.getResources().getDisplayMetrics();

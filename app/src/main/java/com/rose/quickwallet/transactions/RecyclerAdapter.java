@@ -275,7 +275,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
                 fragment.setArguments(args);
                 activity.findViewById(R.id.details_fragment_disabled_text).setVisibility(View.GONE);
                 activity.findViewById(R.id.container_details_fragment_main).setVisibility(View.VISIBLE);
-                activity.getFragmentManager().beginTransaction().replace(R.id.container_details_fragment_main,fragment).commit();
+                activity.getSupportFragmentManager().beginTransaction().replace(R.id.container_details_fragment_main,fragment).commit();
             }
             /*Intent intent = new Intent(context,DetailsActivity.class);
             String name = getDataList().get((getAdapterPosition()-1)).getName();

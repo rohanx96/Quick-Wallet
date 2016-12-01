@@ -25,7 +25,7 @@ public class DetailsActivity extends AppCompatActivity{
         bundle.putInt("position",getIntent().getIntExtra("position",1));
         DetailsFragment fragment = new DetailsFragment();
         fragment.setArguments(bundle);
-        getFragmentManager().beginTransaction().add(R.id.container_details_fragment, fragment).commit();
+        getSupportFragmentManager().beginTransaction().add(R.id.container_details_fragment, fragment).commit();
         if(Build.VERSION.SDK_INT>=21){
             //getWindow().setSharedElementEnterTransition(TransitionInflater.from(this).inflateTransition(R.transition.shared_contact_image_transition));
             //getWindow().setSharedElementExitTransition(TransitionInflater.from(this).inflateTransition(R.transition.details_activity_return_transition));

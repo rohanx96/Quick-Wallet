@@ -1,6 +1,6 @@
 package com.rose.quickwallet.transactions;
 
-import android.app.Fragment;
+
 import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
@@ -10,6 +10,7 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.design.widget.CollapsingToolbarLayout;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -108,11 +109,27 @@ public class DetailsFragment extends Fragment implements DetailsRecyclerViewCall
     }
 
     public void onAdd(View view) {
-        Intent intent = new Intent(mContext, AddNewTransactionActivity.class);
-        intent.setAction(Intent.ACTION_SEARCH);
-        intent.putExtra(SearchManager.QUERY, name);
-        intent.putExtra("action", "add");
-        startActivity(intent);
+        if(isTabletUI){
+            AddNewTransactionFragment fragment = new AddNewTransactionFragment();
+            Bundle args = new Bundle();
+            args.putString("action","add");
+            args.putString(SearchManager.QUERY, name);
+            fragment.setArguments(args);
+            if(getFragmentManager().getBackStackEntryCount() > 1){
+                getFragmentManager().beginTransaction().replace(R.id.container_left_fragment_main, fragment).
+                        addToBackStack(null).commit();
+            }
+            else getFragmentManager().beginTransaction().add(R.id.container_left_fragment_main, fragment).
+                    addToBackStack(null).commit();
+        }
+        else {
+            Intent intent = new Intent(mContext, AddNewTransactionActivity.class);
+            intent.setAction(Intent.ACTION_SEARCH);
+            intent.putExtra(SearchManager.QUERY, name);
+            intent.putExtra("action", "add");
+            ((MainActivity) mContext).overridePendingTransition(0, 0);
+            startActivity(intent);
+        }
     }
 
     @Override
@@ -184,6 +201,6 @@ public class DetailsFragment extends Fragment implements DetailsRecyclerViewCall
 
     public void refreshTransactionList(){
         if(isTabletUI)
-            ((TransactionsFragment)getFragmentManager().findFragmentById(R.id.fragment_transaction_main)).refreshDataList(databaseHelper);
+            ((TransactionsFragment)getFragmentManager().findFragmentById(R.id.container_left_fragment_main)).refreshDataList(databaseHelper);
     }
 }
