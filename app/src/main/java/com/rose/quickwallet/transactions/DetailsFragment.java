@@ -115,11 +115,10 @@ public class DetailsFragment extends Fragment implements DetailsRecyclerViewCall
             args.putString("action","add");
             args.putString(SearchManager.QUERY, name);
             fragment.setArguments(args);
-            if(getFragmentManager().getBackStackEntryCount() > 1){
-                getFragmentManager().beginTransaction().replace(R.id.container_left_fragment_main, fragment).
-                        addToBackStack(null).commit();
+            if(getFragmentManager().getBackStackEntryCount() > 0){
+                getFragmentManager().popBackStackImmediate(R.id.container_left_fragment_main,0);
             }
-            else getFragmentManager().beginTransaction().add(R.id.container_left_fragment_main, fragment).
+            getFragmentManager().beginTransaction().add(R.id.container_left_fragment_main, fragment).
                     addToBackStack(null).commit();
         }
         else {
@@ -127,7 +126,6 @@ public class DetailsFragment extends Fragment implements DetailsRecyclerViewCall
             intent.setAction(Intent.ACTION_SEARCH);
             intent.putExtra(SearchManager.QUERY, name);
             intent.putExtra("action", "add");
-            ((MainActivity) mContext).overridePendingTransition(0, 0);
             startActivity(intent);
         }
     }
@@ -135,25 +133,8 @@ public class DetailsFragment extends Fragment implements DetailsRecyclerViewCall
     @Override
     public void onResume() {
         super.onResume();
-        databaseHelper = new DatabaseHelper(mContext);
-        //ArrayList<DetailsRecyclerViewItem> detailsRecyclerViewItems = databaseHelper.getHistoryData(name);
-        //int newItems = detailsRecyclerViewItems.size() - recyclerViewAdapter.getDataList().size();
-        recyclerViewAdapter.setDataList(databaseHelper.getHistoryData(name));
         recyclerViewAdapter.setmCurrency(PreferenceManager.getDefaultSharedPreferences(mContext).getString("prefCurrency", ""));
-        //recyclerView.getAdapter().notifyDataSetChanged();
-        //for(int i =0;i<=newItems;i++){
-        //    recyclerView.getAdapter().notifyItemInserted(i);
-        //}
-        recyclerView.getAdapter().notifyDataSetChanged();
-        TextView balanceText = (TextView) rootView.findViewById(R.id.details_balance_text);
-        float balance = databaseHelper.getBalance(name);
-        if (balance < 0) {
-            balance = -1 * balance;
-            balanceText.setText(getString(R.string.current_balance_colon) + " - " + mCurrency + balance);
-        } else balanceText.setText(getString(R.string.current_balance_colon) + mCurrency + balance);
-        if (balance == 0)
-            balanceText.setText(getString(R.string.no_balance));
-        databaseHelper.close();
+        refreshDetails();
         refreshTransactionList();
 //        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
 //            startPostponedEnterTransition();
@@ -185,6 +166,16 @@ public class DetailsFragment extends Fragment implements DetailsRecyclerViewCall
 
     @Override
     public void onDeleteTransaction() {
+        refreshDetails();
+        refreshTransactionList();
+    }
+
+    public void refreshTransactionList(){
+        if(isTabletUI)
+            ((TransactionsFragment)getFragmentManager().findFragmentByTag("Transactions")).refreshDataList(databaseHelper);
+    }
+
+    public void refreshDetails(){
         TextView balanceText = (TextView) rootView.findViewById(R.id.details_balance_text);
         databaseHelper = new DatabaseHelper(mContext);
         recyclerViewAdapter.setDataList(databaseHelper.getHistoryData(name));
@@ -196,11 +187,5 @@ public class DetailsFragment extends Fragment implements DetailsRecyclerViewCall
         if (balance == 0)
             balanceText.setText(getString(R.string.no_balance));
         databaseHelper.close();
-        refreshTransactionList();
-    }
-
-    public void refreshTransactionList(){
-        if(isTabletUI)
-            ((TransactionsFragment)getFragmentManager().findFragmentById(R.id.container_left_fragment_main)).refreshDataList(databaseHelper);
     }
 }

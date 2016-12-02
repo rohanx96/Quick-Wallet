@@ -45,7 +45,7 @@ import io.codetail.animation.ViewAnimationUtils;
  * Created by rohanx96 on 11/27/16.
  */
 
-public class AddNewTransactionFragment extends Fragment {
+public class AddNewTransactionFragment extends Fragment implements View.OnClickListener {
     // Variables to hold transaction and user data
     private String image_uri;
     private String type = "Lent";
@@ -83,6 +83,7 @@ public class AddNewTransactionFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         rootView = inflater.inflate(R.layout.fragment_add_transaction,container,false);
+        setUpClickListeners();
         return rootView;
     }
 
@@ -459,6 +460,12 @@ public class AddNewTransactionFragment extends Fragment {
         //Add transaction to database and reset UI
         databaseHelper.saveData(name, image_uri, amount, type, detail, contact, opponentUserID);
         resetDetailsAfterTransactionAdded();
+        if(isTablet){
+            if(getFragmentManager().findFragmentById(R.id.container_details_fragment_main) != null) {
+                ((DetailsFragment) getFragmentManager().findFragmentById(R.id.container_details_fragment_main)).refreshDetails();
+                ((DetailsFragment) getFragmentManager().findFragmentById(R.id.container_details_fragment_main)).refreshTransactionList();
+            }
+        }
 
         // if user signed up and contact not saved make the user choose the associated contact and send chat message
 //        if (contact == null && isSignedUp) {
@@ -618,7 +625,7 @@ public class AddNewTransactionFragment extends Fragment {
             ((TransactionsFragment) getFragmentManager().findFragmentByTag("Transactions")).resetFabScale();
             getActivity().onBackPressed();
         }
-        getActivity().finish();
+        else getActivity().finish();
     }
 
 
@@ -803,6 +810,41 @@ public class AddNewTransactionFragment extends Fragment {
         rootView.findViewById(R.id.btnEqualId).setOnClickListener(listener);
         rootView.findViewById(R.id.btnDecimal).setOnClickListener(listener);
         rootView.findViewById(R.id.btnDelId).setOnClickListener(listener);
+    }
+
+    void setUpClickListeners(){
+        rootView.findViewById(R.id.search_view_done_button).setOnClickListener(this);
+        rootView.findViewById(R.id.close_name).setOnClickListener(this);
+        rootView.findViewById(R.id.money_details).setOnClickListener(this);
+        rootView.findViewById(R.id.radio_button_lent).setOnClickListener(this);
+        rootView.findViewById(R.id.radio_button_borrowed).setOnClickListener(this);
+        rootView.findViewById(R.id.button).setOnClickListener(this);
+        rootView.findViewById(R.id.button2).setOnClickListener(this);
+    }
+    @Override
+    public void onClick(View view) {
+        switch (view.getId()){
+            case R.id.search_view_done_button:
+                onClickSearch(view);
+                break;
+            case R.id.close_name:
+                onClickDeleteName(view);
+                break;
+            case R.id.money_details:
+                hideKeyboard(view);
+                break;
+            case R.id.radio_button_lent:
+                onTypeRadioButtonSelected(view);
+                break;
+            case R.id.radio_button_borrowed:
+                onTypeRadioButtonSelected(view);
+                break;
+            case R.id.button:
+                onCancel(view);
+                break;
+            case R.id.button2:
+                onAdd(view);
+        }
     }
 
     /**

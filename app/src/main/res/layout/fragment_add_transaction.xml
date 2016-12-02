@@ -57,8 +57,7 @@
                         android:layout_alignParentEnd="true"
                         android:layout_centerVertical="true"
                         android:src="@drawable/ic_send"
-                        android:background="?attr/selectableItemBackground"
-                        android:onClick="onClickSearch"/>
+                        android:background="?attr/selectableItemBackground" />
                 </RelativeLayout>
                 <RelativeLayout
                     android:id="@+id/contact_details"
@@ -96,8 +95,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
-                        android:layout_centerVertical="true"
-                        android:onClick="onClickDeleteName"/>
+                        android:layout_centerVertical="true" />
                 </RelativeLayout>
 
                 <EditText
@@ -126,8 +124,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:gravity="center"
-                    android:padding="10dp"
-                    android:onClick="hideKeyboard">
+                    android:padding="10dp">
                     <ImageView
                         android:layout_width="70dp"
                         android:layout_height="70dp"
@@ -604,8 +601,7 @@
             android:padding="4dp"
             android:layout_weight="1"
             android:background="@drawable/oval_button_pressed"
-            android:textColor="@color/white"
-            android:onClick="onTypeRadioButtonSelected"/>
+            android:textColor="@color/white" />
         <!--</android.support.v7.widget.CardView>-->
         <!--<android.support.v7.widget.CardView-->
         <!--android:layout_width="match_parent"-->
@@ -625,7 +621,7 @@
             android:layout_weight="1"
             android:background="@drawable/oval_button_red"
             android:textColor="@color/borrowed_red"
-            android:onClick="onTypeRadioButtonSelected"/>
+            />
         <!--</android.support.v7.widget.CardView>-->
     </LinearLayout>
 
@@ -647,8 +643,7 @@
             android:text="@string/cancel"
             android:id="@+id/button"
             android:layout_weight="1"
-            android:background="@color/white"
-            android:onClick="onCancel" />
+            android:background="@color/white" />
 
         <Button
             android:layout_width="wrap_content"
@@ -656,7 +651,6 @@
             android:text="@string/add"
             android:id="@+id/button2"
             android:layout_weight="1"
-            android:background="@color/white"
-            android:onClick="onAdd" />
+            android:background="@color/white" />
     </LinearLayout>
 </android.support.percent.PercentRelativeLayout>
