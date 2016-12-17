@@ -31,6 +31,7 @@ import com.rose.quickwallet.R;
 import com.rose.quickwallet.callbackhepers.ItemTouchHelperCallback;
 import com.rose.quickwallet.callbackhepers.RecyclerViewCallback;
 import com.rose.quickwallet.transactions.data.DatabaseHelper;
+import com.rose.quickwallet.widget.TransactionsWidgetProvider;
 
 import java.util.ArrayList;
 
@@ -186,6 +187,7 @@ public class TransactionsFragment extends Fragment implements RecyclerViewCallba
             totalBorrowed.setText(getResources().getString(R.string.borrowed_colon) + currency + databaseHelper.totalBorrowed());
         //recyclerView.getAdapter().notifyDataSetChanged();
         databaseHelper.close();
+        TransactionsWidgetProvider.sendRefreshWidgetBroadcast(mContext);
         Snackbar.make(rootView, getString(R.string.snackbar_balance_cleared_beg) + item.getName() + getString(R.string.snackbar_balance_cleared_end), Snackbar.LENGTH_LONG).setAction(getString(R.string.undo), new View.OnClickListener() {
             @Override
             public void onClick(View view) {

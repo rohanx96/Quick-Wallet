@@ -18,7 +18,7 @@ import static com.rose.quickwallet.transactions.data.QuickWalletContract.QuickWa
  */
 
 
-public class DatabaseOpenHelper extends SQLiteOpenHelper {
+class DatabaseOpenHelper extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "QuickWallet.db";
     private static int VERSION = 2;

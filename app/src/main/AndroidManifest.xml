@@ -23,7 +23,8 @@
 
         <provider
             android:authorities="com.rose.quickwallet"
-            android:name=".transactions.data.QuickWalletProvider"/>
+            android:name=".transactions.data.QuickWalletProvider"
+            android:exported="true"/>
 
         <activity
             android:name=".EnterPinActivity"
@@ -113,9 +114,25 @@
         <service
             android:name=".NotificationService"
             android:exported="false"/>
+
+        <service android:name=".widget.TransactionsRemoteViewService"
+            android:permission="android.permission.BIND_REMOTEVIEWS" />
+
         <receiver
             android:name=".AlarmReceiver"
             android:exported="false"/>
+
+        <receiver
+            android:name=".widget.TransactionsWidgetProvider"
+            android:label="@string/app_name">
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/app_widget_provider" />
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE"/>
+                <action android:name="com.rose.quickwallet.updateWidget"/>
+            </intent-filter>
+            </receiver>
 
         <!-- ~~~~~~~~~~~~~~~~~~~~~~~~~ End of services and receivers ~~~~~~~~~~~~~~~~~~~~~~ -->
 

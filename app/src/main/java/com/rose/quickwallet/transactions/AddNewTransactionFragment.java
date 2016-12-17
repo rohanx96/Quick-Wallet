@@ -2,7 +2,11 @@ package com.rose.quickwallet.transactions;
 
 
 import android.app.SearchManager;
+import android.appwidget.AppWidgetManager;
+import android.appwidget.AppWidgetProvider;
+import android.content.ComponentName;
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.database.Cursor;
 import android.graphics.Color;
@@ -34,6 +38,7 @@ import android.widget.Toast;
 
 import com.rose.quickwallet.R;
 import com.rose.quickwallet.transactions.data.DatabaseHelper;
+import com.rose.quickwallet.widget.TransactionsWidgetProvider;
 
 import java.util.Currency;
 import java.util.Locale;
@@ -459,6 +464,7 @@ public class AddNewTransactionFragment extends Fragment implements View.OnClickL
         detail = detailText.getText().toString();
         //Add transaction to database and reset UI
         databaseHelper.saveData(name, image_uri, amount, type, detail, contact, opponentUserID);
+        TransactionsWidgetProvider.sendRefreshWidgetBroadcast(context);
         resetDetailsAfterTransactionAdded();
         if(isTablet){
             if(getFragmentManager().findFragmentById(R.id.container_details_fragment_main) != null) {

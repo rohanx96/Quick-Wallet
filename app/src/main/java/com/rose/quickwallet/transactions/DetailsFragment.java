@@ -25,6 +25,7 @@ import com.getbase.floatingactionbutton.FloatingActionButton;
 import com.rose.quickwallet.R;
 import com.rose.quickwallet.callbackhepers.DetailsRecyclerViewCallback;
 import com.rose.quickwallet.transactions.data.DatabaseHelper;
+import com.rose.quickwallet.widget.TransactionsWidgetProvider;
 
 /**
  * Created by rohanx96 on 11/18/16.
@@ -150,11 +151,13 @@ public class DetailsFragment extends Fragment implements DetailsRecyclerViewCall
         balanceText.setText(R.string.no_balance);
         recyclerView.getAdapter().notifyDataSetChanged();
         refreshTransactionList();
+        TransactionsWidgetProvider.sendRefreshWidgetBroadcast(mContext);
     }
 
     public void onDelete(View view) {
         databaseHelper = new DatabaseHelper(mContext);
         databaseHelper.deleteContact(name);
+        TransactionsWidgetProvider.sendRefreshWidgetBroadcast(mContext);
         if (isTabletUI) {
             refreshTransactionList();
             getFragmentManager().beginTransaction().remove(this).commit();
@@ -167,6 +170,7 @@ public class DetailsFragment extends Fragment implements DetailsRecyclerViewCall
     @Override
     public void onDeleteTransaction() {
         refreshDetails();
+        TransactionsWidgetProvider.sendRefreshWidgetBroadcast(mContext);
         refreshTransactionList();
     }
 
