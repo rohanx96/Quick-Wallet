@@ -60,9 +60,9 @@
     <string name="skip">SKIP</string>
     <string name="share">Share</string>
 
-    <!--<string name="dev_banner_ad_unit_id">ca-app-pub-3940256099942544/6300978111</string>
+    <string name="dev_banner_ad_unit_id">ca-app-pub-3940256099942544/6300978111</string>
     <string name="main_activity_banner_ad_unit_id">ca-app-pub-7975954632775689/1175277850</string>
-    <string name="wallet_activity_banner_ad_unit_id">ca-app-pub-7975954632775689/9198072258</string>-->
+    <string name="wallet_activity_banner_ad_unit_id">ca-app-pub-7975954632775689/9198072258</string>
 
     <string name="my_wallet">My Wallet</string>
     <string name="funds">Funds in Wallet: \</string>

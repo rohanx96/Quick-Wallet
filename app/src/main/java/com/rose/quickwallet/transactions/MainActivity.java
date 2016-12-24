@@ -20,7 +20,11 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.LinearLayout;
 
+import com.google.android.gms.ads.AdListener;
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdView;
 import com.rose.quickwallet.AlarmReceiver;
 import com.rose.quickwallet.BaseActivity;
 import com.rose.quickwallet.EnterPinActivity;
@@ -43,7 +47,7 @@ import com.rose.quickwallet.tutorial.TutorialActivity;
 
 
 public class MainActivity extends BaseActivity {
-//    private boolean isSignedIn = false;
+    //    private boolean isSignedIn = false;
 //    private GCMClientHelper pushClientManager;
     private SharedPreferences preferences;
     boolean shouldAnimate = false;
@@ -54,10 +58,10 @@ public class MainActivity extends BaseActivity {
         //TraceCompat.beginSection("start");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        isTablet = findViewById(R.id.details_fragment_disabled_text)!=null;
-        if(getSupportFragmentManager().findFragmentById(R.id.container_left_fragment_main) == null)
+        isTablet = findViewById(R.id.details_fragment_disabled_text) != null;
+        if (getSupportFragmentManager().findFragmentById(R.id.container_left_fragment_main) == null)
             getSupportFragmentManager().beginTransaction().add(R.id.container_left_fragment_main,
-                    new TransactionsFragment(),"Transactions").commit();
+                    new TransactionsFragment(), "Transactions").commit();
         preferences = PreferenceManager.getDefaultSharedPreferences(this);
 //        isSignedIn = preferences.getBoolean(Consts.IS_SIGNED_UP, false);
         //DialogUtils.showLong(getApplicationContext(),"isSignedIn: " + isSignedIn);
@@ -87,7 +91,7 @@ public class MainActivity extends BaseActivity {
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         setupDrawerContent(navigationView);
         requestPermissions();
-        //loadAd();
+        loadAd();
 //        // Code to create quickblox session and register to GCM client if required
 //        if (isSignedIn) {
 //            QBSettings.getInstance().fastConfigInit(Consts.APP_ID, Consts.AUTH_KEY, Consts.AUTH_SECRET);
@@ -178,7 +182,7 @@ public class MainActivity extends BaseActivity {
 
     @Override
     public void onBackPressed() {
-        if(isTablet){
+        if (isTablet) {
             ((TransactionsFragment) getSupportFragmentManager().findFragmentByTag("Transactions")).resetFabScale();
         }
         super.onBackPressed();
@@ -265,28 +269,32 @@ public class MainActivity extends BaseActivity {
         }
     }
 
-    /**
-     * private void loadAd(){
-     * AdView mAdView = (AdView) findViewById(R.id.adView);
-     * AdRequest.Builder builder = new AdRequest.Builder();
-     * builder.addTestDevice("D882CD568608B87702357166E3B3E8BD");
-     * AdRequest adRequest = builder.build();
-     * mAdView.loadAd(adRequest);
-     * mAdView.setAdListener(new AdListener() {
-     *
-     * @Override public void onAdFailedToLoad(int errorCode) {
-     * super.onAdFailedToLoad(errorCode);
-     * LinearLayout adLayout = (LinearLayout) findViewById(R.id.ad_layout);
-     * adLayout.setVisibility(View.GONE);
-     * }
-     * @Override public void onAdLoaded() {
-     * super.onAdLoaded();
-     * LinearLayout adLayout = (LinearLayout) findViewById(R.id.ad_layout);
-     * adLayout.setVisibility(View.VISIBLE);
-     * }
-     * });
-     * }
-     */
+
+    private void loadAd() {
+        AdView mAdView = (AdView) findViewById(R.id.adView);
+        AdRequest.Builder builder = new AdRequest.Builder();
+        builder.addTestDevice("D882CD568608B87702357166E3B3E8BD");
+        builder.addTestDevice("3CD0759A5D4D2A91A670DD507D6885C5");
+        AdRequest adRequest = builder.build();
+        mAdView.loadAd(adRequest);
+        mAdView.setAdListener(new AdListener() {
+
+            @Override
+            public void onAdFailedToLoad(int errorCode) {
+                super.onAdFailedToLoad(errorCode);
+                LinearLayout adLayout = (LinearLayout) findViewById(R.id.ad_layout);
+                adLayout.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onAdLoaded() {
+                super.onAdLoaded();
+                LinearLayout adLayout = (LinearLayout) findViewById(R.id.ad_layout);
+                adLayout.setVisibility(View.VISIBLE);
+            }
+        });
+    }
+
 
     //    private void setupNavigationHeader() {
 //        final TextView navViewHeaderText = (TextView) LayoutInflater.from(this).inflate(R.layout.nav_header_layout, navigationView).findViewById(R.id.nav_header_text);

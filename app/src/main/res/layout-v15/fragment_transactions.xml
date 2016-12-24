@@ -38,21 +38,4 @@
         android:src="@drawable/plus">
     </android.support.design.widget.FloatingActionButton>
 </android.support.design.widget.CoordinatorLayout>
-    <!--<LinearLayout
-            android:id="@+id/ad_layout"
-            android:layout_width="wrap_content"
-            android:layout_height="0dp"
-            android:layout_weight="1"
-            android:layout_gravity="center_horizontal"
-            android:visibility="gone"
-            >
-            <com.google.android.gms.ads.AdView
-                android:id="@+id/adView"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                ads:adSize="BANNER"
-                ads:adUnitId="@string/main_activity_banner_ad_unit_id">
-            </com.google.android.gms.ads.AdView>
-        </LinearLayout>
-    </LinearLayout>-->
 
