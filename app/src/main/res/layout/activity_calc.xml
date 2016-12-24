@@ -53,7 +53,7 @@
                     app:cardBackgroundColor="@color/white">
                     <Button
                         android:id="@+id/btnClearId"
-                        android:text="Clear"
+                        android:text="@string/clear"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:background="?attr/selectableItemBackground"/>

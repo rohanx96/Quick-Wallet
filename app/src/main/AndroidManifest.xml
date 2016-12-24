@@ -19,7 +19,8 @@
         android:fullBackupContent="@xml/backup_scheme"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/appName"
-        android:theme="@style/AppTheme" >
+        android:theme="@style/AppTheme"
+        android:supportsRtl="true">
 
         <provider
             android:authorities="com.rose.quickwallet"

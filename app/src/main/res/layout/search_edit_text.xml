@@ -8,7 +8,8 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         android:layout_marginRight="10dp"
         android:layout_marginTop="5dp"
-        app:cardElevation="10dp">
+        app:cardElevation="10dp"
+        android:layout_marginEnd="10dp">
         <!--<EditText
             android:id="@+id/edit_search"
             android:layout_width="match_parent"
@@ -29,7 +30,9 @@
                 android:background="@color/transparent"
                 android:layout_marginTop="6dp"
                 android:onClick="onOpenDrawer"
-                android:layout_marginLeft="2dp"/>
+                android:layout_marginLeft="2dp"
+                android:layout_marginStart="2dp"
+                android:contentDescription="@string/cd_click_to_open_drawer" />
             <SearchView
                 android:id="@+id/search_view_home"
                 android:layout_width="match_parent"

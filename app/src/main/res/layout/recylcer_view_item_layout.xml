@@ -21,11 +21,13 @@
             android:layout_width="70dp"
             android:layout_height="70dp"
             android:padding="3dp"
-            android:adjustViewBounds="true"/>
+            android:adjustViewBounds="true"
+            android:contentDescription="@string/cd_contact_image" />
             <ImageView
                 android:src="@drawable/circle_image_background"
                 android:layout_width="70dp"
-                android:layout_height="70dp" />
+                android:layout_height="70dp"
+                android:contentDescription="@null" />
 
         </FrameLayout>
         <TextView
@@ -64,7 +66,8 @@
             android:id="@id/recycler_paid"
             android:layout_alignParentRight="true"
             android:layout_alignParentEnd="true"
-            android:src="@drawable/paid"/>
+            android:src="@drawable/paid"
+            android:contentDescription="@string/no_balance" />
         <LinearLayout
             android:id="@+id/button_bar"
             android:layout_width="match_parent"
@@ -88,7 +91,9 @@
             android:gravity="start|center"
             android:background="@android:color/transparent"
             android:textColor="@color/colorPrimatryText"
-            android:text="@string/add" />
+            android:text="@string/add"
+            android:layout_marginEnd="6dp"
+            android:paddingStart="20dp" />
             <!--style="?android:attr/buttonBarButtonStyle"/>-->
         <Button
             android:layout_width="match_parent"
@@ -102,7 +107,8 @@
             android:layout_marginLeft="6dp"
             android:drawablePadding="5dp"
             android:gravity="start|center"
-            android:background="@android:color/transparent">
+            android:background="@android:color/transparent"
+            android:layout_marginStart="6dp">
         </Button>
             <!--style="?android:attr/buttonBarButtonStyle"/>-->
         </LinearLayout>

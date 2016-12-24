@@ -7,7 +7,7 @@
     android:padding="16dp"
     android:background="@color/colorPrimary"
     android:layout_width="match_parent" android:layout_height="wrap_content"
-    android:text="Set currency"
+    android:text="@string/set_currency"
     android:textAppearance="@android:style/TextAppearance.SearchResult.Title"
     android:textStyle="bold"
     android:clickable="false"

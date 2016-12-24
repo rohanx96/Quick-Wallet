@@ -8,12 +8,16 @@
     android:paddingBottom="3dp"
     android:paddingTop="3dp"
     android:paddingRight="10dp"
-    android:gravity="center_vertical">
+    android:gravity="center_vertical"
+    android:paddingEnd="10dp"
+    android:paddingStart="10dp">
     <ImageView
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:id="@+id/details_type_icon"
-        android:layout_alignParentLeft="true" />
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:contentDescription="@null" />
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -22,7 +26,10 @@
         android:layout_marginLeft="10dp"
         android:layout_marginRight="10dp"
         android:textSize="15sp"
-        android:textColor="@android:color/black"/>
+        android:textColor="@android:color/black"
+        android:layout_marginEnd="10dp"
+        android:layout_marginStart="10dp"
+        android:layout_toEndOf="@+id/details_type_icon" />
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -31,7 +38,8 @@
         android:layout_centerHorizontal="true"
         android:gravity="center_horizontal"
         android:textSize="15sp"
-        android:textColor="@android:color/black"/>
+        android:textColor="@android:color/black"
+        android:layout_marginStart="5dp" />
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -40,12 +48,15 @@
         android:textSize="15sp"
         android:layout_alignParentRight="true"
         android:layout_alignParentEnd="true"
-        android:textColor="@android:color/black"/>
+        android:textColor="@android:color/black"
+        android:layout_marginStart="10dp" />
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/details_type_text"
         android:layout_alignLeft="@+id/details_type_text"
         android:id="@+id/details_description_text"
-        android:layout_marginRight="10dp" />
+        android:layout_marginRight="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_alignStart="@+id/details_type_text" />
 </RelativeLayout>

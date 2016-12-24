@@ -14,11 +14,13 @@
         android:textColor="@color/cardview_dark_background"
         android:layout_toLeftOf="@+id/contact_image"
         android:layout_toStartOf="@+id/contact_image"
-        android:textSize="20sp"/>
+        android:textSize="20sp"
+        android:layout_alignParentStart="true" />
     <ImageView
         android:layout_width="50dp"
         android:layout_height="50dp"
         android:id="@+id/contact_image"
         android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentEnd="true"
+        android:contentDescription="@null" />
 </RelativeLayout>

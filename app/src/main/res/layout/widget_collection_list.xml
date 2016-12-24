@@ -21,7 +21,8 @@
         android:layout_above="@+id/widget_transactions_list"
         android:layout_centerVertical="true"
         android:layout_margin="16dp"
-        android:src="@drawable/plus" />
+        android:src="@drawable/plus"
+        android:contentDescription="@string/add_transaction" />
     <ListView
         android:id="@+id/widget_transactions_list"
         android:layout_width="match_parent"

@@ -23,7 +23,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
-                android:background="@color/white"></FrameLayout>
+                android:background="@color/white">
+            </FrameLayout>
 
             <android.support.v7.widget.CardView
                 android:layout_width="match_parent"
@@ -39,7 +40,7 @@
                     android:layout_height="match_parent"
                     android:gravity="center"
                     android:padding="16dp"
-                    android:text="Select an item from left to view the complete history"
+                    android:text="@string/tablet_details_help_text"
                     android:textAppearance="@android:style/TextAppearance.DeviceDefault.Medium" />
 
                 <RelativeLayout
@@ -47,7 +48,8 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:background="@android:color/white"
-                    android:visibility="gone"></RelativeLayout>
+                    android:visibility="gone">
+                </RelativeLayout>
             </android.support.v7.widget.CardView>
         </LinearLayout>
 
@@ -63,7 +65,8 @@
                 ads:adSize="BANNER"
                 ads:adUnitId="@string/main_activity_banner_ad_unit_id"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"></com.google.android.gms.ads.AdView>
+                android:layout_height="wrap_content">
+            </com.google.android.gms.ads.AdView>
         </LinearLayout>
     </RelativeLayout>
 
@@ -75,5 +78,6 @@
         app:headerLayout="@layout/nav_header_layout"
         app:itemIconTint="@color/navigation_view_item_color"
         app:itemTextColor="@color/navigation_view_item_color"
-        app:menu="@menu/drawer_menu"></android.support.design.widget.NavigationView>
+        app:menu="@menu/drawer_menu">
+    </android.support.design.widget.NavigationView>
 </android.support.v4.widget.DrawerLayout>

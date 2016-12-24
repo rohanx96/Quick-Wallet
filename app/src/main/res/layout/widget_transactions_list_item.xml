@@ -36,6 +36,8 @@
         android:layout_height="1.5dp"
         android:background="@color/cardview_shadow_start_color"
         android:layout_marginLeft="8dp"
-        android:layout_marginRight="8dp">
+        android:layout_marginRight="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp">
     </LinearLayout>
 </LinearLayout>

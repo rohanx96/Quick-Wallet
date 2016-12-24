@@ -34,7 +34,8 @@
             android:text="@string/skip"
             android:textSize="18sp"
             android:textColor="@color/white"
-            android:background="@android:color/transparent"/>
+            android:background="@android:color/transparent"
+            android:layout_alignParentStart="true" />
 
         <LinearLayout
             android:id="@+id/circles"
@@ -54,7 +55,8 @@
             android:textSize="18sp"
             android:textColor="@color/white"
             android:background="@android:color/transparent"
-            android:visibility="gone"/>
+            android:visibility="gone"
+            android:layout_alignParentEnd="true" />
 
         <ImageButton
             android:id="@+id/next"
@@ -66,7 +68,8 @@
             android:src="@drawable/ic_chevron"
             android:background="@android:color/transparent"
             android:scaleType="fitCenter"
-            />
+            android:layout_alignParentEnd="true"
+            android:contentDescription="@string/next"/>
     </RelativeLayout>
 
 </RelativeLayout>

@@ -151,4 +151,11 @@
     <string name="snackbar_create_backup">Please create a backup first</string>
     <string name="permission_storage_request_message">The write external storage permission is required to create a copy of the database on sd card</string>
     <string name="dialog_confirm_restore_data">This will replace your current application data. Are you sure you want to continue?</string>
+    <string name="clear">Clear</string>
+    <string name="tablet_details_help_text">Select an item from left to view the complete history</string>
+    <string name="next">Next</string>
+    <string name="set_currency">Set currency</string>
+    <string name="cd_remove_name">Click to remove selected name and add other name</string>
+    <string name="cd_contact_image">Contact Image</string>
+    <string name="cd_click_to_open_drawer">Click to open drawer</string>
 </resources>

@@ -47,7 +47,9 @@
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="10dp"
                             android:layout_marginRight="10dp"
-                            android:layout_marginTop="10dp">
+                            android:layout_marginTop="10dp"
+                            android:layout_marginEnd="10dp"
+                            android:layout_marginStart="10dp">
 
                             <ImageView
                                 android:id="@+id/no_contact_image"
@@ -56,7 +58,9 @@
                                 android:layout_alignParentLeft="true"
                                 android:adjustViewBounds="true"
                                 android:padding="5dp"
-                                android:src="@drawable/contact_no_image" />
+                                android:src="@drawable/contact_no_image"
+                                android:layout_alignParentStart="true"
+                                android:contentDescription="@null" />
 
                             <AutoCompleteTextView
                                 android:id="@+id/search_view"
@@ -68,7 +72,9 @@
                                 android:background="@color/white"
                                 android:hint="@string/enter_name"
                                 android:imeActionLabel="Done"
-                                android:imeOptions="actionSearch" />
+                                android:imeOptions="actionSearch"
+                                android:layout_marginStart="15dp"
+                                android:layout_toEndOf="@id/no_contact_image" />
 
                             <ImageButton
                                 android:id="@+id/search_view_done_button"
@@ -78,8 +84,8 @@
                                 android:layout_alignParentRight="true"
                                 android:layout_centerVertical="true"
                                 android:background="?attr/selectableItemBackground"
-                                android:onClick="onClickSearch"
-                                android:src="@drawable/ic_send" />
+                                android:src="@drawable/ic_send"
+                                android:contentDescription="@string/enter"/>
                         </RelativeLayout>
 
                         <RelativeLayout
@@ -95,7 +101,8 @@
                                 android:layout_width="60dp"
                                 android:layout_height="60dp"
                                 android:adjustViewBounds="true"
-                                android:padding="5dp" />
+                                android:padding="5dp"
+                                android:contentDescription="@null" />
 
                             <TextView
                                 android:id="@+id/contact_detail_name"
@@ -104,7 +111,9 @@
                                 android:layout_marginLeft="20dp"
                                 android:layout_toRightOf="@+id/contact_detail_image"
                                 android:textSize="20sp"
-                                android:textStyle="bold" />
+                                android:textStyle="bold"
+                                android:layout_toEndOf="@+id/contact_detail_image"
+                                android:layout_marginStart="20dp" />
 
                             <TextView
                                 android:id="@+id/contact_detail_balance"
@@ -113,7 +122,10 @@
                                 android:layout_alignLeft="@+id/contact_detail_name"
                                 android:layout_below="@+id/contact_detail_name"
                                 android:layout_toLeftOf="@+id/close_name"
-                                android:layout_toRightOf="@+id/contact_detail_image" />
+                                android:layout_toRightOf="@+id/contact_detail_image"
+                                android:layout_alignStart="@+id/contact_detail_name"
+                                android:layout_toEndOf="@+id/contact_detail_image"
+                                android:layout_toStartOf="@+id/close_name" />
 
                             <ImageButton
                                 android:id="@+id/close_name"
@@ -122,8 +134,9 @@
                                 android:layout_alignParentRight="true"
                                 android:layout_centerVertical="true"
                                 android:background="@color/transparent"
-                                android:onClick="onClickDeleteName"
-                                android:src="@drawable/ic_close" />
+                                android:src="@drawable/ic_close"
+                                android:layout_alignParentEnd="true"
+                                android:contentDescription="@string/cd_remove_name" />
                         </RelativeLayout>
 
                         <EditText
@@ -135,7 +148,9 @@
                             android:layout_marginLeft="10dp"
                             android:layout_marginRight="10dp"
                             android:hint="@string/enter_details_hint"
-                            android:maxLines="1" />
+                            android:maxLines="1"
+                            android:layout_marginStart="10dp"
+                            android:layout_marginEnd="10dp" />
                         <!--<CheckBox
                             android:id="@+id/checkbox_send_notification"
                             android:layout_below="@id/details_edit_text"
@@ -152,7 +167,6 @@
                             android:layout_height="wrap_content"
                             android:layout_below="@id/details_edit_text"
                             android:gravity="center"
-                            android:onClick="hideKeyboard"
                             android:padding="10dp">
 
                             <ImageView
@@ -160,7 +174,8 @@
                                 android:layout_width="70dp"
                                 android:layout_height="70dp"
                                 android:adjustViewBounds="true"
-                                android:src="@drawable/money_icon" />
+                                android:src="@drawable/money_icon"
+                                android:contentDescription="@null" />
 
                             <TextView
                                 android:id="@+id/money_detail_name"
@@ -171,7 +186,9 @@
                                 android:layout_toRightOf="@+id/money_detail_image"
                                 android:text="@string/amount_colon"
                                 android:textSize="15sp"
-                                android:textStyle="bold" />
+                                android:textStyle="bold"
+                                android:layout_toEndOf="@+id/money_detail_image"
+                                android:layout_marginStart="20dp" />
 
                             <TextView
                                 android:id="@+id/money_detail_balance"
@@ -183,7 +200,8 @@
                                 android:gravity="end"
                                 android:padding="10dp"
                                 android:text="0"
-                                android:textSize="20sp" />
+                                android:textSize="20sp"
+                                android:layout_toEndOf="@+id/money_detail_name" />
                         </RelativeLayout>
                     </RelativeLayout>
                 </android.support.v7.widget.CardView>
@@ -294,7 +312,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:background="?attr/selectableItemBackground"
-                            android:text="Clear" />
+                            android:text="@string/clear" />
                     </android.support.v7.widget.CardView>
                 </TableRow>
 
@@ -547,7 +565,8 @@
                 android:background="@color/white"
                 android:orientation="vertical"
                 app:layout_heightPercent="44%"
-                app:layout_widthPercent="22%">
+                app:layout_widthPercent="22%"
+                android:layout_toEndOf="@id/tableId">
 
                 <android.support.v7.widget.CardView
                     android:layout_width="match_parent"
@@ -660,7 +679,8 @@
                 android:background="@color/white"
                 android:orientation="vertical"
                 app:layout_heightPercent="44%"
-                app:layout_widthPercent="14%">
+                app:layout_widthPercent="14%"
+                android:layout_toEndOf="@id/calc_operation_buttons">
                 <!--<android.support.v7.widget.CardView-->
                 <!--android:layout_width="match_parent"-->
                 <!--android:layout_height="wrap_content"-->
@@ -674,7 +694,6 @@
                     android:layout_margin="2dp"
                     android:layout_weight="1"
                     android:background="@drawable/oval_button_pressed"
-                    android:onClick="onTypeRadioButtonSelected"
                     android:padding="4dp"
                     android:text="L\ne\nn\nt"
                     android:textColor="@color/white" />
@@ -695,7 +714,6 @@
                     android:layout_margin="2dp"
                     android:layout_weight="1"
                     android:background="@drawable/oval_button_red"
-                    android:onClick="onTypeRadioButtonSelected"
                     android:text="B\no\nr\nr\no\nw"
                     android:textColor="@color/borrowed_red" />
                 <!--</android.support.v7.widget.CardView>-->
@@ -717,7 +735,6 @@
             android:layout_weight="1"
             android:background="@color/colorPrimary"
             android:textColor="@color/white"
-            android:onClick="onCancel"
             android:text="@string/cancel" />
 
         <Button
@@ -727,7 +744,6 @@
             android:layout_weight="1"
             android:textColor="@color/white"
             android:background="@color/colorPrimary"
-            android:onClick="onAdd"
             android:text="@string/add" />
     </LinearLayout>
 </LinearLayout>

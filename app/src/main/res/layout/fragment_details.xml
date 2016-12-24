@@ -26,7 +26,8 @@
                 android:minHeight="120dp"
                 android:scaleType="centerCrop"
                 app:layout_collapseMode="parallax"
-                app:layout_scrollFlags="scroll|enterAlways|enterAlwaysCollapsed" />
+                app:layout_scrollFlags="scroll|enterAlways|enterAlwaysCollapsed"
+                android:contentDescription="@string/cd_contact_image" />
 
             <include
                 layout="@layout/details_toolbar"
