@@ -33,7 +33,9 @@
         <item>RM      \b Ringgit</item>
         <item>¥       \b Yuan</item>
         <item>₩       \b Won</item>
+        <item>\u20B1       \b Peso</item>
     </string-array>
+
     <string-array name="locale_value">
         <item>$</item>
         <item>€</item>
@@ -44,6 +46,6 @@
         <item>RM</item>
         <item>¥</item>
         <item>₩</item>
-
+        <item>\u20B1</item>
     </string-array>
 </resources>

@@ -600,7 +600,7 @@
     <LinearLayout
         android:id="@+id/type_buttons"
         android:layout_toRightOf="@id/calc_operation_buttons"
-        android:layout_toEndOf="@id/calc_action_buttons"
+        android:layout_toEndOf="@id/calc_operation_buttons"
         android:layout_above="@+id/calc_action_buttons"
         android:layout_width="match_parent"
         app:layout_heightPercent="44%"

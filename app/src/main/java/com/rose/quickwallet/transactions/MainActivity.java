@@ -149,6 +149,8 @@ public class MainActivity extends BaseActivity {
                 // if it was the first app start
                 if (isFirstStart) {
                     drawerLayout.openDrawer(GravityCompat.START);
+                    Intent tutorial = new Intent(MainActivity.this, TutorialActivity.class);
+                    startActivity(tutorial);
                     SharedPreferences.Editor e = preferences.edit();
                     // we save the value "false", indicating that it is no longer the first appstart
                     e.putBoolean("isFirstStart", false);
@@ -399,6 +401,9 @@ public class MainActivity extends BaseActivity {
                             break;
                         case 8:
                             preferences.edit().putString("prefCurrency", "₩").apply();
+                            break;
+                        case 9:
+                            preferences.edit().putString("prefCurrency", "\u20B1").apply();
                             break;
                         default:
                             preferences.edit().putString("prefCurrency", "").apply();

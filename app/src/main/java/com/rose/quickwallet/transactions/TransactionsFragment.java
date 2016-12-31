@@ -240,6 +240,11 @@ public class TransactionsFragment extends Fragment implements RecyclerViewCallba
 
             frame.addView(imageView);
         }
+        else {
+            /* Set the position of this new fab button same as that of our existing fab button */
+            imageView.setX(view.getX());
+            imageView.setY(view.getY());
+        }
         imageView.setVisibility(View.VISIBLE);
         // Start animation
         imageView.animate().scaleX(35.0f).scaleY(35.0f).setDuration(500).setInterpolator(new AccelerateInterpolator())
