@@ -196,16 +196,15 @@ public class AddWalletItemActivity extends Activity {
 
     public void onTypeRadioButtonSelected(View v){
         TextView textView = (TextView) findViewById(R.id.add_wallet_item_detail_name);
-        switch (v.getId()){
-            case (R.id.radio_button_expenditure):
-                textView.setText(getString(R.string.expense));
-                textView.setTextColor(setColorRed());
-                type = "Expense";
-                break;
-            case R.id.radio_button_income:
-                textView.setText(getString(R.string.income));
-                textView.setTextColor(setColorGreen());
-                type = "Income";
+        int vId = v.getId();
+        if (vId == R.id.radio_button_expenditure) {
+            textView.setText(getString(R.string.expense));
+            textView.setTextColor(setColorRed());
+            type = "Expense";
+        } else if (vId == R.id.radio_button_income) {
+            textView.setText(getString(R.string.income));
+            textView.setTextColor(setColorGreen());
+            type = "Income";
         }
     }
 

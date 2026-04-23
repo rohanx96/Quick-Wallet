@@ -109,20 +109,18 @@ public class WalletActivity extends BaseActivity implements DetailsRecyclerViewC
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()){
-            case R.id.wallet_menu_clear_history:
-                databaseHelper = new WalletDatabaseHelper(this);
-                databaseHelper.clearHistory();
-
-                recyclerAdapter.setDataList(databaseHelper.getData());
-                recyclerView.getAdapter().notifyDataSetChanged();
-                TextView fundsText = (TextView) findViewById(R.id.wallet_funds_text);
-                fundsText.setText(getString(R.string.funds)  + mCurrency + databaseHelper.getBalance());
-                TextView expensesToday = (TextView) findViewById(R.id.wallet_expenses_today);
-                expensesToday.setText(getString(R.string.expense_today)  + mCurrency + databaseHelper.getTodaysExpense());
-                TextView incomeToday = (TextView) findViewById(R.id.wallet_income_today);
-                incomeToday.setText(getString(R.string.income_today) + mCurrency + databaseHelper.getTodaysIncome());
-                databaseHelper.close();
+        if (item.getItemId() == R.id.wallet_menu_clear_history) {
+            databaseHelper = new WalletDatabaseHelper(this);
+            databaseHelper.clearHistory();
+            recyclerAdapter.setDataList(databaseHelper.getData());
+            recyclerView.getAdapter().notifyDataSetChanged();
+            TextView fundsText = (TextView) findViewById(R.id.wallet_funds_text);
+            fundsText.setText(getString(R.string.funds) + mCurrency + databaseHelper.getBalance());
+            TextView expensesToday = (TextView) findViewById(R.id.wallet_expenses_today);
+            expensesToday.setText(getString(R.string.expense_today) + mCurrency + databaseHelper.getTodaysExpense());
+            TextView incomeToday = (TextView) findViewById(R.id.wallet_income_today);
+            incomeToday.setText(getString(R.string.income_today) + mCurrency + databaseHelper.getTodaysIncome());
+            databaseHelper.close();
         }
         return super.onOptionsItemSelected(item);
     }
@@ -148,33 +146,23 @@ public class WalletActivity extends BaseActivity implements DetailsRecyclerViewC
     @Override
     public void selectDrawerItem(final MenuItem menuItem) {
 
-        switch(menuItem.getItemId()) {
-
-            case R.id.nav_transactions:
-                //Toast.makeText(getApplicationContext(), "Send Selected", Toast.LENGTH_SHORT).show();
-                Intent transactionActivity = new Intent(this,MainActivity.class);
-                transactionActivity.setAction("enter");
-                //transactionActivity.setFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
-                startActivity(transactionActivity);
-                finish();
-                menuItem.setChecked(true);
-                break;
-            case R.id.nav_settings:
-                Intent intent = new Intent(this,SettingsActivity.class);
-                startActivity(intent);
-                break;
-            case R.id.nav_tutorial:
-                Intent tutorial = new Intent(this, TutorialActivity.class);
-                startActivity(tutorial);
-                break;
-            case R.id.nav_help:
-                Intent helpIntent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts("mailto", "rohanx96@gmail.com", null));
-                //intent.setType("text/html");
-                helpIntent.putExtra(Intent.EXTRA_SUBJECT, "QuickWallet App on PlayStore");
-                startActivity(Intent.createChooser(helpIntent,"send Email"));
-            default:
-                //Toast.makeText(getApplicationContext(), "Somethings Wrong", Toast.LENGTH_SHORT).show();
-                break;
+        int itemId = menuItem.getItemId();
+        if (itemId == R.id.nav_transactions) {
+            Intent transactionActivity = new Intent(this, MainActivity.class);
+            transactionActivity.setAction("enter");
+            startActivity(transactionActivity);
+            finish();
+            menuItem.setChecked(true);
+        } else if (itemId == R.id.nav_settings) {
+            Intent intent = new Intent(this, SettingsActivity.class);
+            startActivity(intent);
+        } else if (itemId == R.id.nav_tutorial) {
+            Intent tutorial = new Intent(this, TutorialActivity.class);
+            startActivity(tutorial);
+        } else if (itemId == R.id.nav_help) {
+            Intent helpIntent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts("mailto", "rohanx96@gmail.com", null));
+            helpIntent.putExtra(Intent.EXTRA_SUBJECT, "QuickWallet App on PlayStore");
+            startActivity(Intent.createChooser(helpIntent, "send Email"));
         }
         // Highlight the selected item, update the title, and close the drawer
         setTitle(menuItem.getTitle());

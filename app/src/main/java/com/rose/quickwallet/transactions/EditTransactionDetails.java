@@ -132,16 +132,15 @@ public class EditTransactionDetails extends Activity {
 
     public void onTypeRadioButtonSelected(View v){
         TextView textView = (TextView) findViewById(R.id.edit_item_detail_name);
-        switch (v.getId()){
-            case (R.id.radio_button_borrowed_edit):
-                textView.setText(getString(R.string.borrowed));
-                textView.setTextColor(Color.RED);
-                type = "Borrowed";
-                break;
-            case R.id.radio_button_lent_edit:
-                textView.setText(getString(R.string.lent));
-                textView.setTextColor(Color.GREEN);
-                type = "Lent";
+        int vId = v.getId();
+        if (vId == R.id.radio_button_borrowed_edit) {
+            textView.setText(getString(R.string.borrowed));
+            textView.setTextColor(Color.RED);
+            type = "Borrowed";
+        } else if (vId == R.id.radio_button_lent_edit) {
+            textView.setText(getString(R.string.lent));
+            textView.setTextColor(Color.GREEN);
+            type = "Lent";
         }
     }
 

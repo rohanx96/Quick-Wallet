@@ -55,75 +55,42 @@ private class BtnListener implements OnClickListener {
     // On-click event handler for all the buttons
     @Override
     public void onClick(View view) {
-        switch (view.getId()) {
-            // Number buttons: '0' to '9'
-            case R.id.btnNum0Id:
-            case R.id.btnNum1Id:
-            case R.id.btnNum2Id:
-            case R.id.btnNum3Id:
-            case R.id.btnNum4Id:
-            case R.id.btnNum5Id:
-            case R.id.btnNum6Id:
-            case R.id.btnNum7Id:
-            case R.id.btnNum8Id:
-            case R.id.btnNum9Id:
-            case R.id.btnDecimal:
-                String inDigit = ((Button) view).getText().toString();
-                if(!inStr.contains(".")){
-                    if (inStr.equals("0")) {
-                        inStr = inDigit; // no leading zero
-                    }
-                    else {
-                        inStr += inDigit; // accumulate input digit
-                    }
+        int id = view.getId();
+        // Number buttons: '0' to '9' and decimal
+        if (id == R.id.btnNum0Id || id == R.id.btnNum1Id || id == R.id.btnNum2Id ||
+                id == R.id.btnNum3Id || id == R.id.btnNum4Id || id == R.id.btnNum5Id ||
+                id == R.id.btnNum6Id || id == R.id.btnNum7Id || id == R.id.btnNum8Id ||
+                id == R.id.btnNum9Id || id == R.id.btnDecimal) {
+            String inDigit = ((Button) view).getText().toString();
+            if (!inStr.contains(".")) {
+                if (inStr.equals("0")) {
+                    inStr = inDigit;
+                } else {
+                    inStr += inDigit;
                 }
-                else {
-                    inStr += inDigit; // accumulate input digit
-                }
-                txtResult.setText(inStr);
-                // Clear buffer if last operator is '='
-                if (lastOperator == '=') {
-                    result = 0;
-                    lastOperator = ' ';
-                }
-                break;
-
-            // Operator buttons: '+', '-', '*', '/' and '='
-            case R.id.btnAddId:
-                compute();
-                lastOperator = '+';
-                break;
-            case R.id.btnSubId:
-                compute();
-                lastOperator = '-';
-                break;
-            case R.id.btnMulId:
-                compute();
-                lastOperator = '*';
-                break;
-            case R.id.btnDivId:
-                compute();
-                lastOperator = '/';
-                break;
-            case R.id.btnEqualId:
-                compute();
-                lastOperator = '=';
-                break;
-
-            // Clear button
-            case R.id.btnClearId:
-                result = 0;
-                inStr = "0";
-                lastOperator = ' ';
-                txtResult.setText("0");
-                break;
-            case R.id.btnDelId:
-                if(inStr.length()>1)
-                    inStr = inStr.substring(0,inStr.length()-1);
-                else if(inStr.length()==1)
-                    inStr = "0";
-                txtResult.setText(inStr);
-                break;
+            } else {
+                inStr += inDigit;
+            }
+            txtResult.setText(inStr);
+            if (lastOperator == '=') { result = 0; lastOperator = ' '; }
+        // Operator buttons
+        } else if (id == R.id.btnAddId) {
+            compute(); lastOperator = '+';
+        } else if (id == R.id.btnSubId) {
+            compute(); lastOperator = '-';
+        } else if (id == R.id.btnMulId) {
+            compute(); lastOperator = '*';
+        } else if (id == R.id.btnDivId) {
+            compute(); lastOperator = '/';
+        } else if (id == R.id.btnEqualId) {
+            compute(); lastOperator = '=';
+        // Clear / delete
+        } else if (id == R.id.btnClearId) {
+            result = 0; inStr = "0"; lastOperator = ' '; txtResult.setText("0");
+        } else if (id == R.id.btnDelId) {
+            if (inStr.length() > 1) inStr = inStr.substring(0, inStr.length() - 1);
+            else if (inStr.length() == 1) inStr = "0";
+            txtResult.setText(inStr);
         }
     }
 

@@ -829,27 +829,19 @@ public class AddNewTransactionFragment extends Fragment implements View.OnClickL
     }
     @Override
     public void onClick(View view) {
-        switch (view.getId()){
-            case R.id.search_view_done_button:
-                onClickSearch(view);
-                break;
-            case R.id.close_name:
-                onClickDeleteName(view);
-                break;
-            case R.id.money_details:
-                hideKeyboard(view);
-                break;
-            case R.id.radio_button_lent:
-                onTypeRadioButtonSelected(view);
-                break;
-            case R.id.radio_button_borrowed:
-                onTypeRadioButtonSelected(view);
-                break;
-            case R.id.button:
-                onCancel(view);
-                break;
-            case R.id.button2:
-                onAdd(view);
+        int id = view.getId();
+        if (id == R.id.search_view_done_button) {
+            onClickSearch(view);
+        } else if (id == R.id.close_name) {
+            onClickDeleteName(view);
+        } else if (id == R.id.money_details) {
+            hideKeyboard(view);
+        } else if (id == R.id.radio_button_lent || id == R.id.radio_button_borrowed) {
+            onTypeRadioButtonSelected(view);
+        } else if (id == R.id.button) {
+            onCancel(view);
+        } else if (id == R.id.button2) {
+            onAdd(view);
         }
     }
 
@@ -862,90 +854,46 @@ public class AddNewTransactionFragment extends Fragment implements View.OnClickL
         @Override
         public void onClick(View view) {
             TextView amountType = (TextView) rootView.findViewById(R.id.money_detail_name);
-            switch (view.getId()) {
-                // Number buttons: '0' to '9'
-                case R.id.btnNum0Id:
-                case R.id.btnNum1Id:
-                case R.id.btnNum2Id:
-                case R.id.btnNum3Id:
-                case R.id.btnNum4Id:
-                case R.id.btnNum5Id:
-                case R.id.btnNum6Id:
-                case R.id.btnNum7Id:
-                case R.id.btnNum8Id:
-                case R.id.btnNum9Id:
-                    String inDigit = ((Button) view).getText().toString();
-                    if(!inStr.contains(".")){
-                        if (inStr.equals("0")) {
-                            inStr = inDigit; // no leading zero
-                        }
-                        else {
-                            inStr += inDigit; // accumulate input digit
-                        }
-                    }
-                    else {
-                        inStr += inDigit; // accumulate input digit
-                    }
-                    txtResult.setText(inStr);
-                    amount= Float.parseFloat(inStr);
-                    // Clear buffer if last operator is '='
-                    if (lastOperator == '=') {
-                        result = 0;
-                        lastOperator = ' ';
-                    }
-                    break;
-                case R.id.btnDecimal:
-                    if(!inStr.contains(".")){
-                        inStr += ".";
-                    }
-                    txtResult.setText(inStr);
-                    amount= Float.parseFloat(inStr);
-                    // Clear buffer if last operator is '='
-                    if (lastOperator == '=') {
-                        result = 0;
-                        lastOperator = ' ';
-                    }
-                    break;
-
-                // Operator buttons: '+', '-', '*', '/' and '='
-                case R.id.btnAddId:
-                    compute();
-                    lastOperator = '+';
-                    break;
-                case R.id.btnSubId:
-                    compute();
-                    lastOperator = '-';
-                    break;
-                case R.id.btnMulId:
-                    compute();
-                    lastOperator = '*';
-                    break;
-                case R.id.btnDivId:
-                    compute();
-                    lastOperator = '/';
-                    break;
-                case R.id.btnEqualId:
-                    compute();
-                    lastOperator = '=';
-                    break;
-
-                // Clear button
-                case R.id.btnClearId:
-                    result = 0;
-                    inStr = "0";
-                    lastOperator = ' ';
-                    txtResult.setText("0");
-                    amountType.setText(getString(R.string.amount_colon));
-                    break;
-                case R.id.btnDelId:
-                    if(inStr.length()>1)
-                        inStr = inStr.substring(0,inStr.length()-1);
-                    else if(inStr.length()==1) {
-                        inStr = "0";
-                        amountType.setText(getString(R.string.amount_colon));
-                    }
-                    txtResult.setText(inStr);
-                    break;
+            int btnId = view.getId();
+            // Number buttons: '0' to '9'
+            if (btnId == R.id.btnNum0Id || btnId == R.id.btnNum1Id || btnId == R.id.btnNum2Id ||
+                    btnId == R.id.btnNum3Id || btnId == R.id.btnNum4Id || btnId == R.id.btnNum5Id ||
+                    btnId == R.id.btnNum6Id || btnId == R.id.btnNum7Id || btnId == R.id.btnNum8Id ||
+                    btnId == R.id.btnNum9Id) {
+                String inDigit = ((Button) view).getText().toString();
+                if (!inStr.contains(".")) {
+                    inStr = inStr.equals("0") ? inDigit : inStr + inDigit;
+                } else {
+                    inStr += inDigit;
+                }
+                txtResult.setText(inStr);
+                amount = Float.parseFloat(inStr);
+                if (lastOperator == '=') { result = 0; lastOperator = ' '; }
+            } else if (btnId == R.id.btnDecimal) {
+                if (!inStr.contains(".")) inStr += ".";
+                txtResult.setText(inStr);
+                amount = Float.parseFloat(inStr);
+                if (lastOperator == '=') { result = 0; lastOperator = ' '; }
+            // Operator buttons
+            } else if (btnId == R.id.btnAddId) {
+                compute(); lastOperator = '+';
+            } else if (btnId == R.id.btnSubId) {
+                compute(); lastOperator = '-';
+            } else if (btnId == R.id.btnMulId) {
+                compute(); lastOperator = '*';
+            } else if (btnId == R.id.btnDivId) {
+                compute(); lastOperator = '/';
+            } else if (btnId == R.id.btnEqualId) {
+                compute(); lastOperator = '=';
+            // Clear / delete
+            } else if (btnId == R.id.btnClearId) {
+                result = 0; inStr = "0"; lastOperator = ' ';
+                txtResult.setText("0");
+                amountType.setText(getString(R.string.amount_colon));
+            } else if (btnId == R.id.btnDelId) {
+                if (inStr.length() > 1) inStr = inStr.substring(0, inStr.length() - 1);
+                else if (inStr.length() == 1) { inStr = "0"; amountType.setText(getString(R.string.amount_colon)); }
+                txtResult.setText(inStr);
             }
         }
 
