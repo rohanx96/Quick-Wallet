@@ -2,6 +2,7 @@ package com.rose.quickwallet.transactions;
 
 import android.Manifest;
 import android.app.AlarmManager;
+import android.os.Build;
 import android.app.PendingIntent;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -252,7 +253,8 @@ public class MainActivity extends BaseActivity {
     }
 
     /**
-     * Requests read contacts permission from user. Only for android v23 and up
+     * Requests read contacts permission from user. Only for android v23 and up.
+     * Also requests POST_NOTIFICATIONS on Android 13+ (API 33+).
      */
     public void requestPermissions() {
         if (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.READ_CONTACTS) != PackageManager.PERMISSION_GRANTED) {
@@ -269,6 +271,12 @@ public class MainActivity extends BaseActivity {
                 dialogBuilder.show();
             } else
                 ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.READ_CONTACTS}, 2);
+        }
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            if (ContextCompat.checkSelfPermission(this, Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.POST_NOTIFICATIONS}, 3);
+            }
         }
     }
 

@@ -6,9 +6,11 @@ package com.rose.quickwallet;
 
 import android.app.IntentService;
 import android.app.Notification;
+import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.Intent;
+import android.os.Build;
 import android.preference.PreferenceManager;
 import androidx.core.app.NotificationCompat;
 
@@ -25,6 +27,8 @@ import java.util.ArrayList;
  *
  */
 public class NotificationService extends IntentService {
+    private static final String CHANNEL_ID = "quickwallet_balance_channel";
+
     public NotificationService() {
         super("NotificationService");
     }
@@ -82,13 +86,25 @@ public class NotificationService extends IntentService {
             inboxStyle.setSummaryText(getString(R.string.lent_colon) + currency + lentBalance + "         " +
                     getString(R.string.borrowed_colon) + currency + -1 * borrowedBalance);
             NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
-            NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this);
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                NotificationChannel channel = new NotificationChannel(
+                        CHANNEL_ID,
+                        "Balance Reminders",
+                        NotificationManager.IMPORTANCE_DEFAULT);
+                channel.setDescription("Periodic reminders about pending lent/borrowed balances");
+                notificationManager.createNotificationChannel(channel);
+            }
+            int pendingFlags = PendingIntent.FLAG_CANCEL_CURRENT;
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                pendingFlags |= PendingIntent.FLAG_IMMUTABLE;
+            }
+            NotificationCompat.Builder notificationBuilder = new NotificationCompat.Builder(this, CHANNEL_ID);
             notificationBuilder.setAutoCancel(true)
                     .setStyle(inboxStyle)
                     .setContentTitle(getString(R.string.noti_pending_transaction))
                     .setContentText(getString(R.string.lent_colon) + currency + lentBalance + "         "
                             + getString(R.string.borrowed_colon) + currency + -1 * borrowedBalance)
-                    .setContentIntent(PendingIntent.getActivity(this,0,startApplication,0))
+                    .setContentIntent(PendingIntent.getActivity(this, 0, startApplication, pendingFlags))
                     .setSmallIcon(R.drawable.ic_notification)
                     .setDefaults(Notification.DEFAULT_ALL);
             //Log.i("notificationService ", "notifying");
