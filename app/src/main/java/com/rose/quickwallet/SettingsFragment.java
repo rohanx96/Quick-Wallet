@@ -16,11 +16,11 @@ import android.preference.CheckBoxPreference;
 import android.preference.Preference;
 import android.preference.PreferenceFragment;
 //import android.preference.PreferenceManager;
-import android.support.design.widget.Snackbar;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
-import android.support.v7.app.AlertDialog;
-import android.support.v7.app.NotificationCompat;
+import com.google.android.material.snackbar.Snackbar;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.appcompat.app.AlertDialog;
+import androidx.core.app.NotificationCompat;
 import android.widget.Toast;
 
 //import com.rose.quickwallet.quickblox.Consts;
@@ -277,7 +277,7 @@ public class SettingsFragment extends PreferenceFragment implements SharedPrefer
     public void requestPermissions() {
         if (ContextCompat.checkSelfPermission(getActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
             if (ActivityCompat.shouldShowRequestPermissionRationale(getActivity(), Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
-                android.support.v7.app.AlertDialog.Builder dialogBuilder = new android.support.v7.app.AlertDialog.Builder(getActivity());
+                androidx.appcompat.app.AlertDialog.Builder dialogBuilder = new androidx.appcompat.app.AlertDialog.Builder(getActivity());
                 dialogBuilder.setMessage(R.string.permission_storage_request_message)
                         .setPositiveButton(getString(R.string.dlg_ok), new DialogInterface.OnClickListener() {
                             @Override

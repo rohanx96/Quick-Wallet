@@ -10,6 +10,7 @@
     <string name="clear_balance">Clear Pending Balance</string>
     <string name="enter_details_hint">Enter Transaction Details</string>
     <string name="clear_history">Clear History</string>
+    <string name="actions">Actions</string>
     <string name="transactions">Transactions</string>
     <string name="send_notification">Send notification</string>
     <string name="add_transaction">Add transaction</string>

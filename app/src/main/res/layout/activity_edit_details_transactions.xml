@@ -24,7 +24,7 @@
             android:text="@string/borrowed"
             android:onClick="onTypeRadioButtonSelected"/>
     </RadioGroup>
-    <android.support.design.widget.TextInputLayout
+    <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/edit_item_amount_wrapper"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -38,7 +38,7 @@
             android:layout_height="wrap_content"
             android:inputType="numberDecimal"
             android:hint="@string/amount_hint"/>
-    </android.support.design.widget.TextInputLayout>
+    </com.google.android.material.textfield.TextInputLayout>
     <RelativeLayout
         android:id="@+id/edit_item_details"
         android:layout_width="match_parent"
@@ -74,7 +74,7 @@
             android:layout_toEndOf="@id/edit_item_detail_image"
             android:layout_alignStart="@id/edit_item_detail_name" />
     </RelativeLayout>
-    <android.support.design.widget.TextInputLayout
+    <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
@@ -87,7 +87,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/enter_details_hint" />
-    </android.support.design.widget.TextInputLayout>
+    </com.google.android.material.textfield.TextInputLayout>
     <Button
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

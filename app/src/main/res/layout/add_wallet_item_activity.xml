@@ -28,7 +28,7 @@
             android:text="@string/income"
             android:onClick="onTypeRadioButtonSelected"/>
     </RadioGroup>
-    <!--<android.support.design.widget.TextInputLayout
+    <!--<com.google.android.material.textfield.TextInputLayout
         android:id="@+id/add_wallet_item_amount_wrapper"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -40,7 +40,7 @@
             android:layout_height="wrap_content"
             android:inputType="numberDecimal"
             android:hint="@string/amount_hint"/>
-    </android.support.design.widget.TextInputLayout>-->
+    </com.google.android.material.textfield.TextInputLayout>-->
     <Button
         android:id="@+id/add_wallet_item_amount_wrapper"
         android:layout_width="match_parent"
@@ -85,7 +85,7 @@
             android:layout_alignStart="@id/add_wallet_item_detail_name"
             android:layout_toEndOf="@id/add_wallet_item_detail_image" />
         </RelativeLayout>
-    <android.support.design.widget.TextInputLayout
+    <com.google.android.material.textfield.TextInputLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="10dp"
@@ -98,7 +98,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="@string/enter_details_hint" />
-    </android.support.design.widget.TextInputLayout>
+    </com.google.android.material.textfield.TextInputLayout>
     <Button
         android:id="@+id/done_button_add_wallet_item"
         android:layout_width="match_parent"

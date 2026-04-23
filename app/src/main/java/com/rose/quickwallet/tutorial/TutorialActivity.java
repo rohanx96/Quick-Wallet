@@ -2,12 +2,12 @@ package com.rose.quickwallet.tutorial;
 
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentStatePagerAdapter;
-import android.support.v4.view.PagerAdapter;
-import android.support.v4.view.ViewPager;
-import android.support.v7.app.ActionBarActivity;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentStatePagerAdapter;
+import androidx.viewpager.widget.PagerAdapter;
+import androidx.viewpager.widget.ViewPager;
+import androidx.appcompat.app.AppCompatActivity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
@@ -22,7 +22,7 @@ import com.rose.quickwallet.R;
 /**
  * Created by rose on 11/11/15.
  */
-public class TutorialActivity extends ActionBarActivity {
+public class TutorialActivity extends AppCompatActivity {
     static final int NUM_PAGES = 5;
 
     ViewPager pager;

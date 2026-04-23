@@ -14,9 +14,9 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.provider.ContactsContract;
-import android.support.annotation.Nullable;
-import android.support.design.widget.Snackbar;
-import android.support.v4.app.Fragment;
+import androidx.annotation.Nullable;
+import com.google.android.material.snackbar.Snackbar;
+import androidx.fragment.app.Fragment;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.LayoutInflater;
@@ -43,8 +43,8 @@ import com.rose.quickwallet.widget.TransactionsWidgetProvider;
 import java.util.Currency;
 import java.util.Locale;
 
-import io.codetail.animation.SupportAnimator;
-import io.codetail.animation.ViewAnimationUtils;
+import android.animation.Animator;
+import android.view.ViewAnimationUtils;
 
 /**
  * Created by rohanx96 on 11/27/16.
@@ -1025,7 +1025,7 @@ public class AddNewTransactionFragment extends Fragment implements View.OnClickL
                 int dy = Math.max(cy, myView.getHeight() - cy);
                 float finalRadius = (float) Math.hypot(dx, dy);
 
-                SupportAnimator animator = ViewAnimationUtils.createCircularReveal(myView, cx, cy, 0, finalRadius);
+                Animator animator = ViewAnimationUtils.createCircularReveal(myView, cx, cy, 0, finalRadius);
                 animator.setInterpolator(new AccelerateDecelerateInterpolator());
                 animator.setDuration(600);
                 animator.start();

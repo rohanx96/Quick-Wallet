@@ -5,7 +5,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
-import android.support.v7.widget.RecyclerView;
+import androidx.recyclerview.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -78,7 +78,7 @@ public class DetailsRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
             viewHolder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    android.support.v7.app.AlertDialog.Builder builder = new android.support.v7.app.AlertDialog.Builder(context);
+                    androidx.appcompat.app.AlertDialog.Builder builder = new androidx.appcompat.app.AlertDialog.Builder(context);
                     builder.setItems(R.array.transaction_clear_balance_click_dialog_options, new DialogInterface.OnClickListener() {
                         @Override
                         public void onClick(DialogInterface dialog, int which) {
@@ -129,7 +129,7 @@ public class DetailsRecyclerViewAdapter extends RecyclerView.Adapter<RecyclerVie
     }
 
     public void onItemClicked(final int position){
-        android.support.v7.app.AlertDialog.Builder dialogBuilder= new android.support.v7.app.AlertDialog.Builder(context);
+        androidx.appcompat.app.AlertDialog.Builder dialogBuilder= new androidx.appcompat.app.AlertDialog.Builder(context);
         dialogBuilder.setItems(R.array.transaction_click_dialog_options, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {

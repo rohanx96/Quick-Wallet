@@ -2,7 +2,7 @@ package com.rose.quickwallet.transactions;
 
 import android.os.Build;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatActivity;
 import android.transition.Slide;
 import android.transition.TransitionInflater;
 

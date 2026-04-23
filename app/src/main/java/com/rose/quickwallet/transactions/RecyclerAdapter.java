@@ -8,8 +8,8 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.v4.app.ActivityOptionsCompat;
-import android.support.v7.widget.RecyclerView;
+import androidx.core.app.ActivityOptionsCompat;
+import androidx.recyclerview.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -204,7 +204,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
         private Button addButton;
         private Button viewHistoryButton;
         private LinearLayout buttonBar;
-        private android.support.v7.widget.CardView container;
+        private androidx.cardview.widget.CardView container;
         public ViewHolderItem(View itemView) {
             super(itemView);
             itemView.setOnClickListener(this);
@@ -213,7 +213,7 @@ public class RecyclerAdapter extends RecyclerView.Adapter<RecyclerView.ViewHolde
             imageView = (ImageView) itemView.findViewById(R.id.recycler_image);
             paidView = (ImageView) itemView.findViewById(R.id.recycler_paid);
             addButton = (Button) itemView.findViewById(R.id.add_button_recycler);
-            container = (android.support.v7.widget.CardView)itemView.findViewById(R.id.recycler_view_item_container);
+            container = (androidx.cardview.widget.CardView)itemView.findViewById(R.id.recycler_view_item_container);
             addButton.setOnClickListener(new OnClickListener() {
                 @Override
                 public void onClick(View view) {

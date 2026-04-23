@@ -6,7 +6,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.design.widget.Snackbar;
+import com.google.android.material.snackbar.Snackbar;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
 import android.view.View;

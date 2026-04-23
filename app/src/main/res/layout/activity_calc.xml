@@ -3,7 +3,7 @@
     android:layout_height="match_parent"
     android:background="@color/white_grey"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-    <android.support.v7.widget.CardView
+    <androidx.cardview.widget.CardView
         android:id="@+id/txtResultIdCard"
         android:layout_height="wrap_content"
         android:layout_width="match_parent"
@@ -17,7 +17,7 @@
             android:textColor="@color/white"
             android:textSize="35sp"
             android:padding="10dp"/>
-    </android.support.v7.widget.CardView>
+    </androidx.cardview.widget.CardView>
 
     <!--<LinearLayout
         android:id="@+id/calc_divider"
@@ -44,7 +44,7 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:weightSum="4">
-                <android.support.v7.widget.CardView
+                <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="4"
@@ -57,12 +57,12 @@
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:background="?attr/selectableItemBackground"/>
-                </android.support.v7.widget.CardView>
+                </androidx.cardview.widget.CardView>
             </TableRow>
             <TableRow
                 android:layout_height="match_parent"
                 android:layout_weight="1">
-                <android.support.v7.widget.CardView
+                <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -77,8 +77,8 @@
                         android:layout_weight="1"
                         android:background="?attr/selectableItemBackground"
                         android:textSize="@dimen/calc_button_txt_size"/>
-                </android.support.v7.widget.CardView>
-                <android.support.v7.widget.CardView
+                </androidx.cardview.widget.CardView>
+                <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -93,8 +93,8 @@
                         android:layout_weight="1"
                         android:background="?attr/selectableItemBackground"
                         android:textSize="@dimen/calc_button_txt_size"/>
-                </android.support.v7.widget.CardView>
-                <android.support.v7.widget.CardView
+                </androidx.cardview.widget.CardView>
+                <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -109,12 +109,12 @@
                         android:layout_weight="1"
                         android:background="?attr/selectableItemBackground"
                         android:textSize="@dimen/calc_button_txt_size"/>
-                </android.support.v7.widget.CardView>
+                </androidx.cardview.widget.CardView>
             </TableRow>
             <TableRow
                 android:layout_height="match_parent"
                 android:layout_weight="1">
-                <android.support.v7.widget.CardView
+                <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -129,8 +129,8 @@
                         android:layout_weight="1"
                         android:background="?attr/selectableItemBackground"
                         android:textSize="@dimen/calc_button_txt_size"/>
-                </android.support.v7.widget.CardView>
-                <android.support.v7.widget.CardView
+                </androidx.cardview.widget.CardView>
+                <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -145,8 +145,8 @@
                         android:layout_weight="1"
                         android:background="?attr/selectableItemBackground"
                         android:textSize="@dimen/calc_button_txt_size"/>
-                </android.support.v7.widget.CardView>
-                <android.support.v7.widget.CardView
+                </androidx.cardview.widget.CardView>
+                <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -161,12 +161,12 @@
                         android:layout_weight="1"
                         android:background="?attr/selectableItemBackground"
                         android:textSize="@dimen/calc_button_txt_size"/>
-                </android.support.v7.widget.CardView>
+                </androidx.cardview.widget.CardView>
             </TableRow>
             <TableRow
                 android:layout_height="match_parent"
                 android:layout_weight="1">
-                <android.support.v7.widget.CardView
+                <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -181,8 +181,8 @@
                         android:layout_weight="1"
                         android:background="?attr/selectableItemBackground"
                         android:textSize="@dimen/calc_button_txt_size"/>
-                </android.support.v7.widget.CardView>
-                <android.support.v7.widget.CardView
+                </androidx.cardview.widget.CardView>
+                <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -197,8 +197,8 @@
                         android:layout_weight="1"
                         android:background="?attr/selectableItemBackground"
                         android:textSize="@dimen/calc_button_txt_size"/>
-                </android.support.v7.widget.CardView>
-                <android.support.v7.widget.CardView
+                </androidx.cardview.widget.CardView>
+                <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -213,12 +213,12 @@
                         android:layout_weight="1"
                         android:background="?attr/selectableItemBackground"
                         android:textSize="@dimen/calc_button_txt_size"/>
-                </android.support.v7.widget.CardView>
+                </androidx.cardview.widget.CardView>
             </TableRow>
             <TableRow
                 android:layout_height="match_parent"
                 android:layout_weight="1">
-                <android.support.v7.widget.CardView
+                <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:layout_weight="1"
@@ -232,8 +232,8 @@
                         android:layout_height="match_parent"
                         android:background="?attr/selectableItemBackground"
                         android:textSize="@dimen/calc_button_txt_size"/>
-                </android.support.v7.widget.CardView>
-                <android.support.v7.widget.CardView
+                </androidx.cardview.widget.CardView>
+                <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     app:cardCornerRadius="5dp"
@@ -247,8 +247,8 @@
                         android:layout_height="match_parent"
                         android:background="?attr/selectableItemBackground"
                         android:textSize="@dimen/calc_button_txt_size"/>
-                </android.support.v7.widget.CardView>
-                <android.support.v7.widget.CardView
+                </androidx.cardview.widget.CardView>
+                <androidx.cardview.widget.CardView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     app:cardCornerRadius="5dp"
@@ -262,7 +262,7 @@
                         android:layout_height="match_parent"
                         android:background="?android:attr/selectableItemBackground"
                         android:textSize="@dimen/calc_button_txt_size" />
-                </android.support.v7.widget.CardView>
+                </androidx.cardview.widget.CardView>
 
             </TableRow>
         </TableLayout>
@@ -271,7 +271,7 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:orientation="vertical">
-            <android.support.v7.widget.CardView
+            <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -287,8 +287,8 @@
                     android:background="?attr/selectableItemBackground"
                     android:textColor="@color/colorPrimary"
                     android:textSize="@dimen/calc_button_txt_size"/>
-            </android.support.v7.widget.CardView>
-            <android.support.v7.widget.CardView
+            </androidx.cardview.widget.CardView>
+            <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -304,8 +304,8 @@
                     android:background="?attr/selectableItemBackground"
                     android:textColor="@color/colorPrimary"
                     android:textSize="@dimen/calc_button_txt_size"/>
-            </android.support.v7.widget.CardView>
-            <android.support.v7.widget.CardView
+            </androidx.cardview.widget.CardView>
+            <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -321,8 +321,8 @@
                     android:background="?attr/selectableItemBackground"
                     android:textColor="@color/colorPrimary"
                     android:textSize="@dimen/calc_button_txt_size"/>
-            </android.support.v7.widget.CardView>
-            <android.support.v7.widget.CardView
+            </androidx.cardview.widget.CardView>
+            <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_weight="1"
@@ -338,8 +338,8 @@
                     android:background="?attr/selectableItemBackground"
                     android:textColor="@color/colorPrimary"
                     android:textSize="@dimen/calc_button_txt_size"/>
-            </android.support.v7.widget.CardView>
-            <android.support.v7.widget.CardView
+            </androidx.cardview.widget.CardView>
+            <androidx.cardview.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 app:cardCornerRadius="5dp"
@@ -354,12 +354,12 @@
                     android:background="?attr/selectableItemBackground"
                     android:textSize="@dimen/calc_button_txt_size"
                     android:textColor="@color/white"/>
-            </android.support.v7.widget.CardView>
-            <!--<android.support.design.widget.FloatingActionButton
+            </androidx.cardview.widget.CardView>
+            <!--<com.google.android.material.floatingactionbutton.FloatingActionButton
                 android:layout_height="wrap_content"
                 android:layout_width="wrap_content"
                 android:src="@drawable/equal">
-            </android.support.design.widget.FloatingActionButton>-->
+            </com.google.android.material.floatingactionbutton.FloatingActionButton>-->
         </LinearLayout>
     </LinearLayout>
 

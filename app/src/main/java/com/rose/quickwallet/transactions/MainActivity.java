@@ -10,12 +10,12 @@ import android.content.pm.PackageManager;
 import android.net.Uri;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.design.widget.NavigationView;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
-import android.support.v4.view.GravityCompat;
-import android.support.v4.widget.DrawerLayout;
-import android.support.v7.app.AlertDialog;
+import com.google.android.material.navigation.NavigationView;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.appcompat.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -25,6 +25,7 @@ import android.widget.LinearLayout;
 import com.google.android.gms.ads.AdListener;
 import com.google.android.gms.ads.AdRequest;
 import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.LoadAdError;
 import com.rose.quickwallet.AlarmReceiver;
 import com.rose.quickwallet.BaseActivity;
 import com.rose.quickwallet.EnterPinActivity;
@@ -256,7 +257,7 @@ public class MainActivity extends BaseActivity {
     public void requestPermissions() {
         if (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.READ_CONTACTS) != PackageManager.PERMISSION_GRANTED) {
             if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.READ_CONTACTS)) {
-                android.support.v7.app.AlertDialog.Builder dialogBuilder = new android.support.v7.app.AlertDialog.Builder(this);
+                androidx.appcompat.app.AlertDialog.Builder dialogBuilder = new androidx.appcompat.app.AlertDialog.Builder(this);
                 dialogBuilder.setMessage(getString(R.string.request_permissions_contacts))
                         .setPositiveButton(getString(R.string.dlg_ok), new DialogInterface.OnClickListener() {
                             @Override
@@ -274,16 +275,12 @@ public class MainActivity extends BaseActivity {
 
     private void loadAd() {
         AdView mAdView = (AdView) findViewById(R.id.adView);
-        AdRequest.Builder builder = new AdRequest.Builder();
-        builder.addTestDevice("D882CD568608B87702357166E3B3E8BD");
-        builder.addTestDevice("3CD0759A5D4D2A91A670DD507D6885C5");
-        AdRequest adRequest = builder.build();
+        AdRequest adRequest = new AdRequest.Builder().build();
         mAdView.loadAd(adRequest);
         mAdView.setAdListener(new AdListener() {
 
             @Override
-            public void onAdFailedToLoad(int errorCode) {
-                super.onAdFailedToLoad(errorCode);
+            public void onAdFailedToLoad(LoadAdError adError) {
                 LinearLayout adLayout = (LinearLayout) findViewById(R.id.ad_layout);
                 adLayout.setVisibility(View.GONE);
             }

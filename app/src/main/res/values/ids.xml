@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <item type="id" name="details_fragment"/>
+    <item type="id" name="toolbar_main_activity"/>
+    <item type="id" name="fab_expand_menu_button"/>
 </resources>

@@ -8,20 +8,21 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
-import android.support.annotation.Nullable;
-import android.support.design.widget.CollapsingToolbarLayout;
-import android.support.v4.app.Fragment;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.Toolbar;
+import androidx.annotation.Nullable;
+import com.google.android.material.appbar.CollapsingToolbarLayout;
+import androidx.fragment.app.Fragment;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.appcompat.widget.Toolbar;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.getbase.floatingactionbutton.FloatingActionButton;
+import android.widget.PopupMenu;
+import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.rose.quickwallet.R;
 import com.rose.quickwallet.callbackhepers.DetailsRecyclerViewCallback;
 import com.rose.quickwallet.transactions.data.DatabaseHelper;
@@ -85,25 +86,30 @@ public class DetailsFragment extends Fragment implements DetailsRecyclerViewCall
         });*/
         if (Build.VERSION.SDK_INT >= 21)
             contactImage.setTransitionName("contactImage" + getArguments().getInt("position"));
-        FloatingActionButton addButton = (FloatingActionButton) rootView.findViewById(R.id.add_floating_button);
-        addButton.setOnClickListener(new View.OnClickListener() {
+        FloatingActionButton fabMenu = (FloatingActionButton) rootView.findViewById(R.id.fab_actions_menu);
+        fabMenu.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                onAdd(view);
-            }
-        });
-        final FloatingActionButton deleteButton = (FloatingActionButton) rootView.findViewById(R.id.delete_floating_button);
-        deleteButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                onDelete(view);
-            }
-        });
-        FloatingActionButton clearHistoryButton = (FloatingActionButton) rootView.findViewById(R.id.clear_history_floating_button);
-        clearHistoryButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                onClearHistory(v);
+                PopupMenu popup = new PopupMenu(mContext, view);
+                popup.inflate(R.menu.details_fab_menu);
+                popup.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(android.view.MenuItem item) {
+                        int id = item.getItemId();
+                        if (id == R.id.add_floating_button) {
+                            onAdd(view);
+                            return true;
+                        } else if (id == R.id.delete_floating_button) {
+                            onDelete(view);
+                            return true;
+                        } else if (id == R.id.clear_history_floating_button) {
+                            onClearHistory(view);
+                            return true;
+                        }
+                        return false;
+                    }
+                });
+                popup.show();
             }
         });
 
